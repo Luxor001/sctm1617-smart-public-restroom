@@ -40,7 +40,7 @@ namespace smart_public_restroom
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); 
             app.UseMvc();
         }
     }

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "restroom-controller", "restroom-controller.njsproj", "{16264999-5E09-4BAF-9554-ABA61109C2BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16264999-5E09-4BAF-9554-ABA61109C2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16264999-5E09-4BAF-9554-ABA61109C2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16264999-5E09-4BAF-9554-ABA61109C2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16264999-5E09-4BAF-9554-ABA61109C2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27D8C6FC-C5DF-453A-984C-83626E3EB46E}
+	EndGlobalSection
+EndGlobal

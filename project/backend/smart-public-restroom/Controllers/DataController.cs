@@ -8,7 +8,7 @@ namespace smart_public_restroom.Controllers
 {
     public class RestroomFacilityInfo
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public List<RestroomInfo> restRoomsInfo { get; set; } = new List<RestroomInfo>();
         public bool smokeDetected { get; set; }
         public List<int> trashCapacities { get; set; }
@@ -37,6 +37,7 @@ namespace smart_public_restroom.Controllers
 
         // POST api/values
         [HttpPost]
+        [Route("send")]
         public string sendInfo([FromBody] RestroomFacilityInfo value)
         {
             return "works!";   
