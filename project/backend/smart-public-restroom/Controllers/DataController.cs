@@ -3,27 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using smart_public_restroom.Code;
 
 namespace smart_public_restroom.Controllers
 {
-    public class RestroomFacilityInfo
-    {
-        public string id { get; set; }
-        public List<RestroomInfo> restRoomsInfo { get; set; } = new List<RestroomInfo>();
-        public bool smokeDetected { get; set; }
-        public List<int> trashCapacities { get; set; }
-        public List<int> soapDispensersCapacities { get; set; }
-    }
-
-    public class RestroomInfo
-    {
-        public int id { get; set; }
-        public bool paperAvaiable { get; set; }
-        public int umidity { get; set; }
-        public bool lightWorking { get; set; }
-        public bool closed { get; set; }
-    }
-
     [Route("api/data")]
     [ApiController]
     public class DataController : ControllerBase
@@ -35,12 +18,25 @@ namespace smart_public_restroom.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [Route("getToilets")]
+        [HttpGet] /*da aggiungere come parametro: [FromBody] string coordinates*/
+        public ActionResult<List<RestRoomFacility>> GetToilets()
+        {
+            //TODO: query toilets based on location of user
+
+            return DummyValuesGenerator.getDummyFacilities();
+        }
+
         // POST api/values
         [HttpPost]
         [Route("send")]
-        public string sendInfo([FromBody] RestroomFacilityInfo value)
+        public bool sendInfo([FromBody] RestRoomFacility data)
         {
-            return "works!";   
+            //TODO: write down to DB...
+
+
+
+            return true;
         }
     }
 }
