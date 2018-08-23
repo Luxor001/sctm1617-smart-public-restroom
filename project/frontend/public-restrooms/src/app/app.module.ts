@@ -1,18 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from '@angular/cdk/layout';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { AgmCoreModule } from '@agm/core';
 
 import { environment } from '../environments/environment';
 import { MapComponent } from './map/map.component';
 import { AboutComponent } from './about/about.component';
 import { ReportComponent } from './report/report.component';
+import { AppHttpInterceptor } from './appHttpInterceptor';
+import { keyGmap, BASE_URL} from '../environments/keys'
 
 const routes: Routes = [
   {
@@ -53,14 +56,14 @@ const routes: Routes = [
     AgmCoreModule.forRoot({
       apiKey: ''
     }),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
+    { provide: "BASE_URL", useValue: BASE_URL}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-/*
-let modulse = require('../environments/gmapskey').then(resolved => {
-    console.log(resolved);
-});*/
 

@@ -31,6 +31,19 @@ namespace smart_public_restroom
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            /* I know, huge security concerns. 
+               But let me point straight something:
+                1) This is a localhost-only project. It will never pass the unbereable firewalls of my router.
+                2) No sensitive data ar involved in the project.
+                3) This is an academic project about smart cities, not IT Security. 
+                   I am fully aware of the implications of the settings below but i firmly believe they can considered "simplifying assumptions" for the scope of the course.
+
+             I usually consider those implications as low risk-low impact :)   
+             */
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+                                  .AllowAnyMethod()
+                                  .AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -42,6 +55,7 @@ namespace smart_public_restroom
 
             app.UseHttpsRedirection(); 
             app.UseMvc();
+            
         }
     }
 }

@@ -16,10 +16,10 @@ namespace smart_public_restroom.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
-        }
+        } 
 
-        [Route("getToilets")]
-        [HttpGet] /*da aggiungere come parametro: [FromBody] string coordinates*/
+        [Route("getRestrooms")]
+        [HttpPost] /*da aggiungere come parametro: [FromBody] string coordinates*/
         public ActionResult<List<RestRoomFacility>> GetToilets()
         {
             //TODO: query toilets based on location of user

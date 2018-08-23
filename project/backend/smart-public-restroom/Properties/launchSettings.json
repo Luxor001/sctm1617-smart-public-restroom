@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/smart-public-restroom",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:63826",
       "sslPort": 44323
@@ -18,7 +22,7 @@
       }
     },
     "smart_public_restroom": {
-      "commandName": "Project",
+      "commandName": "IIS",
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
