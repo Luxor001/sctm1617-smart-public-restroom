@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { RestRoom } from '../code/restRoom';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,6 @@ export class MapService {
   constructor(private http: HttpClient) { }
 
   getNearbyRestrooms() {
-    this.http.post("api/data/getRestrooms", {}).subscribe(result => {
-      console.log(result);
-    });
+    return this.http.post<RestRoom[]>("api/data/getRestrooms", {});
   }
 }

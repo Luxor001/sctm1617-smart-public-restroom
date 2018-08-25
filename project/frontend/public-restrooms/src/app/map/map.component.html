@@ -1,3 +1,13 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng"> </agm-marker>
+<agm-map [latitude]="userPosition[0]" [longitude]="userPosition[1]"
+[zoom]="14">
+
+  <agm-marker *ngFor="let restRoom of restRooms; let i = index"
+              (markerClick)="restroomSelected(restRoom)"
+              [latitude]="restRoom.address[0]"
+              [longitude]="restRoom.address[1]">
+
+    <agm-info-window>
+      <strong>Restroom</strong>
+    </agm-info-window>
+  </agm-marker>
 </agm-map>

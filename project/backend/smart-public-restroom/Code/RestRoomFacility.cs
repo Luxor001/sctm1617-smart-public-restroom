@@ -13,11 +13,11 @@ namespace smart_public_restroom.Code
         public List<int> trashCapacities { get; set; }
         public List<int> soapDispensersCapacities { get; set; }
 
-        public string address;
+        public double[] address;
 
         public RestRoomFacility(){}
 
-        public RestRoomFacility(string id, List<Restroom> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities, string address)
+        public RestRoomFacility(string id, List<Restroom> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities, double[] address)
         {
             this.id = id;
             this.restRoomsInfo = restRoomsInfo;

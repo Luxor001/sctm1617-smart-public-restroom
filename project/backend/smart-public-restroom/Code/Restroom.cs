@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace smart_public_restroom.Code
 {
     public class Restroom
-    {
+    {   
         public int id { get; set; }
         public bool paperAvaiable { get; set; }
         public int umidity { get; set; }

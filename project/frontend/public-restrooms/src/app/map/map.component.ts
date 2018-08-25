@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from './map.service';
+import { RestRoom } from '../code/restRoom';
 
 @Component({
   selector: 'app-map',
@@ -8,10 +9,15 @@ import { MapService } from './map.service';
   providers: [MapService]
 })
 export class MapComponent{
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  userPosition = [44.063638, 12.563860999999974];
+  restRooms: RestRoom[];
 
   constructor(private map: MapService) {
-    map.getNearbyRestrooms();
+    map.getNearbyRestrooms().subscribe((restRooms:RestRoom[]) => this.restRooms = restRooms);
+    
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.userPosition[0] = position.coords.latitude;
+      this.userPosition[1] = position.coords.longitude;
+    });
   }
 }
