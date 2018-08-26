@@ -7,17 +7,15 @@ using smart_public_restroom.Code;
 
 namespace smart_public_restroom.Controllers
 {
+    public class Report
+    {
+        public string name { get; set; }
+        public string comment { get; set; }
+    }
     [Route("api/data")]
     [ApiController]
     public class DataController : ControllerBase
     {
-        [Route("values")]
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        } 
-
         [Route("getRestrooms")]
         [HttpPost] /*da aggiungere come parametro: [FromBody] string coordinates*/
         public ActionResult<List<RestRoomFacility>> GetToilets()
@@ -35,6 +33,16 @@ namespace smart_public_restroom.Controllers
             //TODO: write down to DB...
 
 
+
+            return true;
+        }
+        
+        // POST api/values
+        [HttpPost]
+        [Route("sendreport")]
+        public bool sendReport([FromBody] Report data)
+        {
+            //TODO: Write down to DB the report!
 
             return true;
         }

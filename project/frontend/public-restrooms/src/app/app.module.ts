@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatInputModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AgmCoreModule } from '@agm/core';
@@ -16,6 +16,7 @@ import { AboutComponent } from './about/about.component';
 import { ReportComponent } from './report/report.component';
 import { AppHttpInterceptor } from './appHttpInterceptor';
 import { keyGmap, BASE_URL} from '../environments/keys'
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -52,6 +53,8 @@ const routes: Routes = [
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatInputModule,
+    FormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AgmCoreModule.forRoot({
       apiKey: ''

@@ -1,5 +1,5 @@
 export interface RestRoom {
-    address[]: number;
+    address: number[];
     id: string;
     restRoomsInfo: RestRoomsInfo[];
     smokeDetected: boolean;
