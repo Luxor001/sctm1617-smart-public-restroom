@@ -2,12 +2,12 @@
 [zoom]="14">
 
   <agm-marker *ngFor="let restRoom of restRooms; let i = index"
-              (markerClick)="restroomSelected(restRoom)"
+              (markerClick)="restRoomSelected(restRoom)"
               [latitude]="restRoom.address[0]"
               [longitude]="restRoom.address[1]">
 
     <agm-info-window>
-      <strong>Restroom</strong>
+      <app-marker-detail [restRoom]="restRoom"></app-marker-detail>
     </agm-info-window>
   </agm-marker>
 </agm-map>

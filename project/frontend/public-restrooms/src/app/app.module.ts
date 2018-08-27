@@ -17,6 +17,7 @@ import { ReportComponent } from './report/report.component';
 import { AppHttpInterceptor } from './appHttpInterceptor';
 import { keyGmap, BASE_URL} from '../environments/keys'
 import { FormsModule } from '@angular/forms';
+import { MarkerDetailComponent } from './map/marker-detail/marker-detail.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
     AppComponent,
     MapComponent,
     AboutComponent,
-    ReportComponent
+    ReportComponent,
+    MarkerDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -14,10 +14,12 @@ namespace smart_public_restroom.Code
         public List<int> soapDispensersCapacities { get; set; }
 
         public double[] address;
+        public string cityAddress { get; set; }
+        public string company { get; set; }
 
         public RestRoomFacility(){}
 
-        public RestRoomFacility(string id, List<Restroom> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities, double[] address)
+        public RestRoomFacility(string id, List<Restroom> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities, double[] address, string cityAddress, string company)
         {
             this.id = id;
             this.restRoomsInfo = restRoomsInfo;
@@ -25,6 +27,8 @@ namespace smart_public_restroom.Code
             this.trashCapacities = trashCapacities;
             this.soapDispensersCapacities = soapDispensersCapacities;
             this.address = address;
+            this.cityAddress = cityAddress;
+            this.company = company;
         }
     }
 }

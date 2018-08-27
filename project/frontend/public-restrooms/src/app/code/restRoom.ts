@@ -1,6 +1,8 @@
 export interface RestRoom {
-    address: number[];
     id: string;
+    address: number[];
+    cityAddress: string;
+    company: string;
     restRoomsInfo: RestRoomsInfo[];
     smokeDetected: boolean;
     trashCapacities: number[];
