@@ -10,3 +10,9 @@
   position: sticky;
   top: 0;
 }
+
+:host {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}

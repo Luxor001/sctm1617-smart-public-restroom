@@ -1,0 +1,10 @@
+:host{
+    flex: 1;/* 1 and it will fill whole space left if no flex value are set to other children*/
+}
+mat-sidenav {
+    width: 230px;
+}
+
+.menu-toolbar {
+    height: 100px;
+}

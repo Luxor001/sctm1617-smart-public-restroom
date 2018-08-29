@@ -1,0 +1,13 @@
+.login-form {
+  min-width: 150px;
+  max-width: 350px;
+  width: 85%;
+  margin: auto;
+}
+
+:host {
+  height:1rem;
+  flex: 1 1 auto;
+  margin-top: 10vh;
+  display: block;
+}

@@ -13,6 +13,7 @@ import { BASE_URL} from '../environments/keys'
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './guards/AuthGuard';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -47,7 +49,8 @@ const routes: Routes = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
-    { provide: "BASE_URL", useValue: BASE_URL}
+    { provide: "BASE_URL", useValue: BASE_URL},
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
