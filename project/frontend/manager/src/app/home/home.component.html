@@ -5,14 +5,20 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="!(isHandset$ | async)">
-    <mat-toolbar class="menu-toolbar" color="primary"></mat-toolbar>
+    <mat-toolbar class="menu-toolbar" color="primary">
+      <div class="userInfo">
+        <div>Tiziano Qualunquelli</div>
+        <div>admin</div>        
+      </div>
+    </mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/restrooms">Restrooms</a>
       <a mat-list-item routerLink="/create">Create</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    Content
+    
+    <router-outlet></router-outlet>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -13,9 +13,12 @@ export class LoginComponent {
   constructor(private loginService: LoginService, private router: Router) {}
 
   login(form: NgForm) {
-    let loginResult = this.loginService.login();
-    if(loginResult){
-      this.router.navigate(['home']);
-    }
+    // TODO: inserire debounce del submit dell'utente
+    this.loginService.login(form.value.username, form.value.password, form.value.gruppoAziendale)
+      .subscribe(success => {
+        if (success)
+          this.router.navigate(['']);
+    });
+
   }
 }

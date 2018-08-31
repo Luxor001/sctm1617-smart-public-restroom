@@ -9,29 +9,35 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { AppComponent } from './app.component';
 
 import { AppHttpInterceptor } from './appHttpInterceptor';
-import { BASE_URL} from '../environments/keys'
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/AuthGuard';
+import { RestroomsListComponent } from './restrooms-list/restrooms-list.component';
+import { LoginGuard } from './guards/LoginGuard';
+import { CreateRestroomComponent } from './create-restroom/create-restroom.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
-  },
-  {
-    path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard]
-  }
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'restrooms', component: RestroomsListComponent, canActivate: [AuthGuard]},
+      { path: 'create', component: CreateRestroomComponent, canActivate: [AuthGuard]}
+    ]
+  },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
+  { path: '**', redirectTo: ''} // questo handler deve SEMPRE rimanere per ultimo
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    RestroomsListComponent,
+    CreateRestroomComponent
   ],
   imports: [
     BrowserModule,
@@ -49,8 +55,8 @@ const routes: Routes = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
-    { provide: "BASE_URL", useValue: BASE_URL},
-    AuthGuard
+    AuthGuard,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

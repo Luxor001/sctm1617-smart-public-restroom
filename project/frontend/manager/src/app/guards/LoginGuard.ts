@@ -5,18 +5,15 @@ import {map} from 'rxjs/operators';
 import { Observable } from '../../../node_modules/rxjs';
 
 /**
- * Una guard che previene l'accesso ad ogni funzionalità dell'applicazione (ad eccezione della login) qualora non si possegga nel proprio indexedDB un loginToken.
- * In caso di fallita autenticazione, la guard effettua un redirect all'indirizzo /login.
+ * Una guard che previene l'accesso alla pagina /login qualora un utente abbia già un loginToken nel proprio indexedDB.
  */
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
     constructor(private localStorage: LocalStorage, private router: Router) {}
 
     canActivate(): Observable<boolean> {
       return this.localStorage.getItem('loginToken').pipe(map(value => {
-          if (value != null)
-              return true;
-          this.router.navigate(['/login']);
+          return value == null;
       }));
     }
   }

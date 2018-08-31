@@ -8,3 +8,20 @@ mat-sidenav {
 .menu-toolbar {
     height: 100px;
 }
+
+.userInfo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-weight: initial;
+    font-size: 0.8rem;
+    padding-left: 5%;
+}
+
+.userInfo > div {    
+    height: 25px;
+}
+
+mat-toolbar {
+    position: relative;
+}
