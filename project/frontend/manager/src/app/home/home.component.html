@@ -12,8 +12,15 @@
       </div>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/restrooms">Restrooms</a>
-      <a mat-list-item routerLink="/create">Create</a>
+      <a mat-list-item routerLink="/restrooms">
+        <i class="material-icons">wc</i>
+        <span>Restrooms</span>
+      </a>
+      <hr class="ng-tns-c14-2 ng-star-inserted">
+      <a mat-list-item (click)="logout()">
+        <i class="material-icons">exit_to_app</i>
+          <span>Exit</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

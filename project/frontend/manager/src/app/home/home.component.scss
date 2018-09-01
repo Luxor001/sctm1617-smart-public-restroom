@@ -4,6 +4,9 @@
 mat-sidenav {
     width: 230px;
 }
+mat-nav-list {
+    font-size: 0.95rem;
+}
 
 .menu-toolbar {
     height: 100px;
@@ -11,7 +14,7 @@ mat-sidenav {
 
 .userInfo {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 0;
     font-weight: initial;
     font-size: 0.8rem;

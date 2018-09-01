@@ -28,3 +28,16 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 .block {
   display: block;
 }
+
+.material-icons {
+  color: gray;
+}
+
+
+mat-nav-list span {
+  padding-left: 7%;
+}
+
+br {
+  border-top: 1px solid rgba(0,0,0,.1);
+}

@@ -29,6 +29,6 @@ export class LoginService {
   }
 
   public logout() {
-    this.localStorage.removeItemSubscribe('loginToken');
+    return this.localStorage.removeItem('loginToken');
   }
 }
