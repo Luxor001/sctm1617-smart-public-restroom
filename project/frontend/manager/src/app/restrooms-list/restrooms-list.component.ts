@@ -20,7 +20,7 @@ export class RestroomsListComponent implements OnInit {
   ngOnInit() {
   }
   dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
+  columnsToDisplay = ['id', 'cityAddress', 'company', 'position'];
   expandedElement: PeriodicElement;
 }
 

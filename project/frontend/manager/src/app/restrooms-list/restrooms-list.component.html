@@ -1,6 +1,10 @@
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+    <div class="button-row">
+      <button mat-mini-fab color="primary">Primary</button>
+    </div>
+    <td><i class="material-icons" (click)="deleteRow">exit_to_app</i></td>
     <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
   </ng-container>
 
