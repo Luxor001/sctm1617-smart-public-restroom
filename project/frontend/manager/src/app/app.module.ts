@@ -16,6 +16,7 @@ import { AuthGuard } from './guards/AuthGuard';
 import { RestroomsListComponent } from './restrooms-list/restrooms-list.component';
 import { LoginGuard } from './guards/LoginGuard';
 import { CreateRestroomComponent } from './create-restroom/create-restroom.component';
+import { BASE_URL } from '../environments/keys';
 
 const routes: Routes = [
   {
@@ -56,6 +57,7 @@ const routes: Routes = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
+    { provide: "BASE_URL", useValue: BASE_URL},
     AuthGuard,
     LoginGuard
   ],

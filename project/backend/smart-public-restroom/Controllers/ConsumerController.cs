@@ -14,7 +14,7 @@ namespace smart_public_restroom.Controllers
     }
     [Route("api/data")]
     [ApiController]
-    public class DataController : ControllerBase
+    public class ConsumerController : ControllerBase
     {
         [Route("getRestrooms")]
         [HttpPost] /*da aggiungere come parametro: [FromBody] string coordinates*/
