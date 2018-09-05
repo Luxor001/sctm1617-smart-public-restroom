@@ -18,7 +18,8 @@ import { RestRoom } from '../code/restRoom';
 export class RestroomsListComponent implements OnInit {
   columnsToDisplay = ['id', 'cityAddress', 'company', 'position'];
   expandedElement: PeriodicElement;
-  restRooms: RestRoom[];
+  restRooms: RestRoom[];  
+  panelOpenState = false;
 
   constructor(private restRoomsService : RestroomsListService) { }
 

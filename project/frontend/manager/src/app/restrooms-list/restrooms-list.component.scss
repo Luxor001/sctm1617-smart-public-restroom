@@ -22,46 +22,69 @@ table {
   .element-detail {
     overflow: hidden;
     display: flex;
-  }   
-  .element-description {
     padding: 16px;
+  }   
+  
+  .element-detail .material-icons {
+    margin-right: 15px;
+    padding-top: 10px;
+    color: darkgray;
+  }  
+  .capacities-container {
+    margin-top: -10px;
+  }  
+  .capacities-container > div {
+    width: 300px;
+    display: inline-block;
+  }  
+  .restroom-facility-description {
+    width: 40%;
   }  
 
-  .element-description .description {
+  .restroom-facility-description .description {
     display: inline-block;
     width:70px;
   }
 
-  .element-description div.float-right {
+  .restroom-facility-description div.float-right {
     margin-left: 20px;
   }
 
-  .element-description .material-icons {
-    margin-right: 15px;
-    color: darkgray;
-    padding-top: 6px;
-  }
-  
-  .element-description .capacities {
+  .restroom-facility-description .capacities {
     padding-left:60px;
   }
-  .element-description .capacities > div {
+  .restroom-facility-description .capacities > div {
     clear: both;
   }
   
-  .element-description .capacities > div > span:first-child {
+  .restroom-facility-description .capacities > div > span:first-child {
     margin-right: 20px;
     display: inline-block;
   }
-  .element-description .capacities > div > span:last-child {
+  .restroom-facility-description .capacities > div > span:last-child {
     padding-left: 5px;
   }
-  .element-description .capacities > div > mat-progress-bar{
+  .restroom-facility-description .capacities > div > mat-progress-bar{
     margin-top:5px;
   }
 
+  .restRooms {
+    width: 60%;
+    margin-top: -15px;
+  }
+  .restRooms .info {
+    display: inline-block;
+    margin-right: 40px;
+  }
+  .coordinates {
+    padding-left: 40px;
+  }
   mat-progress-bar {
     margin-bottom: 10px;
     width: 120px;
     height: 10px;
+  }
+
+  mat-expansion-panel {
+    box-shadow: unset !important;
   }

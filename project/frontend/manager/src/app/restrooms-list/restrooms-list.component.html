@@ -14,64 +14,136 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
       <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div class="element-description">
+        <div class="restroom-facility-description">
           <div>
-            <i class="material-icons float-left">scatter_plot</i>
-            <mat-form-field>
-              <input matInput placeholder="UID" disabled [value]="element.id">
-            </mat-form-field>
+            <div class="float-left">
+              <i class="material-icons inline-block">scatter_plot</i>
+            </div>
+            <div class="inline-block">
+              <mat-form-field>
+                <input matInput placeholder="UID" disabled [value]="element.id">
+              </mat-form-field>
+            </div>
           </div>
+
           <div>
-            <i class="material-icons float-left">location_on</i>
-            <div class="float-left w-20">
+            <div class="float-left">
+              <i class="material-icons inline-block">location_on</i>
+            </div>
+            <div class="inline-block w-20">
               <mat-form-field>
                 <input matInput placeholder="Address" disabled [value]="element.cityAddress">
               </mat-form-field>
             </div>
-            <div class="float-right w-20">
+            <div class="inline-block w-20 coordinates">
               <mat-form-field>
                 <input matInput placeholder="Coordinates" disabled [value]="element.address">
               </mat-form-field>
             </div>
           </div>
+
           <div>
-            <i class="material-icons float-left">build</i>
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="Company" disabled [value]="element.company">
-              </mat-form-field>
+            <div class="float-left">
+              <i class="material-icons inline-block">build</i>
             </div>
+            <mat-form-field class="inline-block">
+              <input matInput placeholder="Company" disabled [value]="element.company">
+            </mat-form-field>
           </div>
-          <div>
-            <i class="material-icons float-left">delete</i>
+          <div class="capacities-container">
             <div>
-              <mat-form-field>
-                <input matInput disabled value="Trash capacities:">
-              </mat-form-field>
-              <div class="capacities">
-                <div *ngFor="let trashCapacity of element.trashCapacities; index as i">
-                  <span class="float-left">{{i+1}}</span>
-                  <mat-progress-bar class="float-left" mode="determinate" [value]="trashCapacity"></mat-progress-bar>
-                  <span>{{trashCapacity}}%</span>
+              <i class="material-icons float-left">delete_sweep</i>
+              <div>
+                <mat-form-field>
+                  <input matInput disabled value="Trash capacities:">
+                </mat-form-field>
+                <div class="capacities">
+                  <div *ngFor="let trashCapacity of element.trashCapacities; index as i">
+                    <span class="float-left">{{i+1}}</span>
+                    <mat-progress-bar class="float-left" mode="determinate" [value]="trashCapacity"></mat-progress-bar>
+                    <span>{{trashCapacity}}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clear">
+              <div class="float-left">
+                <i class="material-icons float-left emojii-icon">💧</i>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput disabled value="Soap capacities:">
+                </mat-form-field>
+                <div class="capacities">
+                  <div *ngFor="let soapCapacity of element.soapDispensersCapacities; index as i">
+                    <span class="float-left">{{i+1}}</span>
+                    <mat-progress-bar class="float-left" mode="determinate" [value]="soapCapacity"></mat-progress-bar>
+                    <span>{{soapCapacity}}%</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="clear">
-            <i class="material-icons float-left emojii-icon">💧</i>
-            <div>
-              <mat-form-field>
-                <input matInput disabled value="Soap Dispensers:">
-              </mat-form-field>
-              <div class="capacities">
-                <div *ngFor="let soapCapacity of element.soapDispensersCapacities; index as i">
-                  <span class="float-left">{{i+1}}</span>
-                  <mat-progress-bar class="float-left" mode="determinate" [value]="soapCapacity"></mat-progress-bar>
-                  <span>{{soapCapacity}}%</span>
+        </div>
+
+        <div class="restRooms">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let restroomInfo of element.restRoomsInfo; index as i">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Restroom #{{i+1}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="info">
+                <div class="float-left">
+                  <i class="material-icons inline-block">meeting_room</i>
+                </div>
+                <div class="inline-block">
+                  <mat-form-field>
+                    <input matInput placeholder="Door" disabled [value]="restroomInfo.closed ? 'Closed' : 'Open'">
+                  </mat-form-field>
                 </div>
               </div>
-            </div>
-          </div>
+
+              <div class="info">
+                <div class="float-left">
+                  <i class="material-icons inline-block">highlight</i>
+                </div>
+                <div class="inline-block">
+                  <mat-form-field>
+                    <input matInput placeholder="Lights" disabled [value]="restroomInfo.lightWorking ? 'Working' : 'Not working'">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div></div>
+
+              <div class="info">
+                <div class="float-left">
+                  <i class="material-icons inline-block emojii-icon">💧</i>
+                </div>
+                <div class="inline-block">
+                  <mat-form-field>
+                    <input matInput placeholder="Floor umidity" disabled [value]="restroomInfo.umidity + ' %'">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="info">
+                <div class="float-left">
+                  <i class="material-icons inline-block">layers</i>
+                </div>
+                <div class="inline-block">
+                  <mat-form-field>
+                    <input matInput placeholder="Paper" disabled [value]="restroomInfo.paperAvaiable ? 'Avaiable' : 'Not avaiable'">
+                  </mat-form-field>
+                </div>
+              </div>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+
         </div>
       </div>
     </td>
