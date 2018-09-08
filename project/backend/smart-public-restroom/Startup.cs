@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using smart_public_restroom.Models;
 
 namespace smart_public_restroom
 {
@@ -19,11 +21,15 @@ namespace smart_public_restroom
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<PublicRestroomsContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+
             /* I know, huge security concerns. 
                But let me point straight something:
                 1) This is a localhost-only project. It will never pass the unbereable firewalls of my router.

@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/smart-public-restroom",
+      "applicationUrl": "https://localhost/smart-public-restroom",
       "sslPort": 0
     },
     "iisExpress": {

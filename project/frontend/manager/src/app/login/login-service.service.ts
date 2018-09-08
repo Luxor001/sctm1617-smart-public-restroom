@@ -11,9 +11,10 @@ export class LoginService {
   constructor(private http: HttpClient, private localStorage: LocalStorage) {}
 
   public login(username: string, password: string, gruppoAziendale: number): Observable<boolean> {
-    /*this.http.post('api/login', {}).subscribe(result => {
-
-    });*/
+    this.http.post('api/manager/login', {username: 'lux', password:'a'}).subscribe(result => {
+      let a = 0;
+      debugger;
+    });
     return this.doFakeLogin();
   }
 
