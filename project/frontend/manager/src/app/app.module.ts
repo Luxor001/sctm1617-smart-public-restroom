@@ -15,7 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/AuthGuard';
 import { RestroomsListComponent } from './restrooms-list/restrooms-list.component';
 import { LoginGuard } from './guards/LoginGuard';
-import { CreateRestroomComponent } from './create-restroom/create-restroom.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 import { BASE_URL } from '../environments/keys';
 
 const routes: Routes = [
@@ -25,7 +25,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'restrooms', component: RestroomsListComponent, canActivate: [AuthGuard]},
-      { path: 'create', component: CreateRestroomComponent, canActivate: [AuthGuard]}
+      { path: 'adduser', component: CreateUserComponent, canActivate: [AuthGuard]}
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
@@ -38,7 +38,7 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     RestroomsListComponent,
-    CreateRestroomComponent
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
