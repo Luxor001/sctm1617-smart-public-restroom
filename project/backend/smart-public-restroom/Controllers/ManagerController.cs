@@ -18,7 +18,7 @@ namespace smart_public_restroom.Controllers
             public string username { get; set; }
             public string password { get; set; }
         }
-        public class LoginResult
+        public class LoginResult : BaseResult
         {
             public string loginToken { get; set; }
         }
@@ -38,9 +38,22 @@ namespace smart_public_restroom.Controllers
 
         [Route("login")]
         [HttpPost]
-        public ActionResult<LoginResult> GetToilets(LoginData loginData)
+        public ActionResult<LoginResult> Login(LoginData loginData)
         {
-            bool exists = PublicRestroomsContext.User.Any(user => loginData.username == user.Username && PasswordHash.ValidatePassword(loginData.password, user.Password));
+            LoginResult result = new LoginResult();
+            bool login = PublicRestroomsContext.User.Any(user => loginData.username == user.Username && PasswordHash.ValidatePassword(loginData.password, user.Password));
+            if (!login)
+            {
+                result.message = "username or password incorrect";
+                return result;
+            }
+
+            PublicRestroomsContext.Login.Add(new Models.Login()
+            {
+                Username = loginData.username,
+                LoginToken = Guid.NewGuid().ToString(),
+                LastAccess = new byte[2]
+            });
             return new LoginResult();
         }
 
@@ -48,12 +61,29 @@ namespace smart_public_restroom.Controllers
         [HttpPost]
         public ActionResult<LoginResult> Register(LoginData loginData)
         {
+            LoginResult result = new LoginResult();
+            // If some user is already registered with that given username...
+            if(PublicRestroomsContext.User.Any(user => loginData.username == user.Username))
+            {
+                result.message = "username already in use";
+                return result;
+            }
+
             PublicRestroomsContext.User.Add(new Models.User()
             {
                 Username = loginData.username,
                 Password = PasswordHash.HashPassword(loginData.password)
             });
-            return new LoginResult();
+
+            PublicRestroomsContext.Login.Add(new Models.Login()
+            {
+                Username = loginData.username,
+                LoginToken = Guid.NewGuid().ToString(),
+                LastAccess = new byte[2]
+            });
+
+            result.result = true;
+            return result;
         }
     }
 }
