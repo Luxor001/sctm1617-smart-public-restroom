@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace smart_public_restroom.Models
+namespace smartpublicrestroom.Models
 {
     public partial class Login
     {
         public string Username { get; set; }
-        public string LoginToken { get; set; }
-        public byte[] LastAccess { get; set; }
+        public string Logintoken { get; set; }
+        public byte[] Timestamp { get; set; }
     }
 }

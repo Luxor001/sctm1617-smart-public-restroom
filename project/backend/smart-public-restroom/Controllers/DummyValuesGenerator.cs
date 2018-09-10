@@ -1,10 +1,10 @@
-﻿using smart_public_restroom.Code;
+﻿using smartpublicrestroom.Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace smart_public_restroom.Controllers
+namespace smartpublicrestroom.Controllers
 {
     public static class DummyValuesGenerator
     {

@@ -1,0 +1,19 @@
+.registration-form {
+    max-width: 250px;
+  }
+  :host {
+    height:1rem;
+    flex: 1 1 auto;
+    display: block;
+    margin-top: 4vh;
+    margin-left: 7vh;
+  }
+  
+  .material-icons {
+      position: absolute;
+      top: 18px;
+      left: -30px;
+  }
+  button {
+      float: right;
+  }

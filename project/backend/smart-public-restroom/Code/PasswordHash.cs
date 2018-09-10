@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace smart_public_restroom.Code
+namespace smartpublicrestroom.Code
 {
     public class PasswordHash
     {

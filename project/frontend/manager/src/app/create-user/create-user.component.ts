@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { CreateUserService } from './create-user.service';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent {
 
-  constructor() { }
+  constructor(private createUserService: CreateUserService) { }
 
-  ngOnInit() {
+  register(form: NgForm) {
+    this.createUserService.createUser(form.value.fullname, form.value.username, form.value.password)
   }
 
 }

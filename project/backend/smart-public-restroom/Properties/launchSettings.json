@@ -23,7 +23,6 @@
     },
     "smart_public_restroom": {
       "commandName": "IIS",
-      "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

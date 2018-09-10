@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace smart_public_restroom
+namespace smartpublicrestroom
 {
     public class Program
     {

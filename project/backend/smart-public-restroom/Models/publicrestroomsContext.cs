@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace smart_public_restroom.Models
+namespace smartpublicrestroom.Models
 {
-    public partial class PublicRestroomsContext : DbContext
+    public partial class publicrestroomsContext : DbContext
     {
-        public PublicRestroomsContext()
+        public publicrestroomsContext()
         {
         }
 
-        public PublicRestroomsContext(DbContextOptions<PublicRestroomsContext> options)
+        public publicrestroomsContext(DbContextOptions<publicrestroomsContext> options)
             : base(options)
         {
         }
@@ -20,49 +20,47 @@ namespace smart_public_restroom.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-4BQ3HRQ\\SQLEXPRESS;Initial Catalog=public-restrooms;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Login>(entity =>
             {
-                entity.HasKey(e => new { e.Username, e.LoginToken });
+                entity.HasKey(e => new { e.Username, e.Logintoken });
 
                 entity.Property(e => e.Username)
                     .HasColumnName("username")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.LoginToken)
-                    .HasColumnName("loginToken")
+                entity.Property(e => e.Logintoken)
+                    .HasColumnName("logintoken")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.LastAccess)
+                entity.Property(e => e.Timestamp)
                     .IsRequired()
-                    .HasColumnName("lastAccess")
+                    .HasColumnName("timestamp")
                     .IsRowVersion();
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.Username);
-
-                entity.Property(e => e.Username)
-                    .HasColumnName("username")
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnName("password")
-                    .HasMaxLength(20);
+                    .HasColumnType("ntext");
 
-                entity.HasOne(d => d.UsernameNavigation)
-                    .WithOne(p => p.InverseUsernameNavigation)
-                    .HasForeignKey<User>(d => d.Username)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_User1");
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasColumnName("username")
+                    .HasColumnType("ntext");
             });
         }
     }

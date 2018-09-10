@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using smart_public_restroom.Code;
+using smartpublicrestroom.Code;
 
-namespace smart_public_restroom.Controllers
+namespace smartpublicrestroom.Controllers
 {
     public class Report
     {

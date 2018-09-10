@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using smart_public_restroom.Code;
-using smart_public_restroom.Models;
+using smartpublicrestroom.Code;
+using smartpublicrestroom.Models;
 
-namespace smart_public_restroom.Controllers
+namespace smartpublicrestroom.Controllers
 {
     [Route("api/manager")]
     [ApiController]
@@ -22,9 +22,9 @@ namespace smart_public_restroom.Controllers
         {
             public string loginToken { get; set; }
         }
-        private PublicRestroomsContext PublicRestroomsContext;
+        private publicrestroomsContext PublicRestroomsContext;
 
-        public ManagerController(PublicRestroomsContext context)
+        public ManagerController(publicrestroomsContext context)
         {
             PublicRestroomsContext = context;
         }
@@ -47,12 +47,12 @@ namespace smart_public_restroom.Controllers
                 result.message = "username or password incorrect";
                 return result;
             }
-
+            
             PublicRestroomsContext.Login.Add(new Models.Login()
             {
                 Username = loginData.username,
-                LoginToken = Guid.NewGuid().ToString(),
-                LastAccess = new byte[2]
+                Logintoken = Guid.NewGuid().ToString(),
+                Timestamp = new byte[2]
             });
             return new LoginResult();
         }
@@ -68,20 +68,21 @@ namespace smart_public_restroom.Controllers
                 result.message = "username already in use";
                 return result;
             }
-
+            
             PublicRestroomsContext.User.Add(new Models.User()
             {
                 Username = loginData.username,
                 Password = PasswordHash.HashPassword(loginData.password)
             });
 
+            PublicRestroomsContext.SaveChanges();
             PublicRestroomsContext.Login.Add(new Models.Login()
             {
                 Username = loginData.username,
-                LoginToken = Guid.NewGuid().ToString(),
-                LastAccess = new byte[2]
+                Logintoken = Guid.NewGuid().ToString(),
+                Timestamp = new byte[2]
             });
-
+            
             result.result = true;
             return result;
         }

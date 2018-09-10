@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using smart_public_restroom.Models;
 
-namespace smart_public_restroom
+namespace smartpublicrestroom
 {
     public class Startup
     {
@@ -21,8 +20,8 @@ namespace smart_public_restroom
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<PublicRestroomsContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DB")));
+            /*services.AddDbContext<publicrestroomsContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DB")));*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -17,6 +17,7 @@ import { RestroomsListComponent } from './restrooms-list/restrooms-list.componen
 import { LoginGuard } from './guards/LoginGuard';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { BASE_URL } from '../environments/keys';
+import { EqualValidator } from './create-user/EqualValidator';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     RestroomsListComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EqualValidator 
   ],
   imports: [
     BrowserModule,
