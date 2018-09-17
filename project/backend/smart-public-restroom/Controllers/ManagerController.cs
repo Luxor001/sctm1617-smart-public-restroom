@@ -55,20 +55,18 @@ namespace smartpublicrestroom.Controllers
         [HttpPost]
         public ActionResult<LoginResult> Login(LoginData loginData)
         {
-           /* LoginResult result = new LoginResult();
-            bool login = PublicRestroomsContext.User.Any(user => loginData.username == user.Username && PasswordHash.ValidatePassword(loginData.password, user.Password));
-            if (!login)
+            LoginResult result = new LoginResult();
+            IMongoCollection<User> usersCollection = _db.GetCollection<User>("User");
+            User user = usersCollection.Find(currUser => loginData.username == currUser.username).FirstOrDefault();
+            if (user == null || !PasswordHash.ValidatePassword(loginData.password, user.password))
             {
                 result.message = "username or password incorrect";
                 return result;
             }
-            
-            PublicRestroomsContext.Login.Add(new Models.Login()
-            {
-                Username = loginData.username,
-                Logintoken = Guid.NewGuid().ToString(),
-                Timestamp = new byte[2]
-            });*/
+
+            result.result = true;
+            IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
+            loginCollection.InsertOne(new Login(ObjectId.GenerateNewId(), user, Guid.NewGuid().ToString()));
             return new LoginResult();
         }
 

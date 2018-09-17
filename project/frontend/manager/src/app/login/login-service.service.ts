@@ -8,25 +8,18 @@ import { Observable, timer, of } from '../../../node_modules/rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  constructor(private http: HttpClient, private localStorage: LocalStorage) {}
+  constructor(private http: HttpClient, private localStorage: LocalStorage) { }
 
   public login(username: string, password: string, gruppoAziendale: number): Observable<boolean> {
-    this.http.post('api/manager/login', {username: 'lux', password:'a'}).subscribe(result => {
-      let a = 0;
-      debugger;
-    });
-    return this.doFakeLogin();
-  }
-
-  private doFakeLogin() {
-    return of({loginResult: true}).pipe(concatMap(result => {
-      if (result.loginResult) {
-        const dummyToken = '9fd9b877fed59334b81dada9bd978c4a';
-        return this.localStorage.setItem('loginToken', dummyToken).pipe(map( () => true));
-      }
-      else
-        return of(false);
-    }));
+    return this.http.post('api/manager/login', { username: username, password: password })
+      .pipe(concatMap((result: any) => {
+        if (result.result) {
+          const dummyToken = '9fd9b877fed59334b81dada9bd978c4a';
+          return this.localStorage.setItem('loginToken', dummyToken).pipe(map(() => true));
+        }
+        else
+          return of(false);
+      }));
   }
 
   public logout() {
