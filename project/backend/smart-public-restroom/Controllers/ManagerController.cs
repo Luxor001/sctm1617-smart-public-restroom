@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using smartpublicrestroom.Code;
 using smartpublicrestroom.Models;
 
@@ -22,11 +24,13 @@ namespace smartpublicrestroom.Controllers
         {
             public string loginToken { get; set; }
         }
-        private publicrestroomsContext PublicRestroomsContext;
 
-        public ManagerController(publicrestroomsContext context)
+        private readonly IMongoDatabase _db;
+        private readonly IMongoCollection<Person> _people;
+        public ManagerController(IMongoDatabase db)
         {
-            PublicRestroomsContext = context;
+            _db = db;
+            _people = _db.GetCollection<Person>("people");
         }
 
         [Route("getRestrooms")]
@@ -40,7 +44,7 @@ namespace smartpublicrestroom.Controllers
         [HttpPost]
         public ActionResult<LoginResult> Login(LoginData loginData)
         {
-            LoginResult result = new LoginResult();
+           /* LoginResult result = new LoginResult();
             bool login = PublicRestroomsContext.User.Any(user => loginData.username == user.Username && PasswordHash.ValidatePassword(loginData.password, user.Password));
             if (!login)
             {
@@ -53,7 +57,7 @@ namespace smartpublicrestroom.Controllers
                 Username = loginData.username,
                 Logintoken = Guid.NewGuid().ToString(),
                 Timestamp = new byte[2]
-            });
+            });*/
             return new LoginResult();
         }
 
@@ -63,13 +67,13 @@ namespace smartpublicrestroom.Controllers
         {
             LoginResult result = new LoginResult();
             // If some user is already registered with that given username...
-            if(PublicRestroomsContext.User.Any(user => loginData.username == user.Username))
+            /*if(PublicRestroomsContext.User.Any(user => loginData.username == user.Username))
             {
                 result.message = "username already in use";
                 return result;
-            }
+            }*/
             
-            PublicRestroomsContext.User.Add(new Models.User()
+        /*    PublicRestroomsContext.User.Add(new Models.User()
             {
                 Username = loginData.username,
                 Password = PasswordHash.HashPassword(loginData.password)
@@ -82,7 +86,7 @@ namespace smartpublicrestroom.Controllers
                 Logintoken = Guid.NewGuid().ToString(),
                 Timestamp = new byte[2]
             });
-            
+            */
             result.result = true;
             return result;
         }

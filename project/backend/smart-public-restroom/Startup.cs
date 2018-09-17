@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace smartpublicrestroom
 {
@@ -20,6 +21,9 @@ namespace smartpublicrestroom
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSingleton<IMongoClient>(x => new MongoClient(Configuration.GetConnectionString("MongoAtlas")));
+            services.AddTransient<IMongoDatabase>(x => x.GetService<IMongoClient>().GetDatabase("public-restroom"));
             /*services.AddDbContext<publicrestroomsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DB")));*/
         }
@@ -54,6 +58,7 @@ namespace smartpublicrestroom
             app.UseHttpsRedirection(); 
             app.UseMvc();
             
+
         }
     }
 }
