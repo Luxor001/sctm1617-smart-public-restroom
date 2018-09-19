@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatInputModule, MatTableModule, MatProgressBarModule, MatExpansionModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatInputModule, MatTableModule, MatProgressBarModule, MatExpansionModule, MatSnackBarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
@@ -54,6 +54,7 @@ const routes: Routes = [
     MatInputModule,
     MatTableModule,
     MatExpansionModule,
+    MatSnackBarModule,
     FormsModule,
     RouterModule.forRoot(routes),
     HttpClientModule,

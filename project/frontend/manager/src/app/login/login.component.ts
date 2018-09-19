@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoginService } from './login-service.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, public snackBar: MatSnackBar) {}
 
   login(form: NgForm) {
     // TODO: inserire debounce del submit dell'utente
@@ -18,6 +19,8 @@ export class LoginComponent {
       .subscribe(success => {
         if (success)
           this.router.navigate(['']);
+        else
+          this.snackBar.open("Wrong username or password", "Dismiss", {panelClass: 'loginSnackbar'});
     });
   }
 }

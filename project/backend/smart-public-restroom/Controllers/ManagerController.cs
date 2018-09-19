@@ -19,6 +19,7 @@ namespace smartpublicrestroom.Controllers
         {
             public string username { get; set; }
             public string password { get; set; }
+            public string loginToken { get; set; }
         }
         public class RegisterData : LoginData
         {
@@ -56,17 +57,39 @@ namespace smartpublicrestroom.Controllers
         public ActionResult<LoginResult> Login(LoginData loginData)
         {
             LoginResult result = new LoginResult();
-            IMongoCollection<User> usersCollection = _db.GetCollection<User>("User");
-            User user = usersCollection.Find(currUser => loginData.username == currUser.username).FirstOrDefault();
-            if (user == null || !PasswordHash.ValidatePassword(loginData.password, user.password))
+
+            // username-password authentication
+            if (loginData.loginToken == null)
             {
-                result.message = "username or password incorrect";
-                return result;
+                IMongoCollection<User> usersCollection = _db.GetCollection<User>("User");
+                User user = usersCollection.Find(currUser => loginData.username == currUser.username).FirstOrDefault();
+                if (user == null || !PasswordHash.ValidatePassword(loginData.password, user.password))
+                {
+                    result.message = "username or password incorrect";
+                    return result;
+                }
+
+                IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
+                Login login = new Login(ObjectId.GenerateNewId(), user, Guid.NewGuid().ToString());
+                loginCollection.InsertOne(login);
+                result.loginToken = login.Logintoken;
+            }
+
+            // token-based authentication
+            if (loginData.loginToken != null)
+            {
+                IMongoCollection<Login> loginCollections = _db.GetCollection<Login>("Login");
+                Login login = loginCollections.Find(currLogin => currLogin.Logintoken == loginData.loginToken).FirstOrDefault();
+                if (login == null)
+                {
+                    result.message = "wrong loginToken";
+                    return result;
+                }
+                login.Timestamp = DateTime.Now;
+                loginCollections.ReplaceOne(currLogin => currLogin == login, login);
             }
 
             result.Result = true;
-            IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
-            loginCollection.InsertOne(new Login(ObjectId.GenerateNewId(), user, Guid.NewGuid().ToString()));
             return result;
         }
 

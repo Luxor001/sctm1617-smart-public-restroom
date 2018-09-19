@@ -13,6 +13,8 @@ export class LoginGuard implements CanActivate {
 
     canActivate(): Observable<boolean> {
       return this.localStorage.getItem('loginToken').pipe(map(value => {
+          if(value != null)          
+            this.router.navigate(['']);
           return value == null;
       }));
     }
