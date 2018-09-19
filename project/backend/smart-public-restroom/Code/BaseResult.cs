@@ -7,7 +7,7 @@ namespace smartpublicrestroom.Code
 {
     public class BaseResult
     {
-        public bool result { get; set; }
+        public bool Result { get; set; }
         public string message { get; set; }
     }
 }

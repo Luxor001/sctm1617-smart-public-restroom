@@ -64,10 +64,10 @@ namespace smartpublicrestroom.Controllers
                 return result;
             }
 
-            result.result = true;
+            result.Result = true;
             IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
             loginCollection.InsertOne(new Login(ObjectId.GenerateNewId(), user, Guid.NewGuid().ToString()));
-            return new LoginResult();
+            return result;
         }
 
         [Route("register")]
@@ -90,7 +90,7 @@ namespace smartpublicrestroom.Controllers
             IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
             loginCollection.InsertOne(new Login(ObjectId.GenerateNewId(), newUser, Guid.NewGuid().ToString()));
 
-            result.result = true;
+            result.Result = true;
             return result;
         }
     }
