@@ -86,7 +86,7 @@ namespace smartpublicrestroom.Controllers
                     return result;
                 }
                 login.Timestamp = DateTime.Now;
-                loginCollections.ReplaceOne(currLogin => currLogin == login, login);
+                loginCollections.ReplaceOne(currLogin => currLogin._id == login._id, login);
             }
 
             result.Result = true;

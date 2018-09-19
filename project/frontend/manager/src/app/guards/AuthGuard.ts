@@ -1,8 +1,9 @@
 import { CanActivate, Router } from "@angular/router";
 import { LocalStorage } from "@ngx-pwa/local-storage";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
+import { map, concatMap } from "rxjs/operators";
 import { LoginService } from "../login/login-service.service";
+import { of } from "rxjs";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -12,10 +13,10 @@ export class AuthGuard implements CanActivate {
 
     // Controlliamo se esiste un loginToken dentro l'applicazione. Se esiste, l'utente si è loggato.
     canActivate() {
-        return this.localStorage.getItem('loginToken').pipe(map(loginToken => {
+        return this.localStorage.getItem('loginToken').pipe(concatMap(loginToken => {
             if (loginToken == null) {
                 this.router.navigate(['/login']);
-                return false;
+                return of(false);
             }
             return this.loginService.loginByToken(loginToken);
         }));
