@@ -14,7 +14,14 @@ namespace smartpublicrestroom.Controllers
     [ApiController]
     public class ManagerController : ControllerBase
     {
-
+        public class AddRestroomData
+        {
+            public Models.Restroom newRestroom { get; set; }
+        }
+        public class AddRestroomResult: BaseResult
+        {
+            public int restroomId { get; set; }
+        }
         public class LoginData
         {
             public string username { get; set; }
@@ -50,6 +57,20 @@ namespace smartpublicrestroom.Controllers
 
             users.InsertOne(new User() { _id = ObjectId.GenerateNewId(), username = "Lux", password = "prova", fullname = "Luxor luxarelli" });*/
             return DummyValuesGenerator.getDummyFacilities();
+        }
+
+        [Route("addRestroom")]
+        [HttpPost]
+        public ActionResult<AddRestroomResult> AddRestroom(AddRestroomData addRestroomData)
+        {
+            AddRestroomResult result = new AddRestroomResult();
+
+            IMongoCollection<Models.Restroom> restroomsCollection = _db.GetCollection<Models.Restroom>("Restroom");
+            addRestroomData.newRestroom._id = ObjectId.GenerateNewId();
+            restroomsCollection.InsertOne(addRestroomData.newRestroom);
+
+            result.Result = true;
+            return result;
         }
 
         [Route("login")]
