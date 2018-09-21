@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatInputModule, MatTableModule, MatProgressBarModule, MatExpansionModule, MatSnackBarModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatInputModule, MatTableModule, MatProgressBarModule, MatExpansionModule, MatSnackBarModule, MatDialogModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
 import { AppHttpInterceptor } from './appHttpInterceptor';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/AuthGuard';
@@ -18,6 +18,8 @@ import { LoginGuard } from './guards/LoginGuard';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { BASE_URL } from '../environments/keys';
 import { EqualValidator } from './create-user/EqualValidator';
+import { CreateRestroomComponent } from './restrooms-list/create-restroom/create-restroom.component';
+import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
 
 const routes: Routes = [
   {
@@ -40,7 +42,8 @@ const routes: Routes = [
     HomeComponent,
     RestroomsListComponent,
     CreateUserComponent,
-    EqualValidator 
+    EqualValidator,
+    CreateRestroomComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ const routes: Routes = [
     MatTableModule,
     MatExpansionModule,
     MatSnackBarModule,
+    MatDialogModule,
     FormsModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
@@ -66,7 +70,9 @@ const routes: Routes = [
     AuthGuard,
     LoginGuard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CreateRestroomComponent]
 })
 export class AppModule { }
 

@@ -64,6 +64,15 @@ br {
 .w-23 {
   width: 230px !important;
 }
+.w-23 .mat-form-field-wrapper {
+  width: 230px !important;
+}
+.w-25 {
+  width: 250px !important;
+}
+.w-25 .mat-form-field-wrapper {
+  width: 250px !important;
+}
 
 .emojii-icon {
   color: transparent !important;  
@@ -91,4 +100,9 @@ br {
 
 .loginSnackbar {
   background: firebrick !important;
+}
+
+mat-toolbar {
+  height: 64px;
+  min-height: 64px;
 }

@@ -28,7 +28,7 @@ namespace smartpublicrestroom.Models
     public partial class RestroomInfo
     {
         internal ObjectId _id { get; set; }
-        public List<Restroom> roomsInfo { get; set; } = new List<Restroom();
+        public List<Restroom> roomsInfo { get; set; } = new List<Restroom>();
         public bool smokeDetected { get; set; }
         public List<int> trashCapacities { get; set; }
         public List<int> soapDispensersCapacities { get; set; }

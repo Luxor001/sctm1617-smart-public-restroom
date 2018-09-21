@@ -1,0 +1,21 @@
+:host {
+    text-align: center;
+}
+.coordinates {
+  padding-left: 10px;
+  margin-top: -10px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+.icon i {
+    position: absolute;
+    top: 16px;
+    left: 8px;
+}
+
+.mat-dialog-actions {
+    justify-content: center;
+}

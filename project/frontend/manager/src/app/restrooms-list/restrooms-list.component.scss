@@ -79,6 +79,9 @@ table {
   .coordinates {
     padding-left: 40px;
   }
+  .coordinates {
+    padding-left: 40px;
+  }
   mat-progress-bar {
     margin-bottom: 10px;
     width: 120px;
@@ -87,4 +90,19 @@ table {
 
   mat-expansion-panel {
     box-shadow: unset !important;
+  }
+
+  button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+  }
+  button i {    
+    color: white;
+  }
+
+  :host > div {
+    height: 100%;
+    max-height: calc(100vh - 90px);
+    overflow-y: scroll;
   }

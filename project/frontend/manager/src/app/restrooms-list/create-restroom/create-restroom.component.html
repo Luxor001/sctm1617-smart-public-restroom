@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Restroom creation</h1>
+<div mat-dialog-content>
+  <form (ngSubmit)="login(form)" class="login-form" #form="ngForm">
+    <div class="relative">
+      <div class="float-left icon">
+        <i class="material-icons inline-block absolute">scatter_plot</i>
+      </div>
+      <div class="inline-block w-25">
+        <mat-form-field>
+          <input matInput placeholder="UID" disabled [value]="newRestroom.id">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="float-left icon">
+        <i class="material-icons inline-block">location_on</i>
+      </div>
+      <div class="inline-block w-25">
+        <mat-form-field [hideRequiredMarker]="true">
+          <input matInput placeholder="Address" autofocus [value]="newRestroom.cityAddress" required>
+        </mat-form-field>
+      </div>
+      <div class="inline-block w-25 coordinates">
+        <mat-form-field [hideRequiredMarker]="true">
+          <input matInput placeholder="Coordinates" [value]="newRestroom.address" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="float-left icon">
+        <i class="material-icons inline-block">build</i>
+      </div>
+      <div class="inline-block w-25">
+        <mat-form-field class="inline-block" [hideRequiredMarker]="true">
+          <input matInput placeholder="Company" [value]="newRestroom.address" required>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newRestroom">Create</button>
+</div>
