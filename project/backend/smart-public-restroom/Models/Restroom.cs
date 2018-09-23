@@ -7,15 +7,15 @@ namespace smartpublicrestroom.Models
 {
     public partial class Restroom
     {
-        public ObjectId _id { get; set; }
+        public string _id { get; set; }
 
         public string cityAddress { get; set; }
-        public double[] address { get; set; }
+        public string[] address { get; set; }
         public string company { get; set; }
         public string device { get; set; }
 
         public RestroomInfo sensorData { get; set; }
-        public Restroom(ObjectId id, double[] adress, string cityAddress, string company, string device)
+        public Restroom(string id, string[] adress, string cityAddress, string company, string device)
         {
             _id = id;
             this.address = address;

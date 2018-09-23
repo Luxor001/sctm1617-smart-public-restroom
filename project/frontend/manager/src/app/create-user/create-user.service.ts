@@ -7,13 +7,6 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 })
 export class CreateUserService {
 
-  constructor(private http: HttpClient, private localStorage: LocalStorage) {}
+  constructor(private http: HttpClient) {}
 
-  public createUser(fullname: string, username: string, password: string) {
-    this.http.post('api/manager/register', {fullname: fullname, username: username, password: password}).subscribe(result => {
-      let a = 0;
-      debugger;
-    });
-
-  }
 }

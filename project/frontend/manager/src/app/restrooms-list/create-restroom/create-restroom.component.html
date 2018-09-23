@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>Restroom creation</h1>
-<div mat-dialog-content>
-  <form (ngSubmit)="login(form)" class="login-form" #form="ngForm">
+<form (ngSubmit)="closeDialog(form)" #form="ngForm">
+  <h1 mat-dialog-title>Restroom creation</h1>
+  <div mat-dialog-content>
     <div class="relative">
       <div class="float-left icon">
         <i class="material-icons inline-block absolute">scatter_plot</i>
       </div>
       <div class="inline-block w-25">
         <mat-form-field>
-          <input matInput placeholder="UID" disabled [value]="newRestroom.id">
+          <input matInput placeholder="UID" [ngModel]="guid" disabled name="id" id="id">
         </mat-form-field>
       </div>
     </div>
@@ -18,12 +18,12 @@
       </div>
       <div class="inline-block w-25">
         <mat-form-field [hideRequiredMarker]="true">
-          <input matInput placeholder="Address" autofocus [value]="newRestroom.cityAddress" required>
+          <input matInput placeholder="Address" ngModel autofocus name="cityAddress" id="cityAddress" required>
         </mat-form-field>
       </div>
       <div class="inline-block w-25 coordinates">
         <mat-form-field [hideRequiredMarker]="true">
-          <input matInput placeholder="Coordinates" [value]="newRestroom.address" required>
+          <input matInput placeholder="Coordinates" ngModel name="address" id="address" required>
         </mat-form-field>
       </div>
     </div>
@@ -34,13 +34,13 @@
       </div>
       <div class="inline-block w-25">
         <mat-form-field class="inline-block" [hideRequiredMarker]="true">
-          <input matInput placeholder="Company" [value]="newRestroom.address" required>
+          <input matInput placeholder="Company" ngModel name="company" id="company" required>
         </mat-form-field>
       </div>
     </div>
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-button [mat-dialog-close]="newRestroom">Create</button>
-</div>
+  </div>
+  <div mat-dialog-actions>
+    <button type="button" mat-button (click)="dialogRef.close()">Cancel</button>
+    <button type="submit" mat-button>Create</button>
+  </div>
+</form>

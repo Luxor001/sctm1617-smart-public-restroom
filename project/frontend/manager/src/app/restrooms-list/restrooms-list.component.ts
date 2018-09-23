@@ -35,11 +35,6 @@ export class RestroomsListComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateRestroomComponent, {
       width: '350px'
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      debugger;
-    });
   }
 }
 

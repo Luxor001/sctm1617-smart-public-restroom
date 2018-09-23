@@ -16,7 +16,10 @@ namespace smartpublicrestroom.Controllers
     {
         public class AddRestroomData
         {
-            public Models.Restroom newRestroom { get; set; }
+            public string guid { get; set; }
+            public string cityAddress { get; set; }
+            public string address { get; set; }
+            public string company { get; set; }
         }
         public class AddRestroomResult: BaseResult
         {
@@ -66,9 +69,10 @@ namespace smartpublicrestroom.Controllers
             AddRestroomResult result = new AddRestroomResult();
 
             IMongoCollection<Models.Restroom> restroomsCollection = _db.GetCollection<Models.Restroom>("Restroom");
-            addRestroomData.newRestroom._id = ObjectId.GenerateNewId();
-            restroomsCollection.InsertOne(addRestroomData.newRestroom);
 
+            Models.Restroom newRestroom = new Models.Restroom(addRestroomData.guid, addRestroomData.address.Split(','), addRestroomData.cityAddress, addRestroomData.company, "");
+
+            restroomsCollection.InsertOne(newRestroom);
             result.Result = true;
             return result;
         }

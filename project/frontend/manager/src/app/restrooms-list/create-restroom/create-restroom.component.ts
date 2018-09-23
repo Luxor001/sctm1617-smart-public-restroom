@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { CreateRestroomService } from './create-restroom.service';
 
 @Component({
   selector: 'app-create-restroom',
@@ -8,14 +9,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./create-restroom.component.scss']
 })
 export class CreateRestroomComponent {
-  newRestroom = {
-    id: this.generateGuid(), 
-    address: null,
-    cityAddress: null,
-    company: null
-  };
-
-  constructor(public dialogRef: MatDialogRef<CreateRestroomComponent>) {
+  guid = this.generateGuid();
+  constructor(public dialogRef: MatDialogRef<CreateRestroomComponent>, private createRestroomService: CreateRestroomService) {
   }
 
   generateGuid() {
@@ -25,4 +20,11 @@ export class CreateRestroomComponent {
     });
   }
 
+  closeDialog(result: NgForm) {
+    let newRestroom = result.value;
+    newRestroom.guid = this.guid;
+
+    this.createRestroomService.createRestroom(newRestroom);
+    this.dialogRef.close(newRestroom);
+  }
 }

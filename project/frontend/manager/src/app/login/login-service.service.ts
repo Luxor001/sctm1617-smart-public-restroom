@@ -11,23 +11,23 @@ export class LoginService {
   constructor(private http: HttpClient, private localStorage: LocalStorage) { }
 
   public login(username: string, password: string, gruppoAziendale: number): Observable<boolean> {
-    
+
 
 
     return this.http.post('api/manager/login', { username: username, password: password })
       .pipe(concatMap((result: any) => {
         if (result.result)
-          return this.localStorage.setItem('loginToken', result.loginToken).pipe(map(() => true));        
+          return this.localStorage.setItem('loginToken', result.loginToken).pipe(map(() => true));
         else
           return of(false);
       }));
   }
 
   public loginByToken(loginToken: string): Observable<boolean> {
-    return this.http.post('api/manager/login', { loginToken: loginToken})
+    return this.http.post('api/manager/login', { loginToken: loginToken })
       .pipe(map((result: any) => {
         return result.result;
-    }));
+      }));
   }
 
   public logout() {
