@@ -18,7 +18,8 @@ import { CreateRestroomComponent } from './create-restroom/create-restroom.compo
   ],
 })
 export class RestroomsListComponent implements OnInit {
-  columnsToDisplay = ['id', 'cityAddress', 'company', 'position'];
+  columnsToDisplay = ['uid', 'cityAddress', 'company', 'sensorData'];
+  columnsName = ['UID', 'ADDRESS', 'COMPANY', 'STATUS'];
   expandedElement: PeriodicElement;
   restRooms: RestRoom[];
   panelOpenState = false;
@@ -26,14 +27,23 @@ export class RestroomsListComponent implements OnInit {
   constructor(private restRoomsService: RestroomsListService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.restRoomsService.getRestrooms().subscribe(restRooms => {
-      this.restRooms = restRooms;
-    });
+    this.refreshRestrooms();
   }
 
   addRestroom() {
     const dialogRef = this.dialog.open(CreateRestroomComponent, {
       width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe((added: boolean) => {
+      if(added)
+        this.refreshRestrooms();
+    });
+  }
+
+  refreshRestrooms() {
+    this.restRoomsService.getRestrooms().subscribe(restRooms => {
+      this.restRooms = restRooms;
     });
   }
 }

@@ -1,4 +1,6 @@
-﻿using smartpublicrestroom.Code;
+﻿using MongoDB.Bson;
+using smartpublicrestroom.Code;
+using smartpublicrestroom.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +10,12 @@ namespace smartpublicrestroom.Controllers
 {
     public static class DummyValuesGenerator
     {
-        private static double[][] adresses = {
-                new double[] { 44.06747087,12.56445526 },
-                new double[] { 44.0676483,12.5616545 },
-                new double[] { 44.05944783,12.55891175},
-                new double[] { 44.06821296,12.56218534},
-                new double[] { 44.06852764, 12.56822782d }
+        private static string[][] adresses = {
+                new string[] { "44.06747087","12.56445526" },
+                new string[] { "44.0676483", "12.5616545" },
+                new string[] { "44.05944783","12.55891175"},
+                new string[] { "44.06821296","12.56218534"},
+                new string[] { "44.06852764", "12.56822782d" }
         };
         private static string[] cityAdresses = {
                 "Via Inesistente, 14",
@@ -29,20 +31,29 @@ namespace smartpublicrestroom.Controllers
                 "La splendente s.n.c",
                 "Gertrumilde e soci"
         };
-        public static List<RestRoomFacility> getDummyFacilities()
+        public static List<RestRoom> getDummyFacilities()
         {
             Random a = new Random();
-
-            List<RestRoomFacility> facilities = Enumerable.Range(0, 5).Select(value =>
+            List<RestRoom> facilities = facilities = Enumerable.Range(0, 5).Select(value =>
             {
-                List<Restroom> restRooms = new List<Restroom>();
-                restRooms.Add(new Restroom(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
-                restRooms.Add(new Restroom(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
-                restRooms.Add(new Restroom(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
+                List<RestRoom> restRooms = new List<RestRoom>();
 
-                List<int> trashCapacities = Enumerable.Range(0, 3).Select(currvalue => a.Next(0, 101)).ToList();
-                return new RestRoomFacility(value.ToString(), restRooms, false, trashCapacities, trashCapacities, adresses[value], cityAdresses[value], companies[value]);
+                string uid = "36e451a2-3520-4704-aec7-a9cfb5fb03b" + value;
+                RestRoom restRoom = new RestRoom(uid, adresses[value], cityAdresses[value], companies[value], "");
+
+                restRoom.sensorData = new RestroomInfo();
+                restRoom.sensorData.trashCapacities = Enumerable.Range(0, 3).Select(currvalue => a.Next(0, 101)).ToList();
+                restRoom.sensorData.soapDispensersCapacities = Enumerable.Range(0, 3).Select(currvalue => a.Next(0, 101)).ToList();
+                restRoom.sensorData.smokeDetected = false;
+                restRoom.sensorData._id = ObjectId.GenerateNewId();
+
+                restRoom.sensorData.roomsInfo.Add(new RoomInfo(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
+                restRoom.sensorData.roomsInfo.Add(new RoomInfo(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
+                restRoom.sensorData.roomsInfo.Add(new RoomInfo(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
+
+                return restRoom;
             }).ToList();
+
             return facilities;
         }
     }

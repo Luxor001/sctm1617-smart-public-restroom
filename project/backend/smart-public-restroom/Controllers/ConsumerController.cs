@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using smartpublicrestroom.Code;
+using smartpublicrestroom.Models;
 
 namespace smartpublicrestroom.Controllers
 {
@@ -18,7 +19,7 @@ namespace smartpublicrestroom.Controllers
     {
         [Route("getRestrooms")]
         [HttpPost] /*da aggiungere come parametro: [FromBody] string coordinates*/
-        public ActionResult<List<RestRoomFacility>> GetToilets()
+        public ActionResult<List<RestRoom>> GetToilets()
         {
             //TODO: query toilets based on location of user
 
@@ -28,7 +29,7 @@ namespace smartpublicrestroom.Controllers
         // POST api/values
         [HttpPost]
         [Route("send")]
-        public bool sendInfo([FromBody] RestRoomFacility data)
+        public bool sendInfo([FromBody] RestRoom data)
         {
             //TODO: write down to DB...
 

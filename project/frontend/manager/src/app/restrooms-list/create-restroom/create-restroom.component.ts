@@ -24,7 +24,8 @@ export class CreateRestroomComponent {
     let newRestroom = result.value;
     newRestroom.guid = this.guid;
 
-    this.createRestroomService.createRestroom(newRestroom);
-    this.dialogRef.close(newRestroom);
+    this.createRestroomService.createRestroom(newRestroom).subscribe(value => {
+      this.dialogRef.close(newRestroom);
+    });    
   }
 }

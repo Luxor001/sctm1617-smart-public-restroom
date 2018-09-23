@@ -12,7 +12,7 @@ export class CreateUserComponent {
   constructor(private createUserService: CreateUserService) { }
 
   register(form: NgForm) {
-    this.createUserService.createUser(form.value.fullname, form.value.username, form.value.password)
+    this.createUserService.createUser(form.value.fullname, form.value.username, form.value.password);
   }
 
 }

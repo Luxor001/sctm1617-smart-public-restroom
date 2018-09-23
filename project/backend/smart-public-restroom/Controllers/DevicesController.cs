@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using smartpublicrestroom.Code;
+using smartpublicrestroom.Models;
 
 namespace smartpublicrestroom.Controllers
 {
@@ -14,7 +15,7 @@ namespace smartpublicrestroom.Controllers
         // POST api/values
         [HttpPost]
         [Route("send")]
-        public bool sendInfo([FromBody] RestRoomFacility data)
+        public bool sendInfo([FromBody] RestRoom data)
         {
             
             return true;

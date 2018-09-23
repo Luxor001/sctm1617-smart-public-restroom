@@ -106,3 +106,11 @@ table {
     max-height: calc(100vh - 90px);
     overflow-y: scroll;
   }
+
+  td, th {
+    width: 30%;
+  }
+
+  th:nth-child(4), td:nth-child(4) {
+    width: 10%;
+}

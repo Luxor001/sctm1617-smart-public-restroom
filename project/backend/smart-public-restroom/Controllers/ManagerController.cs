@@ -48,7 +48,7 @@ namespace smartpublicrestroom.Controllers
 
         [Route("getRestrooms")]
         [HttpPost] 
-        public async Task<ActionResult<List<RestRoomFacility>>> GetToilets()
+        public async Task<ActionResult<List<RestRoom>>> GetToilets()
         {
             /*
             var cursor = await _db.ListCollectionNamesAsync();
@@ -68,9 +68,9 @@ namespace smartpublicrestroom.Controllers
         {
             AddRestroomResult result = new AddRestroomResult();
 
-            IMongoCollection<Models.Restroom> restroomsCollection = _db.GetCollection<Models.Restroom>("Restroom");
+            IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
 
-            Models.Restroom newRestroom = new Models.Restroom(addRestroomData.guid, addRestroomData.address.Split(','), addRestroomData.cityAddress, addRestroomData.company, "");
+            Models.RestRoom newRestroom = new Models.RestRoom(addRestroomData.guid, addRestroomData.address.Split(','), addRestroomData.cityAddress, addRestroomData.company, "");
 
             restroomsCollection.InsertOne(newRestroom);
             result.Result = true;

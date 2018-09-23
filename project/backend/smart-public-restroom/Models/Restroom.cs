@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace smartpublicrestroom.Models
 {
-    public partial class Restroom
+    public partial class RestRoom
     {
-        public string _id { get; set; }
+        public string uid { get; set; }
 
         public string cityAddress { get; set; }
         public string[] address { get; set; }
@@ -15,9 +15,9 @@ namespace smartpublicrestroom.Models
         public string device { get; set; }
 
         public RestroomInfo sensorData { get; set; }
-        public Restroom(string id, string[] adress, string cityAddress, string company, string device)
+        public RestRoom(string uid, string[] address, string cityAddress, string company, string device)
         {
-            _id = id;
+            this.uid = uid;
             this.address = address;
             this.cityAddress = cityAddress;
             this.company = company;
@@ -28,18 +28,22 @@ namespace smartpublicrestroom.Models
     public partial class RestroomInfo
     {
         internal ObjectId _id { get; set; }
-        public List<Restroom> roomsInfo { get; set; } = new List<Restroom>();
+        public List<RoomInfo> roomsInfo { get; set; } = new List<RoomInfo>();
         public bool smokeDetected { get; set; }
         public List<int> trashCapacities { get; set; }
         public List<int> soapDispensersCapacities { get; set; }
 
-        public RestroomInfo(ObjectId id, List<Restroom> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities)
+        public RestroomInfo(ObjectId id, List<RoomInfo> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities)
         {
             _id = id;
             this.roomsInfo = restRoomsInfo;
             this.smokeDetected = smokeDetected;
             this.trashCapacities = trashCapacities;
             this.soapDispensersCapacities = soapDispensersCapacities;
+        }
+        public RestroomInfo()
+        {
+
         }
     }
 
