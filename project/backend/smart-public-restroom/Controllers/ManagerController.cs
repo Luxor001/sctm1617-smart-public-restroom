@@ -51,17 +51,7 @@ namespace smartpublicrestroom.Controllers
         public async Task<ActionResult<List<RestRoom>>> GetToilets()
         {
             IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
-            List<RestRoom> restrooms = null;
-            try
-            {
-            //    restroomsCollection.InsertMany(DummyValuesGenerator.getDummyFacilities());
-                restrooms = restroomsCollection.AsQueryable().ToList();
-
-            }
-            catch (Exception E)
-            {
-                 Console.Clear();
-            }
+            List<RestRoom> restrooms = restroomsCollection.AsQueryable().ToList();
             return restrooms;
         }
 
