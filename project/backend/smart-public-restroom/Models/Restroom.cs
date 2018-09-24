@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace smartpublicrestroom.Models
 {
     public partial class RestRoom
     {
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         public string uid { get; set; }
 
         public string cityAddress { get; set; }
@@ -27,15 +29,16 @@ namespace smartpublicrestroom.Models
 
     public partial class RestroomInfo
     {
+        [BsonId]
         internal ObjectId _id { get; set; }
         public List<RoomInfo> roomsInfo { get; set; } = new List<RoomInfo>();
         public bool smokeDetected { get; set; }
         public List<int> trashCapacities { get; set; }
         public List<int> soapDispensersCapacities { get; set; }
 
-        public RestroomInfo(ObjectId id, List<RoomInfo> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities)
+        public RestroomInfo(List<RoomInfo> restRoomsInfo, bool smokeDetected, List<int> trashCapacities, List<int> soapDispensersCapacities)
         {
-            _id = id;
+            this._id = ObjectId.GenerateNewId();
             this.roomsInfo = restRoomsInfo;
             this.smokeDetected = smokeDetected;
             this.trashCapacities = trashCapacities;
@@ -43,19 +46,23 @@ namespace smartpublicrestroom.Models
         }
         public RestroomInfo()
         {
-
+            this._id = ObjectId.GenerateNewId();
         }
     }
 
     public class RoomInfo
     {
-        public int id { get; set; }
+        [BsonId]
+        internal int id { get; set; }
         public bool paperAvaiable { get; set; }
         public int umidity { get; set; }
         public bool lightWorking { get; set; }
         public bool closed { get; set; }
 
-        public RoomInfo() { }
+        public RoomInfo()
+        {
+
+        }
         public RoomInfo(int id, bool paperAvaiable, int umidity, bool lightWorking, bool closed)
         {
             this.id = id;

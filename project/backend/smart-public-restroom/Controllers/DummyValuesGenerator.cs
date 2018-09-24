@@ -45,11 +45,9 @@ namespace smartpublicrestroom.Controllers
                 restRoom.sensorData.trashCapacities = Enumerable.Range(0, 3).Select(currvalue => a.Next(0, 101)).ToList();
                 restRoom.sensorData.soapDispensersCapacities = Enumerable.Range(0, 3).Select(currvalue => a.Next(0, 101)).ToList();
                 restRoom.sensorData.smokeDetected = false;
-                restRoom.sensorData._id = ObjectId.GenerateNewId();
 
-                restRoom.sensorData.roomsInfo.Add(new RoomInfo(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
-                restRoom.sensorData.roomsInfo.Add(new RoomInfo(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
-                restRoom.sensorData.roomsInfo.Add(new RoomInfo(value, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
+                for (int i = 0; i < 3; i++)
+                    restRoom.sensorData.roomsInfo.Add(new RoomInfo(i, a.Next(0, 2) != 0, a.Next(0, 100), a.Next(0, 2) != 0, a.Next(0, 2) != 0));
 
                 return restRoom;
             }).ToList();

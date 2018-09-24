@@ -54,7 +54,7 @@
                 <input matInput placeholder="Company" disabled [value]="element.company">
               </mat-form-field>
             </div>
-            <div class="capacities-container">
+            <div class="capacities-container" *ngIf="element.sensorData != null">
               <div>
                 <i class="material-icons float-left">delete_sweep</i>
                 <div>
@@ -71,7 +71,7 @@
                 </div>
               </div>
 
-              <div class="clear">
+              <div class="clear" *ngIf="element.sensorData != null">
                 <div class="float-left">
                   <i class="material-icons float-left emojii-icon">💧</i>
                 </div>
@@ -91,7 +91,7 @@
             </div>
           </div>
 
-          <div class="restRooms">
+          <div class="restRooms" *ngIf="element.sensorData != null">
             <mat-accordion>
               <mat-expansion-panel *ngFor="let roomInfo of element.sensorData.roomsInfo; index as i">
                 <mat-expansion-panel-header>

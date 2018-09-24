@@ -45,21 +45,24 @@ namespace smartpublicrestroom.Controllers
         {
             _db = db;
         }
-
+        
         [Route("getRestrooms")]
         [HttpPost] 
         public async Task<ActionResult<List<RestRoom>>> GetToilets()
         {
-            /*
-            var cursor = await _db.ListCollectionNamesAsync();
-            await cursor.ForEachAsync(db =>  Console.WriteLine(db[0]));
-            IMongoCollection<User> users = _db.GetCollection<User>("User");
+            IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
+            List<RestRoom> restrooms = null;
+            try
+            {
+            //    restroomsCollection.InsertMany(DummyValuesGenerator.getDummyFacilities());
+                restrooms = restroomsCollection.AsQueryable().ToList();
 
-            var filter = new BsonDocument();
-            var query = await users.FindAsync(filter);
-
-            users.InsertOne(new User() { _id = ObjectId.GenerateNewId(), username = "Lux", password = "prova", fullname = "Luxor luxarelli" });*/
-            return DummyValuesGenerator.getDummyFacilities();
+            }
+            catch (Exception E)
+            {
+                 Console.Clear();
+            }
+            return restrooms;
         }
 
         [Route("addRestroom")]
