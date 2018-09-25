@@ -4,6 +4,7 @@ import { RestroomsListService } from './restrooms-list.service';
 import { RestRoom } from '../code/restRoom';
 import { MatDialog } from '@angular/material';
 import { CreateRestroomComponent } from './create-restroom/create-restroom.component';
+import { interval, timer } from 'rxjs';
 
 @Component({
   selector: 'app-restrooms-list',
@@ -20,14 +21,16 @@ import { CreateRestroomComponent } from './create-restroom/create-restroom.compo
 export class RestroomsListComponent implements OnInit {
   columnsToDisplay = ['uid', 'cityAddress', 'company', 'sensorData'];
   columnsName = ['UID', 'ADDRESS', 'COMPANY', 'STATUS'];
-  expandedElement: PeriodicElement;
   restRooms: RestRoom[];
   panelOpenState = false;
+  expandedElement: RestRoom;
 
   constructor(private restRoomsService: RestroomsListService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.refreshRestrooms();
+    timer(0, 5000).subscribe(() => {
+      this.refreshRestrooms();
+    });    
   }
 
   addRestroom() {
@@ -44,15 +47,8 @@ export class RestroomsListComponent implements OnInit {
   refreshRestrooms() {
     this.restRoomsService.getRestrooms().subscribe(restRooms => {
       this.restRooms = restRooms;
+      if(this.expandedElement != null)
+          this.expandedElement = this.restRooms.find(element => element.uid == this.expandedElement.uid)
     });
   }
-}
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
 }
