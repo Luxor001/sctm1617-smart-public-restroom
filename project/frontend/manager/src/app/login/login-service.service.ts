@@ -11,9 +11,6 @@ export class LoginService {
   constructor(private http: HttpClient, private localStorage: LocalStorage) { }
 
   public login(username: string, password: string, gruppoAziendale: number): Observable<boolean> {
-
-
-
     return this.http.post('api/manager/login', { username: username, password: password })
       .pipe(concatMap((result: any) => {
         if (result.result)
