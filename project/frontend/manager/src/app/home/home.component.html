@@ -7,8 +7,9 @@
                [opened]="!(isHandset$ | async)">
     <mat-toolbar class="menu-toolbar" color="primary">
       <div class="userInfo">
-        <div>Tiziano Qualunquelli</div>
-        <div>admin</div>        
+        <div class="fullname">{{user.fullname}}</div>
+        <div class="username">{{user.username}} - <span class="role">System admin</span></div>
+        
       </div>
     </mat-toolbar>
     <mat-nav-list>

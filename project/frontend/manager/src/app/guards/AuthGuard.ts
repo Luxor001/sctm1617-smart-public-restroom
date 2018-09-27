@@ -13,6 +13,9 @@ export class AuthGuard implements CanActivate {
 
     // Controlliamo se esiste un loginToken dentro l'applicazione. Se esiste, l'utente si è loggato.
     canActivate() {
+        if (!this.loginService.user == null)
+            return true;
+
         return this.localStorage.getItem('loginToken').pipe(concatMap(loginToken => {
             if (loginToken == null) {
                 this.router.navigate(['/login']);

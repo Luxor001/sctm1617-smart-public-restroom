@@ -110,3 +110,12 @@ mat-toolbar {
   height: 64px;
   min-height: 64px;
 }
+.userCreatedSnackbar {
+    background: forestgreen;
+}
+.userNotCreatedSnackbar {
+    background: firebrick;
+}
+snack-bar-container simple-snack-bar{
+  justify-content: center !important;
+}

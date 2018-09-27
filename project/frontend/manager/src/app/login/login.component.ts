@@ -20,7 +20,7 @@ export class LoginComponent {
         if (success)
           this.router.navigate(['']);
         else
-          this.snackBar.open("Wrong username or password", "Dismiss", {panelClass: 'loginSnackbar'});
+          this.snackBar.open("Wrong username or password", null, {panelClass: 'loginSnackbar', duration: 3000 });
     });
   }
 }

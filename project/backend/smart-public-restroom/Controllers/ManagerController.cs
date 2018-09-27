@@ -30,6 +30,7 @@ namespace smartpublicrestroom.Controllers
             public string username { get; set; }
             public string password { get; set; }
             public string loginToken { get; set; }
+
         }
         public class RegisterData : LoginData
         {
@@ -38,6 +39,7 @@ namespace smartpublicrestroom.Controllers
         public class LoginResult : BaseResult
         {
             public string loginToken { get; set; }
+            public User user { get; set; }
         }
 
         private readonly IMongoDatabase _db;
@@ -91,6 +93,7 @@ namespace smartpublicrestroom.Controllers
                 Login login = new Login(ObjectId.GenerateNewId(), user, Guid.NewGuid().ToString());
                 loginCollection.InsertOne(login);
                 result.loginToken = login.Logintoken;
+                result.user = user;
             }
 
             // token-based authentication
@@ -105,6 +108,7 @@ namespace smartpublicrestroom.Controllers
                 }
                 login.Timestamp = DateTime.Now;
                 loginCollections.ReplaceOne(currLogin => currLogin._id == login._id, login);
+                result.user = login.user;
             }
 
             result.Result = true;
