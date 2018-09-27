@@ -10,6 +10,6 @@ export class RestroomsListService {
   constructor(private httpClient: HttpClient) { }
 
   getRestrooms() {
-    return  this.httpClient.post<RestRoom[]>('api/manager/getRestrooms', {});
+    return this.httpClient.post<RestRoom[]>('api/manager/getRestrooms', {});
   }
 }

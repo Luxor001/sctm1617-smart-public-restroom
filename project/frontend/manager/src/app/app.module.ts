@@ -20,6 +20,7 @@ import { BASE_URL } from '../environments/keys';
 import { EqualValidator } from './create-user/EqualValidator';
 import { CreateRestroomComponent } from './restrooms-list/create-restroom/create-restroom.component';
 import { REACTIVE_DRIVEN_DIRECTIVES } from '@angular/forms/src/directives';
+import { ConsumerReportsComponent } from './consumer-reports/consumer-reports.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'restrooms', component: RestroomsListComponent, canActivate: [AuthGuard]},
-      { path: 'adduser', component: CreateUserComponent, canActivate: [AuthGuard]}
+      { path: 'adduser', component: CreateUserComponent, canActivate: [AuthGuard]},
+      { path: 'reports', component: ConsumerReportsComponent, canActivate: [AuthGuard]}
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
@@ -43,7 +45,8 @@ const routes: Routes = [
     RestroomsListComponent,
     CreateUserComponent,
     EqualValidator,
-    CreateRestroomComponent
+    CreateRestroomComponent,
+    ConsumerReportsComponent
   ],
   imports: [
     BrowserModule,

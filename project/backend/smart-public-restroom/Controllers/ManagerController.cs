@@ -41,6 +41,11 @@ namespace smartpublicrestroom.Controllers
             public User user { get; set; }
         }
 
+        public class ReportsResult : BaseResult
+        {
+            public List<Report> reports { get; set; }
+        }
+
         private readonly IMongoDatabase _db;
         public ManagerController(IMongoDatabase db)
         {
@@ -133,6 +138,18 @@ namespace smartpublicrestroom.Controllers
 
             IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
             loginCollection.InsertOne(new Login(ObjectId.GenerateNewId(), newUser, Guid.NewGuid().ToString()));
+
+            result.Result = true;
+            return result;
+        }
+
+        [Route("reports")]
+        [HttpPost]
+        public ActionResult<ReportsResult> GetReports(LoginData data)
+        {
+            ReportsResult result = new ReportsResult();
+            IMongoCollection<Models.Report> reportsCollection = _db.GetCollection<Models.Report>("Report");
+            result.reports = reportsCollection.AsQueryable().ToList();
 
             result.Result = true;
             return result;

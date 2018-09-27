@@ -1,0 +1,9 @@
+  table {
+    width: 100%;
+  }
+  
+  :host > div {
+    height: 100%;
+    max-height: calc(100vh - 90px);
+    overflow-y: scroll;
+  }
