@@ -14,6 +14,7 @@ export class MarkerDetailComponent implements OnInit {
   }
 
   public avaiableToilets(): number {
-    return this.restRoom.restRoomsInfo.filter(restRoom => restRoom.closed).length;
+    if(this.restRoom.sensorData != null)
+      return this.restRoom.sensorData.roomsInfo.filter(restRoom => restRoom.closed).length;
   }
 }

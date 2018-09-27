@@ -3,49 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using smartpublicrestroom.Code;
 using smartpublicrestroom.Models;
+using static smartpublicrestroom.Controllers.ManagerController;
 
 namespace smartpublicrestroom.Controllers
 {
-    public class Report
-    {
-        public string name { get; set; }
-        public string comment { get; set; }
-    }
     [Route("api/data")]
     [ApiController]
     public class ConsumerController : ControllerBase
     {
+        private readonly IMongoDatabase _db;
+        public ConsumerController(IMongoDatabase db)
+        {
+            _db = db;
+        }
+
         [Route("getRestrooms")]
-        [HttpPost] /*da aggiungere come parametro: [FromBody] string coordinates*/
-        public ActionResult<List<RestRoom>> GetToilets()
-        {
-            //TODO: query toilets based on location of user
-
-            return DummyValuesGenerator.getDummyFacilities();
-        }
-
-        // POST api/values
         [HttpPost]
-        [Route("send")]
-        public bool sendInfo([FromBody] RestRoom data)
+        public async Task<ActionResult<List<RestRoom>>> GetToilets()
         {
-            //TODO: write down to DB...
-
-
-
-            return true;
+            IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
+            List<RestRoom> restrooms = restroomsCollection.AsQueryable().ToList();
+            return restrooms;
         }
-        
-        // POST api/values
+                
         [HttpPost]
         [Route("sendreport")]
-        public bool sendReport([FromBody] Report data)
+        public BaseResult sendReport([FromBody] Report report)
         {
-            //TODO: Write down to DB the report!
+            AddRestroomResult result = new AddRestroomResult();
 
-            return true;
+            IMongoCollection<Models.Report> reportCollections = _db.GetCollection<Models.Report>("Report");
+            reportCollections.InsertOne(report);
+
+            result.Result = true;
+            return result;
         }
     }
 }

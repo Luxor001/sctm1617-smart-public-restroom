@@ -1,6 +1,6 @@
 <form class="example-form" #form="ngForm" (ngSubmit)="onSubmit(form)">
   <mat-form-field class="example-full-width" >
-    <input matInput [(ngModel)]="name" name="name" placeholder="Your name">
+    <input matInput [(ngModel)]="name" name="name" placeholder="Your name" autofocus #fullname>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">

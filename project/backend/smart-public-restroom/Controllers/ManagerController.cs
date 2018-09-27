@@ -30,7 +30,6 @@ namespace smartpublicrestroom.Controllers
             public string username { get; set; }
             public string password { get; set; }
             public string loginToken { get; set; }
-
         }
         public class RegisterData : LoginData
         {

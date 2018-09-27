@@ -2,5 +2,5 @@
   <div class="address">{{restRoom.cityAddress}}</div>
   <div class="carer">{{restRoom.company}}</div>
   <br />
-  <div class="bavaiable">Avaiable: <span class="bold"><span class="green">{{avaiableToilets()}}</span>/{{restRoom.restRoomsInfo.length}}</span></div>
+  <div class="bavaiable" *ngIf="restRoom.sensorData != null">Avaiable: <span class="bold"><span class="green">{{avaiableToilets()}}</span>/{{restRoom.sensorData.roomsInfo.length}}</span></div>
 </div>

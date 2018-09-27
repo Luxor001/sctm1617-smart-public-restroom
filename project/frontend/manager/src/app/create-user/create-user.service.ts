@@ -14,5 +14,5 @@ export class CreateUserService {
     .pipe(concatMap((result: any) => {
       return of(result.result);
     }));
-  }  
+  }
 }

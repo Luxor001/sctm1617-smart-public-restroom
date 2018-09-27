@@ -1,7 +1,7 @@
 <div class="login">
   <form (ngSubmit)="login(form)" class="login-form" #form="ngForm">
     <mat-form-field class="w100p" [hideRequiredMarker]="true">
-      <input matInput placeholder="User" ngModel required name="username" id="username">
+      <input matInput placeholder="User" ngModel required autofocus name="username" id="username">
     </mat-form-field>
 
     <mat-form-field class="w100p" [hideRequiredMarker]="true">
