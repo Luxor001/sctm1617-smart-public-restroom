@@ -5,10 +5,11 @@ import { Report } from '../code/report';
 @Component({
   selector: 'app-consumer-reports',
   templateUrl: './consumer-reports.component.html',
-  styles: ['consumer-restrooms.scss']
+  styleUrls: ['./consumer-reports.scss']
 })
 export class ConsumerReportsComponent {
   reports: Report[];
+  displayedColumns: string[] = ['name', 'Timestamp', 'comment'];
   constructor(private reportService: ReportService) {
     this.reportService.getReports().subscribe((result: any) => {
       if(result.result) 
