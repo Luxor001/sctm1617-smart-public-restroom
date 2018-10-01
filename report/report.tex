@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
-
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
 \usepackage[utf8]{inputenc}
 %\usepackage[T1]{fontenc}
 
@@ -184,9 +185,27 @@ Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
   \label{fig:usecase_consumer}
 \end{figure}
 \newpage
-\subsubsection{Scenari}
-\subsection{Analisi del problema}
-\subsubsection{Architettura logica}
+\phantom{}
+\newpage
+\subsubsection{Requisiti funzionali}
+\begin{enumerate}
+
+\item L'app \textit{manager} richiederà obbligatoriamente un'autenticazione nella forma login/password.
+\item Gli utenti di \textit{manager} dovranno essere in grado di visualizzare i dati inviati dai sensori in tempo reale.
+\item Ogni impianto dovrà rendere disponibili i seguenti dati:
+\begin{itemize}
+\item Sapone residuo di ogni dispenser, espresso in centesimi.
+\item Spazio residuo (tasso di riempimento) di ogni pattumiera, espresso in centesimi.
+\end{itemize}
+Per ogni cella, inoltre, saranno richiesti i seguenti dati:
+\begin{itemize}
+\item Segnalazione esaurimento carta igienica.
+\item Stato di apertura della porta di accesso.
+\item Tasso di umidità.
+\item Ssegnalazione guasto della luce di cortesia.
+\end{itemize}
+\end{enumerate}
+\subsubsection{Requisiti non funzionali}
 %----------------------------------------------------------------------------------------
 %	PROGETTAZIONE
 %----------------------------------------------------------------------------------------
