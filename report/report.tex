@@ -128,14 +128,14 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \subsection{Requisiti}
 
-È necessario realizzare un sistema di gestione per bagni pubblici che consenta a un utente, da remoto, di visionare lo stato generale di un impianto.\\
+È necessario realizzare un sistema di gestione per bagni pubblici che consenta a un utente amministrativo, da remoto, di visionare lo stato generale di un impianto.\\
 Nel dettaglio ci si aspetta che un utente possa, dato uno specifico impianto, visualizzare in tempo reale:
 \begin{itemize}
 \item Indicazioni sulla quantità di sapone per le mani rimasto in ogni dispenser, indicato in centesimi.
 \item Indicazioni sul tasso di riempimento di ogni pattumiera presente, indicata in centesimi.
 \item Indicazioni sullo stato aperto/chiuso di ogni singola cella dell'impianto.
 \item Indicazioni sullo stato disponibile/terminata di ogni dispenser di carta igienica presente nelle celle dell'impianto.
-\item Indicazioni sullo stato funzionanante/non funzionante delle luci interne ad ogni cella.
+\item Indicazioni sullo stato funzionante/non funzionante delle luci di cortesia ad ogni cella.
 \item Indicazioni sul tasso di umidità di ogni cella dell'impianto.
 \end{itemize}
 Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita web app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblii installati.\\
@@ -147,15 +147,30 @@ A fronte infatti di un semplice autenticazione tramite utente/password, infatti,
 \item Visualizzare eventuali report utente sullo stato del sistema dell'app \textit{consumer}.
 \end{itemize}
 Si dovrà anche fornire un apposita app web (chiamata \textit{consumer}) a supporto di tutti i cittadini che si vogliono recare in un ambito pubblico in un certo momento della giornata.\\
-L'app, infatti, dovrà mostrare a schermo la locazione di ogni bagno pubblico disponibile e, all'occorrenza, riportare lo stato degli stessi: qualora un bagno pubblico non sia agibile per qualche motivo, tale informazione dovrà essere riportata.\\
+L'app, infatti, dovrà mostrare a schermo la locazione di ogni bagno pubblico disponibile e, all'occorrenza, riportare lo stato degli stessi: qualora un bagno pubblico non sia agibile per qualche motivo, tale informazione dovrà essere opportunamente riportata.\\
 Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
 \begin{itemize}
-\item Visualizzare una mappa (centrata sulla locazione corrente) con indicati i bagni pubblici disponibili del sistema. Ogni bagno, se clicckato, dovrà mostrare informazioni utili al cittadino circa il loro stato corrente.
+\item Visualizzare una \textit{gmap} (centrata sulla locazione corrente) con indicati i bagni pubblici disponibili del sistema.\\Ogni bagno, se selezionato, dovrà mostrare informazioni utili al cittadino circa il loro stato corrente.
 \item Riportare direttamente dall'app di eventuali problemi dell'applicazione/dei bagni pubblici riscontrati.
 \end{itemize}
 \newpage
 \subsection{Analisi dei requisiti}
 \subsubsection{Glossario}
+
+\begin{center}
+    \begin{tabular}{ | l |  p{10cm} |}
+    \hline
+    \textbf{Name} & \textbf{Definition} \\ \hline
+    Impianto & Struttura rappresentante un bagno pubblico, contenente una serie di celle individuali. Ogni impianto è comprensivo di lavabi, dispenser di sapone e pattumiere. \\ \hline
+    Cella & Struttura rappresentante una singola unità per servizi igienici comprensiva di gabinetto, carta igienica e luce di cortesia. \\ \hline
+    `Manager` web App & Applicazione di amministrazione impianti utilizzata per gestire l'insieme dei bagni pubblici registrati nel network.\\ \hline
+    `Consumer` web App & App di supporto al cittadino per individuare il più vicino bagno pubblico e visionare il suo stato corrente.\\ \hline
+    gmap & Mappa geolocalizzata 2D fornita gratuitamente da \textit{Google} e molto conosciuta tra gli utenti.\\ \hline
+    Utente amministrativo & Utente adibito a compiti di amministrazione e gestione dei bagni pubblici registrati nella rete, attraverso la web app \textit{manager}.\\ \hline
+    Utente consumer & Utente della web app \textit{consumer}. \\ \hline
+    \end{tabular}
+\end{center}	
+\newpage
 \subsubsection{Casi d'uso}
 
 \begin{figure}[h!]
