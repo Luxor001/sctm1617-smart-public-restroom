@@ -139,7 +139,7 @@ Nel dettaglio ci si aspetta che un utente possa, dato uno specifico impianto, vi
 \item Indicazioni sullo stato funzionante/non funzionante delle luci di cortesia ad ogni cella.
 \item Indicazioni sul tasso di umidità di ogni cella dell'impianto.
 \end{itemize}
-Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita web app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblii installati.\\
+Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita web app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblici installati.\\
 A fronte infatti di un semplice autenticazione tramite utente/password, infatti, l'app dovrà inoltre consentire di: 
 \begin{itemize}
 \item Aggiungere nuovi impianti al sistema.
@@ -147,13 +147,14 @@ A fronte infatti di un semplice autenticazione tramite utente/password, infatti,
 \item Aggiungere nuovi utenti di amministrazione.
 \item Visualizzare eventuali report utente sullo stato del sistema dell'app \textit{consumer}.
 \end{itemize}
-Si dovrà anche fornire un apposita app web (chiamata \textit{consumer}) a supporto di tutti i cittadini che si vogliono recare in un ambito pubblico in un certo momento della giornata.\\
-L'app, infatti, dovrà mostrare a schermo la locazione di ogni bagno pubblico disponibile e, all'occorrenza, riportare lo stato degli stessi: qualora un bagno pubblico non sia agibile per qualche motivo, tale informazione dovrà essere opportunamente riportata.\\
+Si dovrà anche fornire un apposita app web (chiamata \textit{consumer}) specificatamente ottimizzata per dispositivi mobili a supporto di tutti i cittadini che si vogliono recare in un ambito pubblico in un certo momento della giornata.\\
+L'app dovrà mostrare a schermo la locazione di ogni bagno pubblico (tramite \textit{markers} o simile) disponibile e, all'occorrenza, riportare lo stato degli stessi: qualora un bagno pubblico non sia agibile per qualche motivo, tale informazione dovrà essere opportunamente riportata.\\
 Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
 \begin{itemize}
 \item Visualizzare una \textit{gmap} (centrata sulla locazione corrente) con indicati i bagni pubblici disponibili del sistema.\\Ogni bagno, se selezionato, dovrà mostrare informazioni utili al cittadino circa il loro stato corrente.
 \item Riportare direttamente dall'app di eventuali problemi dell'applicazione/dei bagni pubblici riscontrati.
 \end{itemize}
+Per facilitare l'utilizzo da parte del cittadino l'app dovrà essere installabile sul dispositivo in uso e compatibile con l'ultima versione di Android e iOS.
 \newpage
 \subsection{Analisi dei requisiti}
 \subsubsection{Glossario}
@@ -167,6 +168,7 @@ Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
     `Manager` web App & Applicazione di amministrazione impianti utilizzata per gestire l'insieme dei bagni pubblici registrati nel network.\\ \hline
     `Consumer` web App & App di supporto al cittadino per individuare il più vicino bagno pubblico e visionare il suo stato corrente.\\ \hline
     gmap & Mappa geolocalizzata 2D fornita gratuitamente da \textit{Google} e molto conosciuta tra gli utenti.\\ \hline
+    marker & Marcatore 2D posizionato in coordinate precise della gmap per segnalare la presenza di un punto di interesse.\\ \hline
     Utente amministrativo & Utente adibito a compiti di amministrazione e gestione dei bagni pubblici registrati nella rete, attraverso la web app \textit{manager}.\\ \hline
     Utente consumer & Utente della web app \textit{consumer}. \\ \hline
     \end{tabular}
@@ -190,22 +192,60 @@ Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
 \subsubsection{Requisiti funzionali}
 \begin{enumerate}
 
-\item L'app \textit{manager} richiederà obbligatoriamente un'autenticazione nella forma login/password.
-\item Gli utenti di \textit{manager} dovranno essere in grado di visualizzare i dati inviati dai sensori in tempo reale.
+\item Ogni sessione di utilizzo di \textit{manager} richiederà un autenticazione nella forma login/password.
 \item Ogni impianto dovrà rendere disponibili i seguenti dati:
 \begin{itemize}
 \item Sapone residuo di ogni dispenser, espresso in centesimi.
 \item Spazio residuo (tasso di riempimento) di ogni pattumiera, espresso in centesimi.
 \end{itemize}
-Per ogni cella, inoltre, saranno richiesti i seguenti dati:
+Per ogni cella saranno richiesti i seguenti dati:
 \begin{itemize}
 \item Segnalazione esaurimento carta igienica.
 \item Stato di apertura della porta di accesso.
 \item Tasso di umidità.
-\item Ssegnalazione guasto della luce di cortesia.
+\item Ssegnalazione guasto luce di cortesia.
 \end{itemize}
+\item Gli utenti di \textit{manager} dovranno essere in grado di visualizzare i dati inviati dai sensori in tempo reale.
+\item Dovrà essere possibile aggiungere nuovi impianti al sistema in qualsiasi momento.
+\item Ogni impianto dovrà essere corredato dai seguenti dati:
+\begin{itemize}
+\item Indirizzo
+\item Coordinate GPS
+\item Azienda appaltratrice di manutenzione.
+\end{itemize}
+\item Ogni utente amministrativo di \textit{manager} dovrà essere in grado di creare nuovi utenti di amministrazione.
+\item Ogni utente amministrativo di \textit{manager} dovrà essere in grado di visualizzare i reports utente sullo stato degli impianti o dell'app \textit{consumer}.
+\item L'app \textit{consumer} dovrà adeguatamente funzionare su dispositivi mobili come smartphone e tablet con Android 8+ o iOS 11+.
+\item L'app \textit{consumer}, all'avvio della gmap, dovrà centrarsi sulla posizione geolocalizzata del dispositivo.
+\item La gmap di \textit{consumer} dovrà mostrare tutti gli impianti registrati nel sistema con appositi \textit{marker}.
+\begin{enumerate}
+\item Ogni impianto selezionato servirà per mostrare all'utente il suo stato corrente, con particolare attenzione circa la sua disponibilità.
+\end{enumerate}
+\item Ogni utente di \textit{consumer} potrà rilasciare, attraverso l'app, una segnalazione sullo stato dei servizi riscontrati.
+\item \textit{consumer} dovrà essere nativamente installabile sul dispositivo dell'utente.
 \end{enumerate}
 \subsubsection{Requisiti non funzionali}
+\begin{itemize}
+\item \textbf{Dinamicità:} Il sistema dovrà consentire l’aggiunta e la rimozione di impianti sul territorio dinamicamente senza causare interruzioni generali del servizio.\\ Il sistema, pertanto, dovrà risultare adattabile ai cambiamenti della topologia di rete di cui è composto.
+\item \textbf{Scalabilità:} Il sistema dovrà essere adattabile alla mole di informazioni inviata dagli impianti ed essere sufficientemente reattivo nei confronti delle richieste degli utenti, che aumenteranno gradualmente mano a mano che il sistema verrà adottato su tutto il territorio.\\
+Verosimilmente, adottando il sistema su scala nazionale per i soli bagni pubblici, il numero di impianti da gestire si attesterà su qualche centinaio.\\
+Anche considerando la partecipazione di bagni pubblici di natura privata (si pensi ai bagni degli autogrill), il numero totale di impianti non dovrebbe superare il migliaio di unità.\\ 
+Il numero di utenti di amministrazione, considerati i punti sopra, dovrebbe rimanere pressoché trascurabile.\\
+Gli utenti \textit{consumer}, d'altro canto, potranno raggiungere numeri considerevoli: particolare attenzione alla scalabilità dovrà essere riposta nello sviluppo dell'app per dispositivi mobili.
+\item \textbf{Prestazioni:}
+\item \textbf{Robustezza:} Il sistema dovrà offrire una buona tolleranza a tutti i guasti che si potranno presentare quotidianamente: errori di rete, anomalie delle letture dei sensori,  malfunzionamenti hardware ecc..\\ 
+Gli eventuali malfunzionamenti riscontrati, infatti, non dovranno compromettere l'intero funzionamento del sistema ma soltanto le risorse direttamente collegate ad esso.\\ 
+Eventuali fallimenti hardware (sia dei sensori che dei microcontrollori presenti) dovranno essere risolvibili sostituendo i singoli componenti difettosi, evitando così costose riconfigurazioni del sistema.\\
+Qualora il server di sistema diventasse irraggiungibile, gli utenti \textit{consumer} dovranno comunque poter utilizzare l'app offline.
+
+\item \textbf{Sicurezza:} Essendo le applicazioni esposte pubblicamente sulla rete, è importante che esse seguano i più elevati standard di sicurezza.\\
+Tutte le applicazioni dovranno essere essere servite su HTTPS e protette da eventuali tentativi di attacco XSS da parte degli utenti.\\
+Tutti gli accessi all'applicazione \textit{manager} (e, di conseguenza, al Database) necessiteranno di essere autenticati per limitare la superficie d'attacco di eventuali attori.\\
+L'app consumer, venendo installata sul dispositivo degli utenti e possibilmente di milioni di persone, dovrà seguire i più elevati standard di sicurezza per evitare \textit{man-in-the-middle attacks} e qualsiasi uso non autorizzato dei servizi sopra descritti.
+
+\item \textbf{Interoperabilità:} il sistema dovrà essere progettato per favorire il più possibile l'adozione di standard riconosciuti e, possibilmente, open-source.\\
+In tal modo sarà possibile adattare il sistema a molteplici scenari e integrarlo con strumenti di terze parti, qualora lo si ritenga necessario.
+\end{itemize}
 %----------------------------------------------------------------------------------------
 %	PROGETTAZIONE
 %----------------------------------------------------------------------------------------
