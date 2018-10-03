@@ -232,7 +232,9 @@ Verosimilmente, adottando il sistema su scala nazionale per i soli bagni pubblic
 Anche considerando la partecipazione di bagni pubblici di natura privata (si pensi ai bagni degli autogrill), il numero totale di impianti non dovrebbe superare il migliaio di unità.\\ 
 Il numero di utenti di amministrazione, considerati i punti sopra, dovrebbe rimanere pressoché trascurabile.\\
 Gli utenti \textit{consumer}, d'altro canto, potranno raggiungere numeri considerevoli: particolare attenzione alla scalabilità dovrà essere riposta nello sviluppo dell'app per dispositivi mobili.
-\item \textbf{Prestazioni:}
+\item \textbf{Prestazioni:} Il sistema dovrà essere in grado di rispondere a tutte le richieste a cui andrà incontro con prestazioni ottimali, minimizzando il tempo di attesa di ogni azione intrapresa dagli utenti.\\
+Dal punto di vista puramente applicativo, l'applicazione dovrà essere fluida nei caricamenti e nelle transizioni: ciò sarà possibile attraverso l'utilizzo di tecnologie all'avanguardia e restringendo il bacino di utenza dell'applicazione ai soli dispositivi più aggiornati.\\
+Considerando la mole di dati coinvolta (e la loro non-criticità), si potrebbe considerare accettabile un aggiornamento dei valori di ogni impianto con intervalli di 10 secondi.
 \item \textbf{Robustezza:} Il sistema dovrà offrire una buona tolleranza a tutti i guasti che si potranno presentare quotidianamente: errori di rete, anomalie delle letture dei sensori,  malfunzionamenti hardware ecc..\\ 
 Gli eventuali malfunzionamenti riscontrati, infatti, non dovranno compromettere l'intero funzionamento del sistema ma soltanto le risorse direttamente collegate ad esso.\\ 
 Eventuali fallimenti hardware (sia dei sensori che dei microcontrollori presenti) dovranno essere risolvibili sostituendo i singoli componenti difettosi, evitando così costose riconfigurazioni del sistema.\\
