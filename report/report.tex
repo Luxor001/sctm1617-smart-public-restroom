@@ -109,24 +109,6 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 %----------------------------------------------------------------------------------------
 
 \section{Analisi dei requisiti}
-
-In questa sezione esporre brevemente i requisiti a cui il sistema proposto deve rispondere, concentrando l'attenzione sugli aspetti più rilevanti e facendo eventualmente uso di opportuni diagrammi di alto livello.\\
-
-Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
-
-\vspace{1cm}
-\begin{tabular}{l|rr}
- & Numero minimo di battute & Numero massimo di battute \\
- \hline
- 1 componente & 4000 & 6000 \\
- 2 componenti & 6000 & 8000 \\
- 3 componenti & 8000 & 10000 \\
- \hline
-\end{tabular}
-
-
-\newpage
-
 \subsection{Requisiti}
 
 È necessario realizzare un sistema di gestione per bagni pubblici che consenta a un utente amministrativo, da remoto, di visionare lo stato generale di un impianto.\\
@@ -251,7 +233,7 @@ In tal modo sarà possibile adattare il sistema a molteplici scenari e integrarl
 %----------------------------------------------------------------------------------------
 %	PROGETTAZIONE
 %----------------------------------------------------------------------------------------
-
+\newpage
 \section{Progettazione}
 
 Devono essere esposte le scelte progettuali operate nelle varie fasi di sviluppo dell'elaborato.\\
@@ -272,7 +254,24 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 
 \newpage
+\subsection{Architettura del sistema}
 
+Una breve analisi dei requisiti in un ottica progettuale ci porta a una suddivisione del sistema in tre parti logiche ben distinte: 
+\begin{itemize}
+	\item Una parte \textit{locale}, installata fisicamente in ogni impianto della rete, dedita alla raccolta di dati tramite sensori e al loro periodico invio.
+	\\ Tutta l'insieme della componentistica hardware (e le relative problematiche) del progetto sarà concentrata in questa macro-area.
+	\item Una parte \textit{applicativa}, dedita all'analisi dei dati raccolti, da parte di personale amministrativo e utenti \textit{consumer}.
+	\item Una parte \textit{centrale}, costituita da un server (o, possibilmente, un insieme di server) dedita alla ricezione e archiviazione dei dati inviati dalle parti \textit{locali} del network.\\
+	Questa entità si occuperà anche di distribuire le applicazioni (\textit{manager} e \textit{consumer}) agli utenti del sistema.
+\end{itemize}
+
+Una suddivisione logica del sistema così organizzata consente di soddisfare pienamente i requisiti presentati nel capitolo precedente: la presenza di un \textit{middleware} (cioè il server)  tra le parti applicative e le parti locali consente di aumentare considerevolmente la sicurezza e la scalabilità dell'intero network.\\\\
+La comunicazione tra la parte \textit{centrale} e parti \textit{applicative} e \textit{locali} avverrà tramite interfaccia RESTful, garantendo così i seguenti vantaggi:
+\begin{itemize}
+	\item Sessione \textit{stateless}: non mantenendo su server alcuna informazione circa il contesto durante la connessione, ogni sessione utente è più sicura, performante e semplice.
+	\item Compatibilità: essendo riconosciuto come standard \textit{de facto} nelle comunicazioni client-server (in virtù anche dei suoi requisiti meno stringenti rispetto ad altre forme di trasmissione formali come WSDL) è del tutto ragionevole considerare RESTFul un interfaccia applicabile in qualsiasi contesto di rete moderno.
+\end{itemize}
+\newpage
 
 %----------------------------------------------------------------------------------------
 %	IMPLEMENTAZIONE
