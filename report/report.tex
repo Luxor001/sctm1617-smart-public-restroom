@@ -120,6 +120,7 @@ Nel dettaglio ci si aspetta che un utente possa, dato uno specifico impianto, vi
 \item Indicazioni sullo stato disponibile/terminata di ogni dispenser di carta igienica presente nelle celle dell'impianto.
 \item Indicazioni sullo stato funzionante/non funzionante delle luci di cortesia ad ogni cella.
 \item Indicazioni sul tasso di umidità di ogni cella dell'impianto.
+\item Indicazioni su eventuale presenza di fumo.
 \end{itemize}
 Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita web app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblici installati.\\
 A fronte infatti di un semplice autenticazione tramite utente/password, infatti, l'app dovrà inoltre consentire di: 
@@ -179,6 +180,7 @@ Per facilitare l'utilizzo da parte del cittadino l'app dovrà essere installabil
 \begin{itemize}
 \item Sapone residuo di ogni dispenser, espresso in centesimi.
 \item Spazio residuo (tasso di riempimento) di ogni pattumiera, espresso in centesimi.
+\item Eventuale presenza di fumo.
 \end{itemize}
 Per ogni cella saranno richiesti i seguenti dati:
 \begin{itemize}
@@ -265,14 +267,24 @@ Una breve analisi dei requisiti in un ottica progettuale ci porta a una suddivis
 	Questa entità si occuperà anche di distribuire le applicazioni (\textit{manager} e \textit{consumer}) agli utenti del sistema.
 \end{itemize}
 
-Una suddivisione logica del sistema così organizzata consente di soddisfare pienamente i requisiti presentati nel capitolo precedente: la presenza di un \textit{middleware} (cioè il server)  tra le parti applicative e le parti locali consente di aumentare considerevolmente la sicurezza e la scalabilità dell'intero network.\\\\
+Una tale suddivisione del sistema consente di soddisfare pienamente i requisiti presentati nel capitolo precedente: la presenza di un \textit{middleware} (cioè il server)  tra le parti applicative e le parti locali consente di aumentare considerevolmente la sicurezza e la scalabilità dell'intero network.\\\\
 La comunicazione tra la parte \textit{centrale} e parti \textit{applicative} e \textit{locali} avverrà tramite interfaccia RESTful, garantendo così i seguenti vantaggi:
 \begin{itemize}
-	\item Sessione \textit{stateless}: non mantenendo su server alcuna informazione circa il contesto durante la connessione, ogni sessione utente è più sicura, performante e semplice.
+	\item \textit{Stateless}: non mantenendo su server alcuna informazione circa il contesto durante la connessione, ogni sessione utente è più sicura, performante e semplice.
 	\item Compatibilità: essendo riconosciuto come standard \textit{de facto} nelle comunicazioni client-server (in virtù anche dei suoi requisiti meno stringenti rispetto ad altre forme di trasmissione formali come WSDL) è del tutto ragionevole considerare RESTFul un interfaccia applicabile in qualsiasi contesto di rete moderno.
+	\item Affidabilità: una trasmissione RESTful JSON è composta sostanzialmente da una connessione HTTP tramite TCP/IP con un formato dati a bassissimo \textit{overhead}.\\
+	Pertanto, ogni connessione si concluderà ad ogni singolo invio di dati:  ciò rende questa forma di comunicazione appetibile in contesti in cui non è possibile assicurare una connessione di rete stabile.
 \end{itemize}
+Viene riportato un diagramma dell'architettura logica della progettazione appena descritta:
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.33]{img/architettura_logica-report.png}
+  \caption{Architettura logica del sistema}
+\end{figure}
+\subsection{Progettazione locale}
+\subsection{Progettazione applicativa}
+\subsection{Progettazione server}
 \newpage
-
 %----------------------------------------------------------------------------------------
 %	IMPLEMENTAZIONE
 %----------------------------------------------------------------------------------------
