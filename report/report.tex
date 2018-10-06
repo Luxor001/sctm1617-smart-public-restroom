@@ -122,7 +122,7 @@ Nel dettaglio ci si aspetta che un utente possa, dato uno specifico impianto, vi
 \item Indicazioni sul tasso di umidità di ogni cella dell'impianto.
 \item Indicazioni su eventuale presenza di fumo.
 \end{itemize}
-Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita web app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblici installati.\\
+Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblici installati.\\
 A fronte infatti di un semplice autenticazione tramite utente/password, infatti, l'app dovrà inoltre consentire di: 
 \begin{itemize}
 \item Aggiungere nuovi impianti al sistema.
@@ -130,7 +130,7 @@ A fronte infatti di un semplice autenticazione tramite utente/password, infatti,
 \item Aggiungere nuovi utenti di amministrazione.
 \item Visualizzare eventuali report utente sullo stato del sistema dell'app \textit{consumer}.
 \end{itemize}
-Si dovrà anche fornire un apposita app web (chiamata \textit{consumer}) specificatamente ottimizzata per dispositivi mobili a supporto di tutti i cittadini che si vogliono recare in un ambito pubblico in un certo momento della giornata.\\
+Si dovrà anche fornire un apposita app (chiamata \textit{consumer}) specificatamente ottimizzata per dispositivi mobili a supporto di tutti i cittadini che si vogliono recare in un ambito pubblico in un certo momento della giornata.\\
 L'app dovrà mostrare a schermo la locazione di ogni bagno pubblico (tramite \textit{markers} o simile) disponibile e, all'occorrenza, riportare lo stato degli stessi: qualora un bagno pubblico non sia agibile per qualche motivo, tale informazione dovrà essere opportunamente riportata.\\
 Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
 \begin{itemize}
@@ -281,9 +281,38 @@ Viene riportato un diagramma dell'architettura logica della progettazione appena
   \includegraphics[scale=0.33]{img/architettura_logica-report.png}
   \caption{Architettura logica del sistema}
 \end{figure}
-\subsection{Progettazione locale}
-\subsection{Progettazione applicativa}
-\subsection{Progettazione server}
+\subsection{Progettazione parte locale}
+Ogni parte \textit{locale} del sistema si occuperà di raccogliere i dati di utilizzo di ogni impianto (tramite l'utilizzo  
+\newpage
+\subsection{Progettazione parte applicativa}
+Grazie all'analisi dei requisiti effettuata, si è evidenziato come il committente abbia richiesto la creazione di due applicazioni distinte, ognuna con una diversa finalità.\\
+Purtroppo, ciò si scontra con la realtà del team di sviluppo incaricato alla produzione di \textit{manager} e \textit{consumer}: le risorse a disposizione sono piuttosto esigue, sia in termini di tempo che di manodopera.\\
+Pertanto, come vedremo, verranno adottate strategie atte a ridurre i costi di sviluppo e rientrare, così, nel budget e nei tempi previsti.\\\\
+Si tenga presente, inoltre, che data la loro reciproca indipendenza, ogni applicazione verrà analizzata separatamente nelle sottosezioni seguenti.
+\subsubsection{Manager}
+I requisiti esposti dal committente riguardo la realizzazione di \textit{manager} non specificano il suo ambiente di utilizzo preferenziale: gli utenti potrebbero lavorare su macchine Windows o Linux indifferentemente.\\
+A seguito di questa considerazione, e in relazione al fatto che non sono stati richieste funzionalità native specifiche di un qualche ambiente, si è deciso di realizzare \textit{manager} come \textit{web appplication}.\\
+Tuttavia, sviluppare un'applicazione amministrativa per ambienti web  non consente soltanto di renderla pressoché universale, ma garantirà anche i seguenti benefici:
+\begin{itemize}
+\item Faciliterà la fase di distribuzione, in quanto non necessiterà di installazione locale (gli utenti potranno accedere all'applicazione attraverso un semplice browser web, che si presume già installato di default in tutti i sistemi operativi moderni).
+ \item Renderà lo sviluppo della stessa più semplice, perché familiare all'insieme di skill pregresse del team di sviluppo.
+\end{itemize}
+Per rendere l'esperienza utente il più possibile vicina a una classica \textit{dekstop application} gestionale, \textit{manager} verrà sviluppata come una SPA (\textit{Single Page Application)}.\\\\
+La decisione di sviluppare \textit{manager} per ambienti web, tuttavia, ha un costo ben definito in termini di compatibilità: il supporto ad alcune tecnologie per SPA, infatti, non potrà essere garantito  e ciò potrà portare ad escludere alcuni dispositivi particolarmente datati.\\
+\begin{figure}
+\centering
+  \includegraphics[scale=0.25]{img/mockup-manager.png}
+  \caption{Mockup di \textit{manager}}
+\end{figure}
+
+\subsubsection{Consumer}
+I requisiti esposti dal committente suggeriscono che \textit{consumer} debba essere un applicazione a larga diffusione, facile da utilizzare e performante; in altre parole, un applicazione il cui utilizzo da un grande numero di persone (come cittadini e turisti) sia un \textit{desiderata} fondamentale.\\
+Questa considerazione, unita alla richiesta specifica del committente di sviluppare l'app per dispositivi mobili, porta allo sviluppo di una \textit{web app}
+\subsection{Progettazione parte server}
+\subsubsection{API}
+\subsubsection{Autenticazione}
+\subsection{Registrazione impianto}
+\subsubsection{DBMS}
 \newpage
 %----------------------------------------------------------------------------------------
 %	IMPLEMENTAZIONE
