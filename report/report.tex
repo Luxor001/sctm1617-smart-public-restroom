@@ -1,4 +1,6 @@
 \documentclass[12pt]{article}
+\setcounter{tocdepth}{4}
+ \setcounter{secnumdepth}{4}
 \renewcommand{\labelenumii}{\theenumii}
 \renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
 \usepackage[utf8]{inputenc}
@@ -289,6 +291,7 @@ Purtroppo, ciò si scontra con la realtà del team di sviluppo incaricato alla p
 Pertanto, come vedremo, verranno adottate strategie atte a ridurre i costi di sviluppo e rientrare, così, nel budget e nei tempi previsti.\\\\
 Si tenga presente, inoltre, che data la loro reciproca indipendenza, ogni applicazione verrà analizzata separatamente nelle sottosezioni seguenti.
 \subsubsection{Manager}
+\paragraph{Ambiente}
 I requisiti esposti dal committente riguardo la realizzazione di \textit{manager} non specificano il suo ambiente di utilizzo preferenziale: gli utenti potrebbero lavorare su macchine Windows o Linux indifferentemente.\\
 A seguito di questa considerazione, e in relazione al fatto che non sono stati richieste funzionalità native specifiche di un qualche ambiente, si è deciso di realizzare \textit{manager} come \textit{web appplication}.\\
 Tuttavia, sviluppare un'applicazione amministrativa per ambienti web  non consente soltanto di renderla pressoché universale, ma garantirà anche i seguenti benefici:
@@ -298,12 +301,33 @@ Tuttavia, sviluppare un'applicazione amministrativa per ambienti web  non consen
 \end{itemize}
 Per rendere l'esperienza utente il più possibile vicina a una classica \textit{dekstop application} gestionale, \textit{manager} verrà sviluppata come una SPA (\textit{Single Page Application)}.\\\\
 La decisione di sviluppare \textit{manager} per ambienti web, tuttavia, ha un costo ben definito in termini di compatibilità: il supporto ad alcune tecnologie per SPA, infatti, non potrà essere garantito  e ciò potrà portare ad escludere alcuni dispositivi particolarmente datati.
-\phantom{}
-\begin{figure}
+\paragraph{Autenticazione}
+I requisiti esposti dal committente richiedono esplicitamente che gli utenti di amministrazione che utilizzano \textit{manager} debbano essere autenticati nel sistema, preferibilmente attraverso l'uso di username e password.\\
+Data l'assenza di indicazioni in merito, il team di sviluppo si concentrerà solamente sulla realizzazione di autenticazioni con un singolo ruolo immutabile, ovvero quello di ``amministratore''; in altre parole, in questa prima iterazione del software qualsiasi utente connesso avrà pieno accesso a tutte le funzionalità del software.\\\\
+Per evitare che ogni funzionalità ``protetta'' del prodotto richieda una forma di autenticazione all'utente, \textit{manager} utilizzerà un \textit{access token} scambiato dal server per ogni accesso successivo.\\
+Tale \textit{access token} sarà costituito da una stringa casuale univoca e verrà salvato localmente nel browser utente: a tal scopo, esso verrà utilizzato come chiave di identificazione ad ogni successivo avvio dell'app, se presente.\\\\
+È necessario tenere presente, tuttavia, che l'utilizzo di questo metodo di autenticazione non è esente da difetti o possibili rischi:
+\begin{itemize}
+\item Come qualsiasi altra risorsa locale salvata sul terminale utente, il \textit{loginToken} può essere accidentalmente (o volutamente) cancellato.\\ Purtroppo, questo rischio è particolarmente sentito in ambito web a causa alla relativa facilità con la quale è possibile cancellare la cache locale.
+\item L'utilizzo di una chiave di accesso può esporre il sistema a rischi legati alla sicurezza: un terminale compromesso da un utente malintenzionato finirà infatti per esporre pubblicamente la propria chiave di accesso (attualmente, purtroppo, non vi è modo di archiviare in sicurezza le risorse locali di un browser).\\
+Ottenuto così un \textit{loginToken} autentico, l'utente malintenzionato potrà effettuare attacchi \textit{masquerade} con la minima probabilità di essere scoperto.
+\end{itemize}
+Per rafforzare ulteriormente la sicurezza del sistema, inoltre, sarebbe opportuno associare un periodo di validità (ad esempio, 7 giorni) ad ogni \textit{loginToken}.\\
+Qualora un utente non abbia effettuato l'accesso per un certo periodo prestabilito, infatti, la sessione sarà da riconvalidare con un nuovo accesso tramite i canali tradizionali.\\\\
+Viene quindi presentato un breve diagramma di attività che riassume il funzionamento della login di \textit{manager}:
+\begin{figure}[h!]
 \centering
-  \includegraphics[scale=0.25]{img/mockup-manager.png}
-  \caption{Mockup di \textit{manager}}
+  \includegraphics[scale=0.6]{img/activity_manager.png}
+  \caption{Login \textit{manager}}
 \end{figure}
+\paragraph{Design}
+Trattandosi di un applicazione di gestione e amministrazione, \textit{manager} non presenterà un'interfaccia ottimizzata per dispositivi mobile: si presume infatti che tutti gli utenti del sistema utilizzeranno il prodotto tramite uno schermo con sufficiente larghezza (ad esempio tramite un PC Fisso).\\Per questo motivo, il design si è incentrato su un interfaccia tipica per dispositivi desktop, come evidenziabile dal mockup seguente: 
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.20]{img/mockup-manager.png}
+  \caption{Mockup di \textit{manager}}
+\end{figure}\\
+A causa di una relativa familiarità a riguardo, il team di sviluppo si dedicherà ad uno stile \textit{Material Design} per tutte le schermate dell'applicazione.
 \newpage
 \subsubsection{Consumer}
 I requisiti esposti dal committente suggeriscono che \textit{consumer} debba essere un applicazione a larga diffusione, facile da utilizzare e performante; in altre parole, un applicazione il cui utilizzo da un grande numero di persone (come cittadini e turisti) sia fondamentale.\\
@@ -329,6 +353,7 @@ L'applicazione, infatti, sarà comunque utilizzabile come un normale sito web: s
 \end{figure}
 \newpage
 \subsection{Progettazione parte server}
+
 \subsubsection{API}
 \subsubsection{Autenticazione}
 \subsection{Registrazione impianto}
