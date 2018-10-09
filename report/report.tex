@@ -330,6 +330,7 @@ Trattandosi di un applicazione di gestione e amministrazione, \textit{manager} n
 A causa di una relativa familiarità a riguardo, il team di sviluppo si dedicherà ad uno stile \textit{Material Design} per tutte le schermate dell'applicazione.
 \newpage
 \subsubsection{Consumer}
+\paragraph{Ambiente}
 I requisiti esposti dal committente suggeriscono che \textit{consumer} debba essere un applicazione a larga diffusione, facile da utilizzare e performante; in altre parole, un applicazione il cui utilizzo da un grande numero di persone (come cittadini e turisti) sia fondamentale.\\
 Questa considerazione porta all'adozione di esperienze utente (UX) e soluzioni popolari, atte a non scoraggiare l'utente finale dall'utilizzo di \textit{consumer} a causa di un eccessiva complessità; considerato inoltre che l'applicazione sarebbe indirizzata all'utilizzo anche da parte di turisti, il team di sviluppo si adopererà per lo sviluppo di una \textit{mobile application}.\\
 Tuttavia, ciò comporterebbe una lievitazione considerevole dei costi di sviluppo: seppur ridotta in termini di funzionalità, sarebbe necessario infatti sviluppare un applicazione per ogni sistema operativo \textit{mobile} presente sul mercato (\textit{Android} e \textit{iOS}).\\\\
@@ -343,21 +344,48 @@ Ciò permette di garantire all'utente una UX da applicazione nativa, pur rimanen
 \end{itemize}
 Come per l'applicazione di amministrazione, tuttavia, emergono delle problematiche relative alle tecnologie supportate dai dispositivi per la PWA: alcuni device infatti potrebbero rivelarsi incompatibili perché troppo datati.\\
 Benché questo aspetto vada chiaramente in contrasto con la necessità di rendere \textit{consumer} utilizzata da un gran numero di utenti, i requisiti funzionali richiesti dal committente saranno comunque rispettati nella loro totalità.\\
-L'applicazione, infatti, sarà comunque utilizzabile come un normale sito web: soltanto alcuni aspetti avanzati, come l'installazione nativa, potranno risultare incompatibili.
-
-\phantom{}
-\begin{figure}
+L'applicazione sarà comunque utilizzabile come un normale sito web: soltanto alcuni aspetti avanzati come l'installazione nativa, infatti, potranno risultare incompatibili.\newpage
+\paragraph{Design}
+La progettazione grafica di \textit{consumer} si è esclusivamente incentrata sulla creazione di un'app per dispositivi mobili incentrata sulla semplicità e immediatezza.\\
+Per il prodotto non sono state infatti previste versioni specificatamente studiate per PC desktop: considerato che la mobilità è un requisito fondamentale per il committente, si può dire che il suo utilizzo attraverso un personal computer sia quanto meno scoraggiato.\\
+A causa della sua maggiore popolarità nel settore mobile verrà utilizzato uno stile \textit{Material Design} per tutte le schermate del prodotto; ciò aiuterà ad orientare meglio l'utente al primo approccio in quanto ricalcherà pattern oramai universali.
+Di seguito viene presentato un primo mockup coerente con i punti precedentemente esposti:
+\begin{figure}[h!]
 \centering
-  \includegraphics[scale=0.25]{img/mockup-consumer.png}
-  \caption{Mockup di \textit{manager}}
+  \includegraphics[scale=0.21]{img/mockup-consumer.png}
+  \caption{Mockup di \textit{consumer}}
 \end{figure}
 \newpage
 \subsection{Progettazione parte server}
-
-\subsubsection{API}
-\subsubsection{Autenticazione}
-\subsection{Registrazione impianto}
+La sezione di analisi dell'architettura ha evidenziato la necessità di creare un apposito \textit{server} RESTFul capace di fornire i dati richiesti dalle due applicazioni frontend (\textit{consumer} e \textit{manager}) e di raccogliere (e immagazzinare) i dati inviati dai singoli impianti installati.\\
+Tali considerazioni profilano la realizzazione di 4 differenti entità:
+\begin{itemize}
+	\item Un web server per la fornitura delle risorse di \textit{manager}.
+	\item Un web server per la fornitura delle risorse di \textit{consumer}.
+	\item Un web server RESTful atto a rispondere a tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
+	\item Un DBMS per archiviare le informazioni inviate dai clients.
+\end{itemize}
+Le sottosezioni seguenti non affronteranno l'analisi progettuale dei web server per \textit{manager} e \textit{consumer}, in quanto considerate banali e non di particolare interesse.\\ 
+Verrà in primo luogo, però, affrontata la parte di gestione dei dati: il DBMS.
 \subsubsection{DBMS}
+\paragraph{Tipologia}
+La scelta di un DBMS adeguato deve essere basata sulle reali esigenze dell'applicazione e sul relativo volume di dati.\\
+%In precedenza, la sezione di analisi dei requisiti di questo documento aveva riportato una prima approssimativa stima del volume di dati coinvolti durante il funzionamento del sistema; per poter giustificare le scelte progettuali effettuate per l'archiviazione dei dati, viene qui riproposta una stima più accurata.\\\\
+%Supponendo un totale di 300 impianti con  	
+\subsubsection{Server RESTFul}
+\paragraph{API}
+A causa di una maggiore familiarità e compatibilità con le modalità di connessione delle applicazioni frontend, ogni endpoint pubblico del web server RESTFul supporterà unicamente comunicazioni di tipo POST.\\
+Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere, sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo backend così improntati, inoltre, si capisce come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
+
+Al di là della modalità di connessione, il server prevede la costruzione di tre diversi controller contenenti gli endpoint pubblici del sistema, chiamati rispettivamente \textit{DevicesController}, \textit{ManagerController} e \textit{ConsumerController}.\\
+Come facilmente intuibile dal loro nome, ognuno è dedicato a servire le richieste di una diversa parte \textit{logica} del sistema: \textit{DevicesController} per la parte locale (invio di dati dei sensori), \textit{ManagerController} per le utenze di \textit{manager} e \textit{ConsumerController} per le richieste di \textit{consumer}.\\\\
+%TODO aggiungere uml!
+Ogni endpoint prevederà un interfaccia dati standard sia in ingresso che in uscita chiamati rispettivamente \textit{BaseData} e \textit{BaseResult}.\\
+Tali interfacce permettono di stabilire un contratto di comunicazione tra i client e il server omogeneo in tutto il sistema: all'occorrenza esse possono essere ampliate (attraverso ereditarietà) per supportare altri tipi di payload.\\
+A titolo di esempio, viene presentato \\\\%\textit{} :
+%TODO aggiungere uml di getRestroomsData che deriva da baseresult!
+L'utilizzo obbligatorio di \textit{BaseResult} (sia direttamente che attraverso ereditarietà) come valore di ritorno degli endpoint permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate.
+\subsection{Registrazione impianto}
 \newpage
 %----------------------------------------------------------------------------------------
 %	IMPLEMENTAZIONE

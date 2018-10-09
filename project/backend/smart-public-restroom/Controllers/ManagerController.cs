@@ -14,6 +14,10 @@ namespace smartpublicrestroom.Controllers
     [ApiController]
     public class ManagerController : ControllerBase
     {
+        public class BaseData
+        {
+            public string loginToken { get; set; }
+        }
         public class AddRestroomData
         {
             public string guid { get; set; }
@@ -25,11 +29,10 @@ namespace smartpublicrestroom.Controllers
         {
             public int restroomId { get; set; }
         }
-        public class LoginData
+        public class LoginData : BaseData
         {
             public string username { get; set; }
             public string password { get; set; }
-            public string loginToken { get; set; }
         }
         public class RegisterData : LoginData
         {
