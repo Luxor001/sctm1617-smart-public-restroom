@@ -372,12 +372,13 @@ Verrà in primo luogo, però, affrontata la parte di gestione dei dati: il DBMS.
 La scelta di un DBMS adeguato deve essere basata sulle reali esigenze dell'applicazione e sul relativo volume di dati.\\
 %In precedenza, la sezione di analisi dei requisiti di questo documento aveva riportato una prima approssimativa stima del volume di dati coinvolti durante il funzionamento del sistema; per poter giustificare le scelte progettuali effettuate per l'archiviazione dei dati, viene qui riproposta una stima più accurata.\\\\
 %Supponendo un totale di 300 impianti con  	
+\paragraph{Sicurezzaè}
 \subsubsection{Server RESTFul}
 \paragraph{API}
 A causa di una maggiore familiarità e compatibilità con le modalità di connessione delle applicazioni frontend, ogni endpoint pubblico del web server RESTFul supporterà unicamente comunicazioni di tipo POST.\\
-Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere, sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo backend così improntati, inoltre, si capisce come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
+Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere, sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
 
-Al di là della modalità di connessione, il server prevede la costruzione di tre diversi controller contenenti gli endpoint pubblici del sistema, chiamati rispettivamente \textit{DevicesController}, \textit{ManagerController} e \textit{ConsumerController}.\\
+Il server prevede la costruzione di tre diversi controller contenenti gli endpoint pubblici del sistema, chiamati rispettivamente \textit{DevicesController}, \textit{ManagerController} e \textit{ConsumerController}.\\
 Come facilmente intuibile dal loro nome, ognuno è dedicato a servire le richieste di una diversa parte \textit{logica} del sistema: \textit{DevicesController} per la parte locale (invio di dati dei sensori), \textit{ManagerController} per le utenze di \textit{manager} e \textit{ConsumerController} per le richieste di \textit{consumer}.\\\\
 %TODO aggiungere uml!
 Ogni endpoint prevederà un interfaccia dati standard sia in ingresso che in uscita chiamati rispettivamente \textit{BaseData} e \textit{BaseResult}.\\
@@ -386,6 +387,21 @@ A titolo di esempio, viene presentato \\\\%\textit{} :
 %TODO aggiungere uml di getRestroomsData che deriva da baseresult!
 L'utilizzo obbligatorio di \textit{BaseResult} (sia direttamente che attraverso ereditarietà) come valore di ritorno degli endpoint permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate.
 \subsection{Registrazione impianto}
+\paragraph{Configuratore} Per poter efficacemente spiegare il processo di registrazione di un nuovo impianto è necessario introdurre la figura del \textit{configuratore} (o \textit{installatore}) all'interno dell'architettura di sistema.\\
+Questa figura ha il compito di installare fisicamente le \textit{smart restrooms} sparse sul territorio adoperandosi per la cablatura, configurazione e posizionamento di tutte le parti coinvolte.\\
+Sarà responsabilità del \textit{configuratore}, infatti, il buon funzionamento del sistema locale a livello hardware; inoltre, trattandosi di apparecchiature delicate che richiedono una precisa configurazione, ogni intervento di manutenzione o potenziamento dell'infrastruttura dovrà essere eseguita da una persona certificata con questa qualifica. 
+\paragraph{Processo} 
+La registrazione di un nuovo impianto è un processo che coinvolgerà interamente le tre parti costituenti l'architettura di \textit{smart-restrooms}: locale, applicativa (\textit{manager}) e server.\\
+Ogni registrazione richiederà l'intervento di due tipologie di utenti: un \textit{configuratore} e un \textit{manager}.\\\\
+Come si evince dalla progettazione DBMS, ogni impianto viene identificato da un GUID univoco: esso viene generato casualmente (e univocamente) nella prima fase di registrazione effettuata da un utente \textit{manager}.\\
+Attraverso l'applicazione è infatti possibile aggiungere un nuovo \textit{public restroom} compilando alcuni campi obbligatori; al termine di questa operazione verrà consegnato all'utente \textit{manager} il GUID risultante.\\
+Tale valore verrà consegnato al \textit{configuratore} che ha predisposto fisicamente l'impianto; una volta ricevuto 
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.6]{img/activity_registration.png}
+  \caption{Mockup di \textit{consumer}}
+\end{figure}
+
 \newpage
 %----------------------------------------------------------------------------------------
 %	IMPLEMENTAZIONE
