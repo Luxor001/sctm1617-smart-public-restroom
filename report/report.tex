@@ -400,6 +400,7 @@ Sarà responsabilità del \textit{configuratore}, infatti, il buon funzionamento
 La registrazione di un nuovo impianto è un processo che coinvolgerà interamente le tre parti costituenti l'architettura di \textit{smart-restrooms}: locale, applicativa (\textit{manager}) e server.\\
 Ogni registrazione richiederà l'intervento di due tipologie di utenti, un \textit{configuratore} e un \textit{manager}, attraverso la seguente procedura:
 \begin{enumerate}
+\item Un utente \textit{manager}, attraverso l'apposita l'interfaccia del software, aggiunge un nuovo impianto specificando i dati obbligatori richiesti (come \textit{Company}, Address e \textit{CityAddress}).\\
 Al termine di questa operazione ottiene un GUID che identifica il \textit{restroom} appena creato.
 \item L'utente invia il GUID al \textit{configuratore}, che nel frattempo ha installato fisicamente il nuovo impianto.
 \item Il \textit{configuratore} inserisce la chiave di identificazione (GUID) nel controller e installa la connettività di rete.
