@@ -363,18 +363,24 @@ Tali considerazioni profilano la realizzazione di 4 differenti entità:
 	\item Un web server per la fornitura delle risorse di \textit{manager}.
 	\item Un web server per la fornitura delle risorse di \textit{consumer}.
 	\item Un web server RESTful atto a rispondere a tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
-	\item Un DBMS per archiviare le informazioni inviate dai clients.
+	\item Un DBMS per archiviare le informazioni inviate dai client.
 \end{itemize}
 Le sottosezioni seguenti non affronteranno l'analisi progettuale dei web server per \textit{manager} e \textit{consumer}, in quanto considerate banali e non di particolare interesse.\\ 
 Verrà in primo luogo, però, affrontata la parte di gestione dei dati: il DBMS.
 \subsubsection{DBMS}
+
 \paragraph{Tipologia}
-La scelta di un DBMS adeguato deve essere basata sulle reali esigenze dell'applicazione e sul relativo volume di dati.\\
-%In precedenza, la sezione di analisi dei requisiti di questo documento aveva riportato una prima approssimativa stima del volume di dati coinvolti durante il funzionamento del sistema; per poter giustificare le scelte progettuali effettuate per l'archiviazione dei dati, viene qui riproposta una stima più accurata.\\\\
-%Supponendo un totale di 300 impianti con  	
-\paragraph{Sicurezzaè}
+Il particolare contesto in cui quest'applicazione è situata ha chiaramente influenzato la tipologia di DBMS scelto per l'archiviazione dati.\\
+Al termine di alcune considerazioni. il team di sviluppo scelto un DBMS i tipo NOSQL con dati formattati BSON.\\Le motivazioni che hanno portato a questa scelta possono essere così riassunte: 
+\begin{itemize}
+\item Scalabilità orizzontale: %parlare del fatto che i dati possono diventare molto grandi
+\item Semplicità dati: %parlare di BSON compatibile con restful% 
+\item Budget ridotto: %parlare del cloud ecc.%
+\end{itemize}
+\paragraph{Struttura dati}
+
+%parlare delle password hashate
 \subsubsection{Server RESTFul}
-\paragraph{API}
 A causa di una maggiore familiarità e compatibilità con le modalità di connessione delle applicazioni frontend, ogni endpoint pubblico del web server RESTFul supporterà unicamente comunicazioni di tipo POST.\\
 Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere, sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
 
@@ -387,21 +393,26 @@ A titolo di esempio, viene presentato \\\\%\textit{} :
 %TODO aggiungere uml di getRestroomsData che deriva da baseresult!
 L'utilizzo obbligatorio di \textit{BaseResult} (sia direttamente che attraverso ereditarietà) come valore di ritorno degli endpoint permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate.
 \subsection{Registrazione impianto}
-\paragraph{Configuratore} Per poter efficacemente spiegare il processo di registrazione di un nuovo impianto è necessario introdurre la figura del \textit{configuratore} (o \textit{installatore}) all'interno dell'architettura di sistema.\\
+\subsubsection{Configuratore} Per poter efficacemente spiegare il processo di registrazione di un nuovo impianto è necessario introdurre la figura del \textit{configuratore} (o \textit{installatore}) all'interno dell'architettura di sistema.\\
 Questa figura ha il compito di installare fisicamente le \textit{smart restrooms} sparse sul territorio adoperandosi per la cablatura, configurazione e posizionamento di tutte le parti coinvolte.\\
 Sarà responsabilità del \textit{configuratore}, infatti, il buon funzionamento del sistema locale a livello hardware; inoltre, trattandosi di apparecchiature delicate che richiedono una precisa configurazione, ogni intervento di manutenzione o potenziamento dell'infrastruttura dovrà essere eseguita da una persona certificata con questa qualifica. 
-\paragraph{Processo} 
+\subsubsection{Processo} 
 La registrazione di un nuovo impianto è un processo che coinvolgerà interamente le tre parti costituenti l'architettura di \textit{smart-restrooms}: locale, applicativa (\textit{manager}) e server.\\
-Ogni registrazione richiederà l'intervento di due tipologie di utenti: un \textit{configuratore} e un \textit{manager}.\\\\
-Come si evince dalla progettazione DBMS, ogni impianto viene identificato da un GUID univoco: esso viene generato casualmente (e univocamente) nella prima fase di registrazione effettuata da un utente \textit{manager}.\\
-Attraverso l'applicazione è infatti possibile aggiungere un nuovo \textit{public restroom} compilando alcuni campi obbligatori; al termine di questa operazione verrà consegnato all'utente \textit{manager} il GUID risultante.\\
-Tale valore verrà consegnato al \textit{configuratore} che ha predisposto fisicamente l'impianto; una volta ricevuto 
+Ogni registrazione richiederà l'intervento di due tipologie di utenti, un \textit{configuratore} e un \textit{manager}, attraverso la seguente procedura:
+\begin{enumerate}
+Al termine di questa operazione ottiene un GUID che identifica il \textit{restroom} appena creato.
+\item L'utente invia il GUID al \textit{configuratore}, che nel frattempo ha installato fisicamente il nuovo impianto.
+\item Il \textit{configuratore} inserisce la chiave di identificazione (GUID) nel controller e installa la connettività di rete.
+\end{enumerate}
+Purtroppo, allo stato attuale, non è stato predisposto alcun metodo di distribuzione delle chiavi di identificazione tra \textit{manager} e \textit{configuratore}.\\
+Si confida che, perlomeno in una prima istanza dell'applicazione, gli utenti utilizzino un mezzo di comunicazione a loro discrezione per scambiare i GUID appena creati.
+\newpage
+Il processo sopra riportato può essere efficacemente schematizzato attraverso un diagramma \textit{Activity} presentato di seguito:
 \begin{figure}[h!]
 \centering
   \includegraphics[scale=0.6]{img/activity_registration.png}
-  \caption{Mockup di \textit{consumer}}
+  \caption{Processo di registrazione di un nuovo impianto}
 \end{figure}
-
 \newpage
 %----------------------------------------------------------------------------------------
 %	IMPLEMENTAZIONE
