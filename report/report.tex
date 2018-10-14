@@ -439,13 +439,24 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \end{tabular}
 \newpage
 \subsection{Implementazione parte locale}
-\subsubsection{Manager}
-\paragraph{Caratteristiche}
-Il capitolo di progettazione di \textit{manager }prevedeva lo sviluppo di una applicazione web SPA di una certa complessità.\\
-Con questi requisiti, il team di sviluppo ha deciso di adottare \textit{Angular} come framework di sviluppo per il prodotto.
-\subsubsection{Consumer}
 \newpage
 \subsection{Implementazione parte Applicativa}
+\subsubsection{Manager}
+\paragraph{Caratteristiche}
+Il capitolo di progettazione di \textit{manager} prevedeva lo sviluppo di una applicazione web di tipo SPA caratterizzata da una certa complessità, facilità di manutenzione e scalabilità.\\
+Con queste premesse, il team di sviluppo ha deciso di adottare \textit{Angular} come framework per lo sviluppo dell'applicazione.\\\\
+Adottato specificatamente nella versione 6+, \textit{Angular} è un set di librerie frontend open-source studiate appostiamente per una creazione agevole e strutturata di SPA; creata e mantenuta tutt'ora direttamente da \textit{Google}, questo framework si posiziona al primo posto per popolarità per la creazione di progetti enterprise web.\\
+Benché infatti si presti anche alla creazione di prodotti di ridotta complessità, lo sviluppo attraverso \textit{Angular} è caratterizzato da una curva di apprendimento ripida e dalla necessità di scrivere molto codice \textit{boilerplate} per sviluppare funzionalità semplici; benché queste caratteristiche lo rendano capace di strutturare adeguatamente progetti frontend complessi, molti team di sviluppo lo ritengono uno strumento troppo potente (e difficile) per le loro necessità.\\
+Concludendo, questo \textit{framework} è stato scelto rispetto ad altre librerie popolari (come \textit{React} o \textit{Vue}) per i seguenti motivi:
+\begin{itemize}
+\item \textit{Angular} fornisce direttamente funzionalità utili allo sviluppo di SPA come \textit{Dependency Injection}, \textit{AJAX}, gestione token ecc.\\
+I suoi principali competitor, essendo librerie e non \textit{framework}, richiedono l'integrazione con dipendenze di terze parti (esponendo il prodotto a una minore mantenibilità).
+\item Grazie a una suddivisione in moduli e sottomoduli e al supporto della \textit{Dependency Injection
+}, un applicazione scritta attraverso \textit{Angular} permette di scalare la sua complessità in maniera nettamente migliore rispetto al processo non strutturato e completamente in mano al programmatore tipico delle altre librerie.
+\item Avendo già sviluppato prodotti di una certa complessità attraverso questo framework, il team di sviluppo è riuscito a rimanere particolarmente efficiente.
+\end{itemize}
+%L'applicazione è stata scritta in Typescript, linguaggio di nuova concezione per lo sviluppo frontend che permette di scrivere
+\subsubsection{Consumer}
 \subsection{Implementazione parte Server}
 \newpage
 
