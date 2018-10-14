@@ -406,12 +406,11 @@ Al termine di questa operazione ottiene un GUID che identifica il \textit{restro
 \item Il \textit{configuratore} inserisce la chiave di identificazione (GUID) nel controller e installa la connettività di rete.
 \end{enumerate}
 Purtroppo, allo stato attuale, non è stato predisposto alcun metodo di distribuzione delle chiavi di identificazione tra \textit{manager} e \textit{configuratore}.\\
-Si confida che, perlomeno in una prima istanza dell'applicazione, gli utenti utilizzino un mezzo di comunicazione a loro discrezione per scambiare i GUID appena creati.
-\newpage
+Si confida che, perlomeno in una prima istanza dell'applicazione, gli utenti utilizzino un mezzo di comunicazione a loro discrezione per scambiare i GUID appena creati.\\
 Il processo sopra riportato può essere efficacemente schematizzato attraverso un diagramma \textit{Activity} presentato di seguito:
 \begin{figure}[h!]
 \centering
-  \includegraphics[scale=0.6]{img/activity_registration.png}
+  \includegraphics[scale=0.55]{img/activity_registration.png}
   \caption{Processo di registrazione di un nuovo impianto}
 \end{figure}
 \newpage
@@ -442,7 +441,7 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \newpage
 \subsection{Implementazione parte Applicativa}
 \subsubsection{Manager}
-\paragraph{Caratteristiche}
+\paragraph{Caratteristiche Principali}
 Il capitolo di progettazione di \textit{manager} prevedeva lo sviluppo di una applicazione web di tipo SPA caratterizzata da una certa complessità, facilità di manutenzione e scalabilità.\\
 Con queste premesse, il team di sviluppo ha deciso di adottare \textit{Angular} come framework per lo sviluppo dell'applicazione.\\\\
 Adottato specificatamente nella versione 6+, \textit{Angular} è un set di librerie frontend open-source studiate appostiamente per una creazione agevole e strutturata di SPA; creata e mantenuta tutt'ora direttamente da \textit{Google}, questo framework si posiziona al primo posto per popolarità per la creazione di progetti enterprise web.\\
@@ -453,9 +452,20 @@ Concludendo, questo \textit{framework} è stato scelto rispetto ad altre libreri
 I suoi principali competitor, essendo librerie e non \textit{framework}, richiedono l'integrazione con dipendenze di terze parti (esponendo il prodotto a una minore mantenibilità).
 \item Grazie a una suddivisione in moduli e sottomoduli e al supporto della \textit{Dependency Injection
 }, un applicazione scritta attraverso \textit{Angular} permette di scalare la sua complessità in maniera nettamente migliore rispetto al processo non strutturato e completamente in mano al programmatore tipico delle altre librerie.
-\item Avendo già sviluppato prodotti di una certa complessità attraverso questo framework, il team di sviluppo è riuscito a rimanere particolarmente efficiente.
+\item Avendo già sviluppato prodotti di una certa complessità attraverso questo framework, il team di sviluppo si è dimostrato particolarmente efficiente.
 \end{itemize}
-%L'applicazione è stata scritta in Typescript, linguaggio di nuova concezione per lo sviluppo frontend che permette di scrivere
+L'applicazione è stata scritta in Typescript, super-set di Javascript che permette di scrivere codice per applicazioni web attraverso il paradigma ad oggetti.\\
+La sua notevole somiglianza con il linguaggio c\#, inoltre, ha reso lo sviluppo del lato server più semplice (dato che è stato scritto in asp.net core).
+\paragraph{Librerie}
+Segnaliamo qui le dipendenze esterne degne di nota necessarie al funzionamento del progetto:
+\begin{itemize}
+\item \textit{Angular Material:} libreria per interfacce utente basate sul \textit{material design} e largamente supportata dalla comunità dell'omonimo \textit{framework}.\\
+Gran parte degli artefatti grafici presente nell'applicazione (tabelle, notifiche, inputs) sono disegnati grazie all'utilizzo di questa versatile libreria.
+\item \textit{Ngx local storage:} libreria che consente di archiviare valori nella cache del browser attraverso una serie di strategie (indexedDB, local storage ecc.).\\
+Viene unicamente utilizzata per mantenere in memoria il \textit{loginToken}.
+\end{itemize}
+\paragraph{Codice}
+In \textit{Angular}, ogni componente visiva principale dell'applicazione viene modellata come un \textit{Component}, cioè un costrutto composto da un \textit{controller} (cioè una parte nella quale risiede la logica del componente: funzioni, variabili, hooks) e un \textit{template} (cioè, in ambito web, un sezione di HTML e CSS).
 \subsubsection{Consumer}
 \subsection{Implementazione parte Server}
 \newpage
