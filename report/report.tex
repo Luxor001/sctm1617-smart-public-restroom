@@ -15,6 +15,28 @@
 \linespread{1.2}
 \setlength{\parindent}{0pt}
 
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+
+\usepackage{color}
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+
+\usepackage{listings}
+\lstset{language=[Sharp]C,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  escapeinside={(*@}{@*)},
+  commentstyle=\color{greencomments},
+  keywordstyle=\color{bluekeywords},
+  stringstyle=\color{redstrings},
+  basicstyle=\ttfamily
+}
+
 \begin{document}
 
 %----------------------------------------------------------------------------------------
@@ -368,8 +390,7 @@ Tali considerazioni profilano la realizzazione di 4 differenti entità:
 Le sottosezioni seguenti non affronteranno l'analisi progettuale dei web server per \textit{manager} e \textit{consumer}, in quanto considerate banali e non di particolare interesse.\\ 
 Verrà in primo luogo, però, affrontata la parte di gestione dei dati: il DBMS.
 \subsubsection{DBMS}
-
-km\paragraph{Tipologia}
+\paragraph{Tipologia}
 Il particolare contesto in cui quest'applicazione è situata ha chiaramente influenzato la tipologia di DBMS scelto per l'archiviazione dati.\\
 Al termine di alcune considerazioni. il team di sviluppo scelto un DBMS i tipo NOSQL con dati formattati BSON.\\Le motivazioni che hanno portato a questa scelta possono essere così riassunte: 
 \begin{itemize}
@@ -465,8 +486,90 @@ Gran parte degli artefatti grafici presente nell'applicazione (tabelle, notifich
 Viene unicamente utilizzata per mantenere in memoria il \textit{loginToken}.
 \end{itemize}
 \paragraph{Codice}
-In \textit{Angular}, ogni componente visiva principale dell'applicazione viene modellata come un \textit{Component}, cioè un costrutto composto da un \textit{controller} (cioè una parte nella quale risiede la logica del componente: funzioni, variabili, hooks) e un \textit{template} (cioè, in ambito web, un sezione di HTML e CSS).
+In \textit{Angular}, ogni componente visiva principale dell'applicazione viene modellata come un \textit{Component}, cioè un costrutto composto da un \textit{controller} (cioè una parte nella quale risiede la logica del componente: funzioni, variabili, hooks) e un \textit{template} (cioè, in ambito web, un sezione di HTML e CSS).\\
+Questo elemento è indispensabile per specificare singole funzionalità o parti riusabili dell'applicazione, grazie alla sua sintassi precisa e inedita nel mondo dello sviluppo frontend.\\
+Considerato inoltre che i progetti \textit{Angular} devono passare attraverso una procedura di compilazione (o, più precisamente, transpilazione) dei sorgenti, si può capire come lo sviluppo di applicazioni particolarmente complesse venga agevolata: ogni file sarà esente da errori di compilazione (anche grazie all'uso del paradigma OOP) e il progetto avrà una struttura chiara e definita formalmente.
+\newpage
+Come primo esempio viene presentato il \textit{component} dedito alla login utente:
+\begin{lstlisting}
+
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+export class LoginComponent {
+// constructor(loginService: LoginService...) {}
+
+  login(form: NgForm) {
+    this.loginService.login(form.v.username, form.v.password).subscribe(success => {     
+     
+        if (success) 
+          this.router.navigate(['']);
+        else
+          this.snack.open("Wrong username or password", null, {panelClass: 'loginSnackbar'});
+    });
+  }}
+\end{lstlisting}
+Si possono notare i seguenti punti d'interesse: 
+\begin{itemize}
+\item Importazione delle dipendenze attraverso la parola chiave \textit{import}.\\
+Questo meccanismo si può considerare simile all'inclusione di package presente in C\# e Java.
+\item Dichiarazione del componente attraverso il decoratore \textit{@Component}.\\ 
+Un decoratore non è altro che un meccanismo per estendere le funzionalità di una classe attraverso il framework.
+\item Subscription del form di login: ogni tentativo di login da parte dell'utente richiamerà la lambda mostrata.\\
+In caso di successo, viene spostata la navigazione utente alla home della webApp.\\
+In caso contrario, viene mostrata una notifica di errore grazie alla libreria \textit{Angular Material}.
+\end{itemize}
+Un altra sezione di particolare interesse sono le \textit{Routes} e le \textit{Guards}.\\
+Le prime vengono utilizzate dal framework per impostare gli url a cui l'applicazione dovrà rispondere: attraverso di esse sarà possibile specificare quale \textit{Component} mostrare e con quali parametri.\\
+Le seconde, invece, possono essere associate a \textit{routes} per determinare la loro attivazione in base alle condizioni inserite: \textit{manager} utilizza delle \textit{guards} per prevenire che utenti non autenticati possano accedere a sezioni protette dell'applicazione.\\\\
+Un esempio di tale guard viene presentata di seguito:
+\begin{lstlisting}
+
+import { Injectable } from "@angular/core";
+@Injectable()
+export class AuthGuard implements CanActivate {
+//  constructor(storage: LocalStorage...) {}
+
+    canActivate() {
+        if (!this.loginService.user == null)
+            return true;
+
+        return this.storage.getItem('loginToken').
+        pipe(concatMap(loginToken => {
+            if (loginToken == null) {
+                this.router.navigate(['/login']);
+                return of(false);
+            }
+            return this.loginService.loginByToken(loginToken);
+        }));
+    }
+}
+\end{lstlisting}
+Anche qui vengono evidenziati i seguenti punti d'interesse:
+\begin{itemize}
+\item In modo analogo al componente descritto in precedenza, in questa classe viene specificato un decoratore (\textit{@Injectable}) per donare alla classe uno specifico comportamento.
+\item L'implementazione dell'interfaccia \textit{CanActivate} serve a specificare la tipologia di \textit{Guard} che verrà implementata: in questo caso si tratterà della più semplice, cioè per determinare se attivare o no una certa \textit{Route} richiesta (attraverso il metodo \textit{canActivate()}.
+\item \textit{this.storage.getItem()} rappresenta è un esempio di utilizzo della libreria \textit{Ngx local storage} descritta nella sezione precedente: in questo caso mostrato il reperimento di un \textit{loginToken} di sessione.\\
+Qualora il token non esista (e quindi l'utente non sia autenticato) allora si rimanda l'applicazione all'indirizzo di login.\\
+In caso contrario la \textit{Route} viene accettata e fatta proseguire.
+\end{itemize}
 \subsubsection{Consumer}
+\paragraph{Caratteristiche Principali}
+Il capitolo di progettazione di \textit{consumer} evidenzia la necessità di sviluppare \textit{consumer} come un'applicazione di tipo PWA.\\
+Questa scelta è stata dovuta principalmente ai suoi più rapidi tempi di sviluppo rispetto a una normale app nativa; date le ridotte risorse a disposizione, il team di sviluppo è sempre stato propenso a ridurre i costi, dove possibile.\\
+Pertanto, per evitare di investire tempo nella formazione di personale per l'utilizzo di tecnologie specifiche per PWA, è stato deciso di utilizzare \textit{Angular} per lo sviluppo di \textit{Consumer}.\\\\
+La natura poliedrica di questo framework, infatti, permette di aggiungere il supporto alle \textit{Progressive Web apps} attraverso dei semplici moduli e pochi file di configurazione aggiuntivi: gran parte del funzionamento dell'app, infatti, verrà gestita da \textit{Angular} (ad esempio, non sarà necessario sviluppare direttamente un \textit{service worker}).\\
+Infine, anche in questo caso verrà utilizzato \textit{Typescript} come linguaggio di programmazione
+\paragraph{Librerie}
+
+Segnaliamo qui le dipendenze esterne degne di nota necessarie al funzionamento del progetto:
+\begin{itemize}
+\item \textit{Angular Material:} anche in questo caso è stata utilizzata \textit{Angular Material} come libreria per interfacce utente.\\
+\end{itemize}
+\paragraph{Codice}
 \subsection{Implementazione parte Server}
 \newpage
 
