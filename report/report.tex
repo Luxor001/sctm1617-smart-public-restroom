@@ -34,8 +34,144 @@
   commentstyle=\color{greencomments},
   keywordstyle=\color{bluekeywords},
   stringstyle=\color{redstrings},
-  basicstyle=\ttfamily
+  basicstyle={\footnotesize\ttfamily},   
 }
+
+
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{darkgray}{rgb}{0.4, 0.4, 0.4}
+%\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\definecolor{editorGray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{editorOcher}{rgb}{1, 0.5, 0} % #FF7F00 -> rgb(239, 169, 0)
+\definecolor{editorGreen}{rgb}{0, 0.5, 0} % #007C00 -> rgb(0, 124, 0)
+\definecolor{orange}{rgb}{1,0.45,0.13}		
+\definecolor{olive}{rgb}{0.17,0.59,0.20}
+\definecolor{brown}{rgb}{0.69,0.31,0.31}
+\definecolor{purple}{rgb}{0.38,0.18,0.81}
+\definecolor{lightblue}{rgb}{0.1,0.57,0.7}
+\definecolor{lightred}{rgb}{1,0.4,0.5}
+\usepackage{upquote}
+\usepackage{listings}
+% CSS
+\lstdefinelanguage{CSS}{
+  keywords={color,background-image:,margin,padding,font,weight,display,position,top,left,right,bottom,list,style,border,size,white,space,min,width, transition:, transform:, transition-property, transition-duration, transition-timing-function},	
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  alsoletter={:},
+  alsodigit={-}
+}
+
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+  morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morestring=[b]",
+  morestring=[b]'
+}
+
+\lstdefinelanguage{HTML5}{
+  language=html,
+  sensitive=true,	
+  alsoletter={<>=-},	
+  morecomment=[s]{<!-}{-->},
+  tag=[s],
+  otherkeywords={
+  % General
+  >,
+  % Standard tags
+	<!DOCTYPE,
+  </html, <html, <head, <title, </title, <style, </style, <link, </head, <meta, />,
+<agm-info-window, </agm-info-window, <agm-marker, </agm-marker, <agm-map, </agm-map, <app-marker-detail, </app-marker-detail
+	% body
+	</body, <body,
+	% Divs
+	</div, <div, </div>, 
+	% Paragraphs
+	</p, <p, </p>,
+	% scripts
+	</script, <script,
+  % More tags...
+  <canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video>, <image, </image>, <header, </header, <article, </article
+  },
+  ndkeywords={
+  % General
+  =,
+  % HTML attributes
+  charset=, src=, id=, width=, height=, style=, type=, rel=, href=, latitude=, longitude=
+  % SVG attributes
+  fill=, attributeName=, begin=, dur=, from=, to=, poster=, controls=, x=, y=, repeatCount=, xlink:href=,
+  % properties
+  margin:, padding:, background-image:, border:, top:, left:, position:, width:, height:, margin-top:, margin-bottom:, font-size:, line-height:,
+	% CSS3 properties
+  transform:, -moz-transform:, -webkit-transform:,
+  animation:, -webkit-animation:,
+  transition:,  transition-duration:, transition-property:, transition-timing-function:,
+  }
+}
+
+\lstdefinestyle{htmlcssjs} {%
+  % General design
+%  backgroundcolor=\color{editorGray},
+  basicstyle={\footnotesize\ttfamily},   
+  % line-numbers
+  % Code design
+  identifierstyle=\color{black},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywordstyle=\color{editorGreen}\bfseries,
+  stringstyle=\color{editorOcher}\ttfamily,
+  commentstyle=\color{brown}\ttfamily,
+  % Code
+  language=HTML5,
+  alsolanguage=JavaScript,
+  alsodigit={.:;},	
+  tabsize=2,
+  showtabs=false,
+  showspaces=false,
+  showstringspaces=false,
+  extendedchars=true,
+  breaklines=true,
+}
+%
+\lstdefinestyle{py} {%
+language=python,
+literate=%
+*{0}{{{\color{lightred}0}}}1
+{1}{{{\color{lightred}1}}}1
+{2}{{{\color{lightred}2}}}1
+{3}{{{\color{lightred}3}}}1
+{4}{{{\color{lightred}4}}}1
+{5}{{{\color{lightred}5}}}1
+{6}{{{\color{lightred}6}}}1
+{7}{{{\color{lightred}7}}}1
+{8}{{{\color{lightred}8}}}1
+{9}{{{\color{lightred}9}}}1,
+basicstyle=\footnotesize\ttfamily, % Standardschrift
+numbers=left,               % Ort der Zeilennummern
+%numberstyle=\tiny,          % Stil der Zeilennummern
+%stepnumber=2,               % Abstand zwischen den Zeilennummern
+numbersep=5pt,              % Abstand der Nummern zum Text
+tabsize=4,                  % Groesse von Tabs
+extendedchars=true,         %
+breaklines=true,            % Zeilen werden Umgebrochen
+keywordstyle=\color{blue}\bfseries,
+frame=b,
+commentstyle=\color{brown}\itshape,
+stringstyle=\color{editorOcher}\ttfamily, % Farbe der String
+showspaces=false,           % Leerzeichen anzeigen ?
+showtabs=false,             % Tabs anzeigen ?
+xleftmargin=17pt,
+framexleftmargin=17pt,
+framexrightmargin=5pt,
+framexbottommargin=4pt,
+%backgroundcolor=\color{lightgray},
+showstringspaces=false,      % Leerzeichen in Strings anzeigen ?
+}%
+%
+
 
 \begin{document}
 
@@ -378,7 +514,7 @@ Di seguito viene presentato un primo mockup coerente con i punti precedentemente
   \caption{Mockup di \textit{consumer}}
 \end{figure}
 \newpage
-\subsection{Progettazione parte server}
+\subsection{Progettazione parte centrale}
 La sezione di analisi dell'architettura ha evidenziato la necessità di creare un apposito \textit{server} RESTFul capace di fornire i dati richiesti dalle due applicazioni frontend (\textit{consumer} e \textit{manager}) e di raccogliere (e immagazzinare) i dati inviati dai singoli impianti installati.\\
 Tali considerazioni profilano la realizzazione di 4 differenti entità:
 \begin{itemize}
@@ -512,6 +648,7 @@ export class LoginComponent {
     });
   }}
 \end{lstlisting}
+\phantom{\\}
 Si possono notare i seguenti punti d'interesse: 
 \begin{itemize}
 \item Importazione delle dipendenze attraverso la parola chiave \textit{import}.\\
@@ -556,6 +693,7 @@ Anche qui vengono evidenziati i seguenti punti d'interesse:
 Qualora il token non esista (e quindi l'utente non sia autenticato) allora si rimanda l'applicazione all'indirizzo di login.\\
 In caso contrario la \textit{Route} viene accettata e fatta proseguire.
 \end{itemize}
+\newpage
 \subsubsection{Consumer}
 \paragraph{Caratteristiche Principali}
 Il capitolo di progettazione di \textit{consumer} evidenzia la necessità di sviluppare \textit{consumer} come un'applicazione di tipo PWA.\\
@@ -567,11 +705,61 @@ Infine, anche in questo caso verrà utilizzato \textit{Typescript} come linguagg
 
 Segnaliamo qui le dipendenze esterne degne di nota necessarie al funzionamento del progetto:
 \begin{itemize}
-\item \textit{Angular Material:} anche in questo caso è stata utilizzata \textit{Angular Material} come libreria per interfacce utente.\\
+\item \textit{Angular Material:} anche in questo caso è stata utilizzata questa libreria per il disegno e la gestione delle interfacce utente.\\
+Utilizzare la stessa dipendenza nei due prodotti si è dimostrato utile nel risparmiare sui costi di sviluppo, dato che la tecnologia adottata era divenuta familiare.
+\item \textit{Angular Google Maps Core:} i requisiti esposti dal committente rendono chiaro il desiderio di mostrare una \textit{gmap} per orientare l'utente nella ricerca di un bagno pubblico; ciò è stato possibile grazie all'inclusione della libreria \textit{Angular Google Maps Core} all'interno del progetto.\\
+Per poter avviare il servizio, inoltre, è stato necessario fornire all'applicazione un apposita chiave di identificazione.
+
 \end{itemize}
 \paragraph{Codice}
-\subsection{Implementazione parte Server}
+Dato il suo sviluppo in \textit{Angular} come il già analizzato \textit{manager}, non verranno qua analizzate le modalità di costruzione delle funzionalità di \textit{consumer}, che si possono infatti considerare pressoché simili.\\
+Inoltre, dato che gran parte del codice necessario per rendere \textit{consumer} una PWA non è stato sviluppato direttamente dal team ma generato automaticamente dal framework (attraverso un tool di transpilazione chiamato \textit{angular-cli}) non si ritiene meritevole di interesse il suo approfondimento.\\\\
+Tuttavia, si ritiene importante approfondire le modalità con le quali è stato possibile mostrare a schermo una \textit{gmap} interattiva con l'utente, in particolare il lato \textit{template} che è stato tralasciato nella precedente sezione.\\
+Innanzitutto, \textit{Angular} consente di effettuare un \textit{binding} (cioè un collegamento) tra una variabile presente nel \textit{controller} e il rispettivo \textit{template} attraverso due modalità: \textit{box casing} (cioè racchiudendo l'attributo a cui assegnare una variabile tramite i caratteri []) oppure tramite \textit{double brackets} (cioè racchiudere il nome della variabile assegnata a un certo attributo tramite i caratteri \{\}).\\\\
+Ad esempio, l'implementazione della \textit{gmap} nel componente è stato effettuato attraverso un binding di tipo \textit{box casing}, come mostrato di seguito: 
+\begin{lstlisting}[style=htmlcssjs]
+
+<agm-map [latitude]="userPosition[0]" [longitude]="userPosition[1]"
+[zoom]="14">
+
+  <agm-marker *ngFor="let restRoom of restRooms; let i = index"
+              (markerClick)="restRoomSelected(restRoom)"
+              [latitude]="restRoom.address[0]"
+              [longitude]="restRoom.address[1]">
+
+    <agm-info-window>
+      <app-marker-detail [restRoom]="restRoom"></app-marker-detail>
+    </agm-info-window>
+  </agm-marker>
+</agm-map>
+\end{lstlisting}
 \newpage
+Oltre al \textit{binding}, si possono notare i seguenti punti d'interesse:
+\begin{itemize}
+	\item \textit{agm-map}, \textit{agm-marker} e \textit{agm-info-window} sono componenti esterni forniti dalla libreria \textit{Angular Material}.\\ Come qualsiasi altro elemento HTML, possono essere  istanziati semplicemente specificando il loro nome nel template. 
+	\item Il componente \textit{agm-marker} viene istanziato tante volte quanti sono gli elementi presenti nell'array \textit{restRooms} del \textit{controller} (grazie alla direttiva \textit{*ngFor}).\\ Visivamente, ciò permette di disegnare i \textit{marker} descritti nell'analisi dei requisiti e mostrati nel mockup della fase di progettazione.
+	\item \textit{app-marker-detail} invece corrisponde a un componente scritto dal team di sviluppo: esso servirà a rappresentare il contenuto esposto (\textit{popover}) al click di un marker.
+\end{itemize}
+\newpage
+\subsection{Implementazione parte centrale}
+\subsubsection{Server}
+\paragraph{Caratteristiche}
+La progettazione della parte centrale del sistema ha previsto la creazione di un generico server RESTFul in grado di rispondere alle richieste delle altre entità coinvolte nel sistema.\\
+Dato che i requisti del committente non hanno dato alcuna indicazione sul suo ambiente di destinazione e la progettazione non ha individuato vincoli in tal senso, il team di sviluppo ha optato per una soluzione multipiattaforma, gratuita e opensource come \textit{ASP.NET Core}.\\
+Questo framework di sviluppo backend è stato creato e tutt'ora direttamente mantenuto da \textit{Microsoft}, in futura sostituzione del più classico ambiente ASP.NET; dalla sua introduzione (circa 2016) ha ricevuto una crescente popolarità come soluzione general-purpose backend.\\
+Comunque, le motivazioni che hanno spinto il team di sviluppo a scegliere questa tecnologia possono essere così riassunte: 
+\begin{itemize}
+\item Le elevate prestazioni garantite dal framework (sopratutto in situazioni di elevato carico da parte di host multipli) lo rendono perfettamente adatto al carico di lavoro previsto del progetto.
+\item La natura multipiattaforma di \textit{ASP.NET Core} consente una notevole flessibilità sull'ambiente di hosting di destinazione.\\
+Ciò consentirà una scelta più ampia e concorrenziale e, pertanto, un maggiore ritorno economico del sistema.
+\item La stretta vicinanza con l'ambiente di sviluppo delle applicazioni frontend (scritte in Typescript) ha migliorato l'efficienza generale del team.\\
+Data la notevole somiglianza dei linguaggi C\# e Typescript, infatti, non è stato necessario assegnare risorse nella formazione degli sviluppatori.
+\end{itemize}
+
+\subsubsection{DBMS}
+\paragraph{Caratteristiche Principali}
+\newpage
+
 
 
 %----------------------------------------------------------------------------------------
