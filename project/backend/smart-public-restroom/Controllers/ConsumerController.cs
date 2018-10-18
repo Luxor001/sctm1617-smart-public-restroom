@@ -10,7 +10,7 @@ using static smartpublicrestroom.Controllers.ManagerController;
 
 namespace smartpublicrestroom.Controllers
 {
-    [Route("api/data")]
+    [Route("api/consumer")]
     [ApiController]
     public class ConsumerController : ControllerBase
     {

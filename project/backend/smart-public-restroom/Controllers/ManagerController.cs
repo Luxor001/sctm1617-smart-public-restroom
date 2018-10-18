@@ -144,8 +144,7 @@ namespace smartpublicrestroom.Controllers
 
             User newUser = new User(ObjectId.GenerateNewId(), loginData.username, PasswordHash.HashPassword(loginData.password), loginData.fullname);
             usersCollection.InsertOne(newUser);
-
-
+            
             IMongoCollection<Login> loginCollection = _db.GetCollection<Login>("Login");
             loginCollection.InsertOne(new Login(ObjectId.GenerateNewId(), newUser, Guid.NewGuid().ToString()));
 

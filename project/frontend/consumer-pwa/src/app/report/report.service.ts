@@ -12,7 +12,7 @@ export class ReportService {
   constructor(private http: HttpClient) { }
 
   sendReport(reportData: Report) {
-    return this.http.post("api/data/sendreport", reportData)
+    return this.http.post("api/consumer/sendreport", reportData)
       .pipe(concatMap((result: any) => {
         return of(result.result);
       }));

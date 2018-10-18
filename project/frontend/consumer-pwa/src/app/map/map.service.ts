@@ -11,7 +11,7 @@ export class MapService {
   constructor(private http: HttpClient) { }
 
   getNearbyRestrooms() {
-    return this.http.post<RestRoom[]>("api/data/getRestrooms", {}).pipe(map((result: any) => {
+    return this.http.post<RestRoom[]>("api/consumer/getRestrooms", {}).pipe(map((result: any) => {
 
       return result.filter(restroom => restroom.sensorData != null).map(restroom => {
         restroom.address = restroom.address.map(address => parseFloat(address));
