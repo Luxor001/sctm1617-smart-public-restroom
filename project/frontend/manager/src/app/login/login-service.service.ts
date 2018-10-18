@@ -24,8 +24,8 @@ export class LoginService {
       }));
   }
 
-  public loginByToken(loginToken: string): Observable<boolean> {
-    return this.http.post('api/manager/login', { loginToken: loginToken })
+  public loginByToken(): Observable<boolean> {
+    return this.http.post('api/manager/login', {})
       .pipe(map((result: any) => {
         if(result.result)
         this.user = result.user;

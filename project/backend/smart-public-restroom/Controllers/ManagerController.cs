@@ -14,10 +14,6 @@ namespace smartpublicrestroom.Controllers
     [ApiController]
     public class ManagerController : ControllerBase
     {
-        public class BaseData
-        {
-            public string loginToken { get; set; }
-        }
         public class AddRestroomData
         {
             public string guid { get; set; }
@@ -29,7 +25,7 @@ namespace smartpublicrestroom.Controllers
         {
             public int restroomId { get; set; }
         }
-        public class LoginData : BaseData
+        public class LoginData
         {
             public string username { get; set; }
             public string password { get; set; }
@@ -42,6 +38,10 @@ namespace smartpublicrestroom.Controllers
         {
             public string loginToken { get; set; }
             public User user { get; set; }
+        }
+        public class GetRestroomsResult: BaseResult
+        {
+            public List<RestRoom> restrooms { get; set; }
         }
 
         public class ReportsResult : BaseResult
@@ -57,11 +57,16 @@ namespace smartpublicrestroom.Controllers
         
         [Route("getRestrooms")]
         [HttpPost] 
-        public async Task<ActionResult<List<RestRoom>>> GetToilets()
+        public ActionResult<GetRestroomsResult> GetToilets()
         {
+            GetRestroomsResult result = new GetRestroomsResult();
+            if (!ValidUserSession())
+                return result;
+            
             IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
-            List<RestRoom> restrooms = restroomsCollection.AsQueryable().ToList();
-            return restrooms;
+            result.restrooms = restroomsCollection.AsQueryable().ToList();
+            
+            return result;
         }
 
         [Route("addRestroom")]
@@ -69,12 +74,13 @@ namespace smartpublicrestroom.Controllers
         public ActionResult<AddRestroomResult> AddRestroom(AddRestroomData addRestroomData)
         {
             AddRestroomResult result = new AddRestroomResult();
-
+            if (!ValidUserSession())
+                return result;
+            
             IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
-
             Models.RestRoom newRestroom = new Models.RestRoom(addRestroomData.guid, addRestroomData.address.Split(','), addRestroomData.cityAddress, addRestroomData.company, "");
-
             restroomsCollection.InsertOne(newRestroom);
+
             result.Result = true;
             return result;
         }
@@ -85,8 +91,9 @@ namespace smartpublicrestroom.Controllers
         {
             LoginResult result = new LoginResult();
 
+            string loginToken = Request.Headers["loginToken"].FirstOrDefault();
             // username-password authentication
-            if (loginData.loginToken == null)
+            if (loginToken == null)
             {
                 IMongoCollection<User> usersCollection = _db.GetCollection<User>("User");
                 User user = usersCollection.Find(currUser => loginData.username == currUser.username).FirstOrDefault();
@@ -104,10 +111,10 @@ namespace smartpublicrestroom.Controllers
             }
 
             // token-based authentication
-            if (loginData.loginToken != null)
+            if (loginToken != null)
             {
                 IMongoCollection<Login> loginCollections = _db.GetCollection<Login>("Login");
-                Login login = loginCollections.Find(currLogin => currLogin.Logintoken == loginData.loginToken).FirstOrDefault();
+                Login login = loginCollections.Find(currLogin => currLogin.Logintoken == loginToken).FirstOrDefault();
                 if (login == null)
                 {
                     result.message = "wrong loginToken";
@@ -151,11 +158,24 @@ namespace smartpublicrestroom.Controllers
         public ActionResult<ReportsResult> GetReports(LoginData data)
         {
             ReportsResult result = new ReportsResult();
+            if (!ValidUserSession())
+                return result;
+
             IMongoCollection<Models.Report> reportsCollection = _db.GetCollection<Models.Report>("Report");
             result.reports = reportsCollection.AsQueryable().ToList();
 
             result.Result = true;
             return result;
+        }
+
+        public bool ValidUserSession()
+        {
+            string loginToken = Request.Headers["loginToken"].FirstOrDefault();
+            if (loginToken == null)
+                return false;
+            IMongoCollection<Login> loginCollections = _db.GetCollection<Login>("Login");
+            Login login = loginCollections.Find(currLogin => currLogin.Logintoken == loginToken).FirstOrDefault();
+            return login != null;
         }
     }
 }
