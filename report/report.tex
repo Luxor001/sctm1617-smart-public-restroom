@@ -755,7 +755,53 @@ Ciò consentirà una scelta più ampia e concorrenziale e, pertanto, un maggiore
 \item La stretta vicinanza con l'ambiente di sviluppo delle applicazioni frontend (scritte in Typescript) ha migliorato l'efficienza generale del team.\\
 Data la notevole somiglianza dei linguaggi C\# e Typescript, infatti, non è stato necessario assegnare risorse nella formazione degli sviluppatori.
 \end{itemize}
+Precisamente, il server implementato in \textit{ASP.NET Core} è di tipo \textit{Web Api}, cioè specifico per la creazione di server RESTFul.\\
+La prossima sezione si dedicherà all'analisi delle API implementate più rilevanti a fini di studio.
+\paragraph{API}
+Strutturalmente, il server è progettato in una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
+Ogni controller è caratterizzato da una radice di API diversa: ad esempio tutti gli endpoint di \textit{ConsumerController} sono nella forma:
+\begin{center}
+\textit{https://public-restrooms/api/consumer/api-name}
+\end{center}
+Come inoltre già previsto dalla fase di progettazione, tutte le interfacce esposte del server prevedono un input nel metodo HTTP POST, con un \textit{payload} che varia in base all'endpoint selezionato.\\
+Tuttavia, sebbene i payload di ingresso cambino radicalmente per ogni endpoint esposto, il valore di ritorno di essi è prevedibile grazie alla derivazione di una classe base chiamata \textit{BaseResult}, che qui brevemente esponiamo:
+\begin{lstlisting}
 
+public abstract class BaseResult
+{
+    public bool Result { get; set; }
+    public string message { get; set; }
+}
+\end{lstlisting}
+Questo meccanismo fornisce a tutti i client del sistema un contratto di comunicazione per ogni possibile API esposta dal server.\\ 
+Ne consegue che l'implementazione delle chiamate HTTP è notevolmente semplificata e coerente.\\\\
+Viene qui mostrato un primo esempio di endpoint del server che adotta questo meccanismo, cioè un interfaccia atta alla registrazione di nuove \textit{restRooms} inviate dall'utente:
+\newpage
+\begin{lstlisting}
+[Route("addRestroom")]
+[HttpPost]
+public ActionResult<AddRestroomResult> AddRestroom(AddRestroomData addRestroomData)
+{
+    AddRestroomResult result = new AddRestroomResult();
+    if (!ValidUserSession())
+            return result;
+        
+    IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
+    
+    Models.RestRoom newRestroom = new Models.RestRoom(addRestroomData.guid, addRestroomData.address.Split(','), addRestroomData.cityAddress, addRestroomData.company, "");
+    restroomsCollection.InsertOne(newRestroom);
+
+    result.Result = true;
+    return result;    
+}
+\end{lstlisting}
+Da questo esempio si evidenziano i seguenti punti fondamentali:
+\begin{itemize}
+	\item Trattandosi di un API per app \textit{manager}, la prima operazione che viene effettuata è il controllo della sessione utente corrente attraverso il metodo \textit{ValidUserSession()}.\\
+	Ciò avverrà ricercando il \textit{loginToken} inviato tra gli headers di ogni richiesta nel DBMS: qualora esista un record di login recente contenente il \textit{loginToken} inviato, allora la richiesta sarà autenticata.
+	\item Grazie al sistema di \textit{Dependency Injection} di \textit{ASP.NET Core}, viene recuperata la sessione di connessione con il DBMS corrente (attraverso il metodo \textit{GetCollection()}).
+	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente della buona riuscita dell'operazione.
+\end{itemize}
 \subsubsection{DBMS}
 \paragraph{Caratteristiche Principali}
 \newpage
