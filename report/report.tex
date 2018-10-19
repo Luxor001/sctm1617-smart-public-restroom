@@ -804,6 +804,17 @@ Da questo esempio si evidenziano i seguenti punti fondamentali:
 \end{itemize}
 \subsubsection{DBMS}
 \paragraph{Caratteristiche Principali}
+La fase di progettazione relativa al DBMS ipotizzava l'utilizzo di un database NOSQL con dati in formato BSON.\\
+Sebbene esista un ampia scelta di prodotti per database con queste caratteristiche, il team di sviluppo ha scelto \textit{MongoDb} come prodotto commerciale a supporto dell'applicazione a seguito delle seguenti considerazioni: 
+\begin{itemize}
+\item \textit{Maturità}: la progettazione di un sistema di notevole complessità e consistente flusso dati richiede l'utilizzo di tecnologie affidabili e ben supportate.\\
+Considerato che nessun membro del team di sviluppo annovera esperienze di utilizzo di database NOSQL, si è scelto di non cimentarsi nell'utilizzo di prodotti meno conosciuti sul quale vi sarà minore supporto e documentazione.
+\item \textit{Integrazione}: sono disponibili gratuitamente dei set di librerie per integrare \textit{ASP.NET Core} con \textit{MongoDB}.\\
+Ciò ha permesso ovviamente di velocizzare i tempi di sviluppo in quanto la connessione con il DBMS ha richiesto una configurazione minimale.
+\item \textit{Hosting}: sono disponibili soluzioni di hosting gratuite (fornite direttamente dalla \textit{MongoDb Inc.}) per l'utilizzo del DBMS su cloud.\\
+Oltre che essere semplici da utilizzare, non hanno vincoli di durata e le prestazioni generali sono accettabili per un utilizzo iniziale del sistema; è chiaramente possibile aumentare adeguatamente le prestazioni del \textit{Tier} in qualsiasi momento.
+\end{itemize}
+
 \newpage
 
 
@@ -836,7 +847,7 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 
-
+ 
 %----------------------------------------------------------------------------------------
 %	ANALISI DI DEPLOYMENT SU LARGA SCALA
 %----------------------------------------------------------------------------------------
