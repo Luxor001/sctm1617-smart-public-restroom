@@ -278,19 +278,19 @@ Nel dettaglio ci si aspetta che un utente possa, dato uno specifico impianto, vi
 \item Indicazioni sul tasso di riempimento di ogni pattumiera presente, indicata in centesimi.
 \item Indicazioni sullo stato aperto/chiuso di ogni singola cella dell'impianto.
 \item Indicazioni sullo stato disponibile/terminata di ogni dispenser di carta igienica presente nelle celle dell'impianto.
-\item Indicazioni sullo stato funzionante/non funzionante delle luci di cortesia ad ogni cella.
+\item Indicazioni sullo stato funzionante/non funzionante delle luci di cortesia di ogni cella.
 \item Indicazioni sul tasso di umidità di ogni cella dell'impianto.
 \item Indicazioni su eventuale presenza di fumo.
 \end{itemize}
 Le informazioni sopra riportate dovranno essere visionabili attraverso un apposita app chiamata \textit{manager}, che fungerà da supporto gestionale dei bagni pubblici installati.\\
-A fronte infatti di un semplice autenticazione tramite utente/password, infatti, l'app dovrà inoltre consentire di: 
+A fronte di un semplice autenticazione tramite utente/password, infatti, l'app dovrà consentire di: 
 \begin{itemize}
 \item Aggiungere nuovi impianti al sistema.
 \item Visualizzare e, all'occorrenza, modificare alcune informazioni di carattere generale sui bagni pubblici installati, come ad esempio indirizzo, coordinate GPS e azienda di manutenzione assegnata.
 \item Aggiungere nuovi utenti di amministrazione.
 \item Visualizzare eventuali report utente sullo stato del sistema dell'app \textit{consumer}.
 \end{itemize}
-Si dovrà anche fornire un apposita app (chiamata \textit{consumer}) a supporto di tutti i cittadini e turisti che si vogliono recare in un ambito pubblico in un certo momento della giornata.\\
+Si dovrà anche fornire un apposita app (chiamata \textit{consumer}) a supporto di tutti i cittadini e turisti che si vogliono recare in un ambiente pubblico in un certo momento della giornata.\\
 L'app dovrà mostrare a schermo la locazione di ogni bagno pubblico (tramite \textit{markers} o simile) disponibile e, all'occorrenza, riportare lo stato degli stessi: qualora un bagno pubblico non sia agibile per qualche motivo, tale informazione dovrà essere opportunamente riportata.\\
 Nel dettaglio, l'app \textit{consumer} dovrà consentire di:
 \begin{itemize}
@@ -432,7 +432,7 @@ La comunicazione tra la parte \textit{centrale} e parti \textit{applicative} e \
 	\item \textit{Stateless}: non mantenendo su server alcuna informazione circa il contesto durante la connessione, ogni sessione utente è più sicura, performante e semplice.
 	\item Compatibilità: essendo riconosciuto come standard \textit{de facto} nelle comunicazioni client-server (in virtù anche dei suoi requisiti meno stringenti rispetto ad altre forme di trasmissione formali come WSDL) è del tutto ragionevole considerare RESTFul un interfaccia applicabile in qualsiasi contesto di rete moderno.
 	\item Affidabilità: una trasmissione RESTful JSON è composta sostanzialmente da una connessione HTTP tramite TCP/IP con un formato dati a bassissimo \textit{overhead}.\\
-	Pertanto, ogni connessione si concluderà ad ogni singolo invio di dati:  ciò rende questa forma di comunicazione appetibile in contesti in cui non è possibile assicurare una connessione di rete stabile.
+	Pertanto, ogni connessione si concluderà con un singolo invio di dati:  ciò rende questa forma di comunicazione appetibile in contesti in cui non è possibile assicurare una connessione di rete stabile.
 \end{itemize}
 Viene riportato un diagramma dell'architettura logica della progettazione appena descritta:
 \begin{figure}[h!]
@@ -479,7 +479,7 @@ Viene quindi presentato un breve diagramma di attività che riassume il funziona
   \caption{Login \textit{manager}}
 \end{figure}
 \paragraph{Design}
-Trattandosi di un applicazione di gestione e amministrazione, \textit{manager} non presenterà un'interfaccia ottimizzata per dispositivi mobile: si presume infatti che tutti gli utenti del sistema utilizzeranno il prodotto tramite uno schermo con sufficiente larghezza (ad esempio tramite un PC Fisso).\\Per questo motivo, il design si è incentrato su un interfaccia tipica per dispositivi desktop, come evidenziabile dal mockup seguente: 
+Trattandosi di un applicazione di gestione e amministrazione, \textit{manager} non presenterà un'interfaccia ottimizzata per dispositivi mobili: si presume infatti che tutti gli utenti del sistema utilizzeranno il prodotto tramite uno schermo con sufficiente larghezza (ad esempio tramite un PC Fisso).\\Per questo motivo, il design si è incentrato su un interfaccia tipica per dispositivi desktop, come evidenziabile dal mockup seguente: 
 \begin{figure}[h!]
 \centering
   \includegraphics[scale=0.20]{img/mockup-manager.png}
@@ -489,7 +489,7 @@ A causa di una relativa familiarità a riguardo, il team di sviluppo si dedicher
 \newpage
 \subsubsection{Consumer}
 \paragraph{Ambiente}
-I requisiti esposti dal committente suggeriscono che \textit{consumer} debba essere un applicazione a larga diffusione, facile da utilizzare e performante; in altre parole, un applicazione il cui utilizzo da un grande numero di persone (come cittadini e turisti) sia fondamentale.\\
+I requisiti esposti dal committente suggeriscono che \textit{consumer} debba essere un'applicazione a larga diffusione, facile da utilizzare e performante; in altre parole, un applicazione il cui utilizzo da un grande numero di persone (come cittadini e turisti) sia fondamentale.\\
 Questa considerazione porta all'adozione di esperienze utente (UX) e soluzioni popolari, atte a non scoraggiare l'utente finale dall'utilizzo di \textit{consumer} a causa di un eccessiva complessità; considerato inoltre che l'applicazione sarebbe indirizzata all'utilizzo anche da parte di turisti, il team di sviluppo si adopererà per lo sviluppo di una \textit{mobile application}.\\
 Tuttavia, ciò comporterebbe una lievitazione considerevole dei costi di sviluppo: seppur ridotta in termini di funzionalità, sarebbe necessario infatti sviluppare un applicazione per ogni sistema operativo \textit{mobile} presente sul mercato (\textit{Android} e \textit{iOS}).\\\\
 A seguito di tali considerazioni, si è deciso di sviluppare \textit{consumer} come PWA (\textit{Progressive Web App}) garantendo così i seguenti vantaggi:
@@ -501,7 +501,7 @@ Ciò permette di garantire all'utente una UX da applicazione nativa, pur rimanen
 \item Familiarità: come per \textit{manager}, le scelte progettuali di \textit{consumer} sono state parzialmente influenzate dallo \textit{skill set} preesistente del team di sviluppo. 
 \end{itemize}
 Come per l'applicazione di amministrazione, tuttavia, emergono delle problematiche relative alle tecnologie supportate dai dispositivi per la PWA: alcuni device infatti potrebbero rivelarsi incompatibili perché troppo datati.\\
-Benché questo aspetto vada chiaramente in contrasto con la necessità di rendere \textit{consumer} utilizzata da un gran numero di utenti, i requisiti funzionali richiesti dal committente saranno comunque rispettati nella loro totalità.\\
+Benché questo aspetto vada chiaramente in contrasto con la necessità di rendere \textit{consumer} utilizzata da un gran numero di utenti, i requisiti funzionali richiesti dal committente verranno rispettati nella loro totalità.\\
 L'applicazione sarà comunque utilizzabile come un normale sito web: soltanto alcuni aspetti avanzati come l'installazione nativa, infatti, potranno risultare incompatibili.\newpage
 \paragraph{Design}
 La progettazione grafica di \textit{consumer} si è esclusivamente incentrata sulla creazione di un'app per dispositivi mobili incentrata sulla semplicità e immediatezza.\\
@@ -520,11 +520,11 @@ Tali considerazioni profilano la realizzazione di 4 differenti entità:
 \begin{itemize}
 	\item Un web server per la fornitura delle risorse di \textit{manager}.
 	\item Un web server per la fornitura delle risorse di \textit{consumer}.
-	\item Un web server RESTful atto a rispondere a tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
+	\item Un web server RESTFul atto a rispondere a tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
 	\item Un DBMS per archiviare le informazioni inviate dai client.
 \end{itemize}
 Le sottosezioni seguenti non affronteranno l'analisi progettuale dei web server per \textit{manager} e \textit{consumer}, in quanto considerate banali e non di particolare interesse.\\ 
-Verrà in primo luogo, però, affrontata la parte di gestione dei dati: il DBMS.
+Verrà però in primo luogo affrontata la parte di gestione dei dati: il DBMS.
 \subsubsection{DBMS}
 \paragraph{Tipologia}
 Il particolare contesto in cui quest'applicazione è situata ha chiaramente influenzato la tipologia di DBMS scelto per l'archiviazione dati.\\
@@ -539,12 +539,12 @@ Al termine di alcune considerazioni. il team di sviluppo scelto un DBMS i tipo N
 %parlare delle password hashate
 \subsubsection{Server RESTFul}
 A causa di una maggiore familiarità e compatibilità con le modalità di connessione delle applicazioni frontend, ogni endpoint pubblico del web server RESTFul supporterà unicamente comunicazioni di tipo POST.\\
-Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere, sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
+Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo di backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
 
 Il server prevede la costruzione di tre diversi controller contenenti gli endpoint pubblici del sistema, chiamati rispettivamente \textit{DevicesController}, \textit{ManagerController} e \textit{ConsumerController}.\\
 Come facilmente intuibile dal loro nome, ognuno è dedicato a servire le richieste di una diversa parte \textit{logica} del sistema: \textit{DevicesController} per la parte locale (invio di dati dei sensori), \textit{ManagerController} per le utenze di \textit{manager} e \textit{ConsumerController} per le richieste di \textit{consumer}.\\\\
 %TODO aggiungere uml!
-Ogni endpoint prevederà un interfaccia dati standard sia in ingresso che in uscita chiamati rispettivamente \textit{BaseData} e \textit{BaseResult}.\\
+Ogni endpoint prevederà un'interfaccia dati standard sia in ingresso che in uscita chiamati rispettivamente \textit{BaseData} e \textit{BaseResult}.\\
 Tali interfacce permettono di stabilire un contratto di comunicazione tra i client e il server omogeneo in tutto il sistema: all'occorrenza esse possono essere ampliate (attraverso ereditarietà) per supportare altri tipi di payload.\\
 A titolo di esempio, viene presentato \\\\%\textit{} :
 %TODO aggiungere uml di getRestroomsData che deriva da baseresult!
