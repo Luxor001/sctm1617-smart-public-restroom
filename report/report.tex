@@ -814,7 +814,14 @@ Ciò ha permesso ovviamente di velocizzare i tempi di sviluppo in quanto la conn
 \item \textit{Hosting}: sono disponibili soluzioni di hosting gratuite (fornite direttamente dalla \textit{MongoDb Inc.}) per l'utilizzo del DBMS su cloud.\\
 Oltre che essere semplici da utilizzare, non hanno vincoli di durata e le prestazioni generali sono accettabili per un utilizzo iniziale del sistema; è chiaramente possibile aumentare adeguatamente le prestazioni del \textit{Tier} in qualsiasi momento.
 \end{itemize}
-
+Come anticipato, si è deciso di delegare la gestione del DBMS al servizio cloud offerto gratuitamente dalla compagnia di MongoDB.\\
+Precisamente, l'offerta \textit{Free Tier} offre un hosting cloud basato con queste caratteristiche:
+\begin{itemize}
+\item Hosting fornito da AWS situato a Francoforte.
+\item 512Mb di spazio di storage massimo.
+\item RAM del cluster condivisa con altre utenze.
+\end{itemize}
+Sebbene queste caratteristiche possano sembrare un po' limitanti, si confida in un suo upgrade immediato qualora il progetto non si rilevi fallimentare.
 \newpage
 
 
@@ -900,6 +907,23 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 
+Il progetto appena presentato è stato interamente realizzato da un team di due persone, \textit{Stefano Beli} e \textit{Andrea Vecchiotti}.\\
+La divisione dei compiti è stata netta e basata sull'affinità di ogni membro del gruppo di lavoro:
+\begin{itemize}
+	\item \textit{Stefano Belli} si è occupato della creazione e gestione della parte \textit{applicativa} e \textit{server}.\\
+	Più dettagliatamente, si è occupato della progettazione e sviluppo del server scritto in \textit{ASP.NET Core} e della relativa connessione con il DBMS.\\
+	Si è inoltre incentrato sulla realizzazione del database in MongoDB e del relativo deploy su cloud \textit{Atlas} come descritto nel capitolo 6.\\
+	Infine, si è dedicato alla realizzazione delle applicazioni \textit{manager} e \textit{consumer} e della relativa progettazione.
+	\item \textit{Andrea Vecchiotti}
+\end{itemize}
+Nella stesura di questa documentazione di progetto ogni membro si è dedicato al suo specifico ambito di lavoro; altre sezioni generiche (come la qui presente) si possono considerare soggette a un lavoro collettivo.\\\\
+Per quanto riguarda le tempistiche, \textit{Stefano Belli}  ha riportato:
+\begin{itemize}
+\item Circa 6 giorni/uomo per lo sviluppo del frontend dell'app \textit{consumer}.
+\item Circa 18 giorni/uomo per lo sviluppo del frontend dell'app \textit{manager}.
+\item Circa 8 giorni/uomo per lo sviluppo (e deploy) della parte server.
+\item Circa 25 giorni/uomo per la stesura della relazione.
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 %	CONCLUSIONI
