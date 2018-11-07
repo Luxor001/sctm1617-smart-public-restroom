@@ -22,17 +22,18 @@ namespace smartpublicrestroom.Controllers
         // POST api/values
         [HttpPost]
         [Route("send")]
-        public string sendInfo([FromBody] RestroomInfo data)
+        public BaseResult sendInfo([FromBody] RestroomInfo data)
         {
             BaseResult result = new BaseResult();
             RestRoom requestedRestroom = GetRequestedRestroom();
             if (requestedRestroom == null)
-                return "FAIL";
+                return result;
 
-            return "Found restroom";
-            /*result.Result = true;
+            requestedRestroom.sensorData = data;
+            IMongoCollection<RestRoom> restRoomsCollection = _db.GetCollection<RestRoom>("Restroom");
+            restRoomsCollection.ReplaceOne(currRestroom => currRestroom.uid == requestedRestroom.uid, requestedRestroom);
+            result.Result = true;
             return result;
-            return true;*/
         }
 
         [HttpGet]
