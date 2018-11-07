@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace smartpublicrestroom.Code
 {
-    public abstract class BaseResult
+    public class BaseResult
     {
         public bool Result { get; set; }
         public string message { get; set; }

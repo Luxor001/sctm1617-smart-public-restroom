@@ -42,7 +42,7 @@ namespace smartpublicrestroom
 
              I usually consider those implications as low risk-low impact :)   
              */
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200")
+            app.UseCors(builder => builder.AllowAnyOrigin()
                                   .AllowAnyMethod()
                                   .AllowAnyHeader());
 
