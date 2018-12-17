@@ -263,7 +263,28 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 
+La letteratura accademica annovera un discreto numero di pubblicazioni riguardanti l'integrazione di sistemi\textit{smart} di toilette.\\
+A titolo di esempio, il paper \cite{KooBathroom} pubblicato da \textit{Koa et al.} presenta una soluzione di informatizzazione di un bagno privato di un appartamento, grazie all'utilizzo di una serie di sensori suddivisi in "nodi" logici.\\
+Sebbene l'architettura proposta a livello di sensoristica non sia direttamente comparabile a quella presentata in questo documento (vengono infatti adottati dei trasduttori completamente differenti) si possono individuare delle analogie con la suddivisione logica del sistema.\\
+\textit{Koa et al.}, infatti, teorizzano la creazione di un nodo di comunicazione per ogni parte suddivisibile della struttura: uno per il pavimento, uno per il wc, uno per la doccia ecc.
+Ognuno di esso verrà connesso a un \textit{Gateway} (un \textit{arduino Yun}) tramite trasmittenti \textit{ZigBee}.
+In \textit{Smart Public Restrooms} si può osservare una suddivisione simile: ogni cella singola celle e la struttura nel suo insieme vengono gestite da un singolo \textit{Arduino}, che invia i dati a un \textit{Raspberry Pi} che fa da \textit{Gateway}.\\\\
 
+\begin{figure}[h!]
+  \includegraphics[scale=0.45]{img/paperbathroom.png}
+  \caption{La soluzione proposta nel paper}
+  \label{fig:usecase_manager}
+\end{figure}
+
+A livello commerciale, la gestione informatizzata di bagni pubblici è un mercato che si è sviluppato molto rapidamente negli ultimi anni, grazie sopratutto alla maggiore diffusione ed economicità dell'IoT nel mondo.\\
+Tuttavia, la maggioranza delle soluzioni disponibili offrono un semplice servizio di reportistica dello stato dei bagni pubblici utilizzati da parte degli utenti; si ritiene possibile affrontare in questo modo le problematiche più stringenti segnalate dagli utenti come mancanza di carta igienica, luci non funzionanti ecc.\\
+Al momento sono state individuate le seguenti soluzioni:
+\begin{itemize}
+\item \textit{txt2clean}\cite{txt2clean} e \textit{restroomalert}\cite{restroomalert}
+\item Gli altri due
+\end{itemize}2
+
+\newpage
 %----------------------------------------------------------------------------------------
 %	ANALISI DEI REQUISITI
 %----------------------------------------------------------------------------------------
@@ -967,8 +988,24 @@ A titolo esemplificativo possono essere incluse le schede tecniche dei component
 %	RIFERIMENTI BIBLIOGRAFICI
 %----------------------------------------------------------------------------------------
 \addcontentsline{toc}{section}{Riferimenti bibliografici}
-\begin{thebibliography}
-EElencare i riferimenti bibliografici citati nel testo. 
+\begin{thebibliography}{9}
+\bibitem{KooBathroom} 
+Dan D. Kooa, John J. Leea, Aleksei Sebastiania, Jonghoon Kimb \\
+\textit{An Internet-of-Things (IoT) system development and
+implementation for bathroom safety enhancement}.\\
+Procedia Engineering 145 ( 2016 ) 396 – 403 
+
+\bibitem{txt2clean}
+\textit{https://www.txt2clean.com/}
+
+\bibitem{restroomalert}
+\textit{https://www.restroomalert.com/}
+
+\bibitem{onvation}
+\textit{https://www.kcprofessional.com/en-us/workplacesolutions/onvation}
+
+\bibitem{restroom-management-system}
+\textit{http://www.advantech.com/iretail-hospitality/solutions/detail/restroom-management-system}
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
