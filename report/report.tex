@@ -263,28 +263,31 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 
-La letteratura accademica annovera un discreto numero di pubblicazioni riguardanti l'integrazione di sistemi\textit{smart} di toilette.\\
-A titolo di esempio, il paper \cite{KooBathroom} pubblicato da \textit{Koa et al.} presenta una soluzione di informatizzazione di un bagno privato di un appartamento, grazie all'utilizzo di una serie di sensori suddivisi in "nodi" logici.\\
+La letteratura accademica annovera un discreto numero di pubblicazioni riguardanti l'integrazione di sistemi\textit{smart} di toilette.\\\\
+A titolo di esempio, \textit{Koa et al.}\cite{KooBathroom} presentano una soluzione di informatizzazione di un bagno privato di un appartamento, grazie all'utilizzo di una serie di sensori suddivisi in "nodi" logici.\\
 Sebbene l'architettura proposta a livello di sensoristica non sia direttamente comparabile a quella presentata in questo documento (vengono infatti adottati dei trasduttori completamente differenti) si possono individuare delle analogie con la suddivisione logica del sistema.\\
-\textit{Koa et al.}, infatti, teorizzano la creazione di un nodo di comunicazione per ogni parte suddivisibile della struttura: uno per il pavimento, uno per il wc, uno per la doccia ecc.
-Ognuno di esso verrà connesso a un \textit{Gateway} (un \textit{arduino Yun}) tramite trasmittenti \textit{ZigBee}.
-In \textit{Smart Public Restrooms} si può osservare una suddivisione simile: ogni cella singola celle e la struttura nel suo insieme vengono gestite da un singolo \textit{Arduino}, che invia i dati a un \textit{Raspberry Pi} che fa da \textit{Gateway}.\\\\
-
+Viene infatti teorizzata la creazione di un nodo di comunicazione per ogni parte suddivisibile della struttura: uno per il settore doccia, uno per il pavimento ecc.
+Ognuno di questi nodi verrà connesso a un \textit{Gateway} (un \textit{arduino Yun}) tramite trasmittenti \textit{ZigBee}.
+\textit{Smart Public Restrooms} adotta una suddivisione logica molto simile simile: ogni cella singola celle e la struttura nel suo insieme vengono gestite da un singolo \textit{Arduino}, che invia i dati a un \textit{Raspberry Pi} operante da \textit{Gateway}.\\\\
 \begin{figure}[h!]
-  \includegraphics[scale=0.45]{img/paperbathroom.png}
+  \includegraphics[scale=0.42]{img/paperbathroom.png}
   \caption{La soluzione proposta nel paper}
   \label{fig:usecase_manager}
 \end{figure}
-
-A livello commerciale, la gestione informatizzata di bagni pubblici è un mercato che si è sviluppato molto rapidamente negli ultimi anni, grazie sopratutto alla maggiore diffusione ed economicità dell'IoT nel mondo.\\
-Tuttavia, la maggioranza delle soluzioni disponibili offrono un semplice servizio di reportistica dello stato dei bagni pubblici utilizzati da parte degli utenti; si ritiene possibile affrontare in questo modo le problematiche più stringenti segnalate dagli utenti come mancanza di carta igienica, luci non funzionanti ecc.\\
-Al momento sono state individuate le seguenti soluzioni:
-\begin{itemize}
-\item \textit{txt2clean}\cite{txt2clean} e \textit{restroomalert}\cite{restroomalert}
-\item Gli altri due
-\end{itemize}2
-
 \newpage
+A livello commerciale, la gestione informatizzata di bagni pubblici si è sviluppata notevolmente negli ultimi anni, grazie sopratutto alla maggiore diffusione ed economicità dell'IoT nel mondo.\\
+In linea generale, i prodotti commerciali disponibili possono suddividere in due macro-categorie:
+\begin{itemize}
+	\item \textit{Sistemi di reportistica}: sono soluzioni che offrono un servizio di reportistica a partecipazione utente, fornendo applicazioni e infrastrutture dal quale è possibile segnalare eventuali problemi riscontrati nell'utilizzo dei servizi pubblici.\\
+	Alcuni esempi di prodotti commerciali di questa categoria sono \textit{txt2clean}\cite{txt2clean},\\\textit{restroomalert} \cite{restroomalert} e \textit{Restroom-Management-System}\cite{restroom-management-system}; per fornire un pacchetto più completo, in alcuni prodotti vengono integrate anche alcune funzionalità HR per la gestione del personale.\\
+Queste soluzioni sono senza dubbio economiche, ma piuttosto inefficienti: gli addetti alla manutenzione si dovranno affidare a dei semplici feedback per gestire le emergenze, col rischio di incappare in falsi positivi.\\
+Inoltre, in questo modo non c'è alcuna prevenzione: le problematiche vengono risolte soltanto dopo la segnalazione (e relativa insoddisfazione) degli utenti.\\
+Si tenga presente, infine, che \textit{Smart Public Restroom} prevede già un sistema di reportistica integrato nell'applicazione \textit{Consumer} PWA.
+	\item \textit{Sistemi di monitoraggio}: sono prodotti che offrono un monitoraggio completo del servizio igienico grazie all'adozione di sistema composto da un'insieme di sensori appositamente posizionati.\\
+	Particolarmente affine si può considerare \textit{Onvation}\cite{onvation}, che sfrutta dispenser smart proprietari di aziende come\textit{Purell} e \textit{Scott} per costruire un sistema smart di monitoraggio e controllo.\\
+	Come in \textit{Smart Public Restrooms}, i dati raccolti possono essere aggregati e analizzati grazie ad apposite applicazioni gestionali analoghe a \textit{Manager}; ciò che manca nell'offerta di \textit{Onvation} è un sistema di raccolta feedback degli utenti, che consentirebbe di raccogliere informazioni non direttamente percepibili da sensori.
+\end{itemize}
+A seguito di questa breve analisi, riteniamo di poter associare \textit{Smart Public Restrooms} a entrambe le categorie di prodotti. 
 %----------------------------------------------------------------------------------------
 %	ANALISI DEI REQUISITI
 %----------------------------------------------------------------------------------------
@@ -1001,11 +1004,12 @@ Procedia Engineering 145 ( 2016 ) 396 – 403
 \bibitem{restroomalert}
 \textit{https://www.restroomalert.com/}
 
+\bibitem{restroom-management-system}
+\textit{http://www.advantech.com/iretail-hospitality/solutions/detail/restroom-management-system}
+
 \bibitem{onvation}
 \textit{https://www.kcprofessional.com/en-us/workplacesolutions/onvation}
 
-\bibitem{restroom-management-system}
-\textit{http://www.advantech.com/iretail-hospitality/solutions/detail/restroom-management-system}
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
