@@ -235,16 +235,40 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 
 \newpage
-
-Il DPR 327/80\cite{articolo1}, pubblicato sulla Gazzetta ufficiale n.193 del 16/07/1980 ha imposto a tutti gli esercizi pubblici con finalità di produzione e vendita di sostanze alimentari la predisposizione di almeno un servizio igienico liberamente accessibile dai clienti.\\
-Tale obbligo è stato poi esteso, in maniera più generale, a tutti gli "esercizi pubblici" presenti sul territorio italiano, andando a comprendere quindi anche gli spazi lavorativi di qualsiasi genere.\\\\
-Ogni azienda o ente pubblico vede tale servizio come un costo "vivo" che incide inevitabilmente sul bilancio di ogni anno; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia}: quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni o i singoli treni?).\\
-Spesso purtroppo la soluzione è quella di affidare la loro manutenzione e pulizia a enti terzi nell'ottica di un risparmio generale 
+La possibilità di usufruire di servizi igienici in luoghi pubblici viene percepita al giorno d'oggi come un diritto da parte del singolo cittadino, che si aspetta puntalmente di trovare un servizio funzionante, pulito e facilmente accessibile.\\
+Oltre che per una questione di pubblico decoro, le aziende (o enti) sono obbligate per legge\cite{articolo1} a fornire servizi igienici ai propri clienti/dipendenti.\\ Inevitabilmente, tuttavia, la loro manutenzione può incidere in maniera rilevante sul bilancio aziendale di ogni anno; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia} e a quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni italiane).\\
 %parlare che ogni bagno viene gestito localmente..
 \\\\
-A nostro parere, la soluzione è quella di adottare un sistema centralizzato di gestione e reportistica dei servizi pubblici, capace di individuare rapidamente le problematiche che riscontrano negli impianti e razionalizzare così le risorse assegnate.\\
-\textit{Smart Public Restrooms} è la soluzione che riteniamo essere in grado di rispondere a tali specifiche; un sistema a basso costo hardware (si può stimare che per ogni impianto vi sia un costo hardware cbe va dai 100 ai 300€) e di facile utilizzo per i gestori.
-capace di migliorare sia la qualità del servizio che i costi di gestione per le aziende 
+In questa relazione presentiamo \textit{Smart Public Restroom}, una soluzione capace di contenere i costi operativi e di mantenimento dei bagni pubblici e di incrementare la percezione del servizio da parte degli utenti.\\
+Nel dettaglio, \textit{Smart Public Restroom} prevede:
+\begin{itemize}
+	\item L'installazione di un sistema di monitoraggio per ognuno dei servizi igienici del cliente, capace (grazie a una serie di microcontrollori e trasduttori) di individuare rapidamente le problematiche che riscontrano negli impianti ( come ad esempio il malfunzionamento di una luce, l'esaurimento del sapone sanitario o il riempimento del bidone della spazzatura).\\
+	Tale sistema si configurerà di una parte \textit{locale} a basso costo composta da alcuni sensori (come fotoresistenze, sensori di pressione ecc.) e microcontrollori (come \textit{arduino} e \textit{Raspberry Pi}) e da una parte \textit{Manager} composta da una SPA scritta in \textit{Angular} e \textit{asp.net core}.
+	\item Il rilascio di un'applicazione PWA \textit{Consumer} (scritta anch'essa in \textit{Angular}) studiata per dare la possibilità di segnalare eventuali problematiche riscontrate negli impianti e di individuare (grazie a una mappa interattiva) il più vicino impianto pubblico.\\
+\end{itemize}
+Ovviamente, questa tipologia di soluzione è adeguata a una gestione centralizzata dei servizi igienici forniti dall'azienda/ente: avere del personale dedicato alla riparazione e alla pulizia degli impianti (ad esempio su scala nazionale) permetterà di sfruttare appieno le potenzialità di \textit{Smart Public Restroom}.\\\\
+Da un punto di vista puramente didattico i punti di interesse di questo progetto sono molteplici:
+\begin{itemize}
+\item È stato realizzato un sistema di monitoraggio a basso livello con hardware economico e di facile reperibilità.\\
+Ogni impianto composto da tre celle, infatti, impiega circa 100€ di hardware e utilizza sensori e microcontrollori molto comuni nel settore.
+\item Alcune scelte progettuali sono state motivate in un'ottica di reale, riproducendo motivazioni che si possono realmente trovare in un contesto aziendale medio-piccolo (a tal fine, si è ipotizzato che lo sviluppo dell'applicazione sia stato dato in \textit{outsourcing} a un azienda IT).\\
+A titolo di esempio, l'applicazione \textit{Consumer} è stata studiata come PWA sia perché è coerente con il trend tecnologico del settore sia perché comportava un notevole risparmio in termini di risorse per l'azienda.\\
+Coerentemente, questa ambientazione reale non ha trascurato i possibili impieghi lavorativi correlati al progetto: sono stati ipotizzate delle figure professionali (come il \textit{configuratore} o il \textit{manager}) che verranno collocate all'interno di questo caso di studio.
+\item Anche la scelta delle tecnologie utilizzate non è stata casuale o motivata semplicemente da motivazioni di studio: dove possibile è stato sempre individuato il miglior compromesso tra novità tecnologica e relativa affidabilità.\\
+Ad esempio, per il \textit{frontend} è stato utilizzato \textit{Angular} e \textit{ASP.NET Core}, due framework al momento molto popolari, recenti e supportati direttamente da case madre come \textit{Google} e \textit{Microsoft}.
+\end{itemize}
+
+%La relazione è strutturata nelle seguenti parti:
+% nel primo capitolo saranno definiti e analizzati i requisiti del sistema
+%che si intende realizzare;
+% nel secondo capitolo sarà descritta l’architettura del progetto, derivata
+%dall’analisi dei requisiti, oltre allo schema di deployment;
+% nel terzo capitolo verrà illustrata l’implementazione realizzata;
+% nel quarto capitolo saranno presentati i test effettuati.
+%Per la sua adozione
+%A nostro parere, la soluzione è quella di adottare un sistema centralizzato di gestione e reportistica dei servizi pubblici, capace di individuare rapidamente le problematiche che riscontrano negli impianti e razionalizzare così le risorse assegnate.\\
+%\textit{Smart Public Restrooms} è la soluzione che riteniamo essere in grado di rispondere a tali specifiche; un sistema a basso costo hardware (si può stimare che per ogni impianto vi sia un costo hardware cbe va dai 100 ai 300€) e di facile utilizzo per i gestori.
+%capace di migliorare sia la qualità del servizio che i costi di gestione per le aziende 
 \newpage
 
 %----------------------------------------------------------------------------------------
