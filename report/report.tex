@@ -912,15 +912,50 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \newpage
 \subsection{Performance parte Locale}
 \subsection{Performance parte applicativa}
-Applicazioni frontend con un uso intensivo di dati come \textit{Manager} e \textit{Consumer} devono la loro responsività a due fattori principali:
+Nell'ambito di applicazioni RESTful le performance finali si possono considerare dipendenti da due fattori:
 \begin{itemize}
-\item \textit{Tempo scaricamento:}
-\item \textit{Tempo renderizzazione:}
+\item \textit{Tempo richiesta:} è il tempo che intercorre tra l'invio l'invio della richiesta e la ricezione della sua risposta dal server.
+\item \textit{Tempo renderizzazione:} è il tempo impiegato per la processione dei dati ricevuti e per la loro effettiva visualizzazione a schermo.
 \end{itemize}
-Le applicazioni frontend (\textit{Manager} e \textit{Consumer}) possono risentire 
+Quindi, un utente percepisce la responsività di un'applicazione RESTful come la \textit{somma} del tempo di richiesta e il tempo di renderizzazione per una specifica azione; tutte le successive analisi presenti in questa sezione pertanto terranno conto di questa suddivisione.
 \subsubsection{Manager}
-Come già analizzato nei capitoli precedenti, \textit{Manager} è un applicazione studiata per il monitoraggio di un numero di impianti consistente.
-Allo stato attuale del progetto presentato non si prevedono grosse criticitàLe performance riguardanti \textit{Manager}.
+Come già analizzato nei capitoli precedenti, \textit{Manager} è un applicazione studiata per il monitoraggio di un numero di impianti consistente ad aggiornamento continuo.\\
+Innanzitutto, partendo dall'analisi fornitaci dal \textit{Webpack Bundle Analizer}\cite{bundleAnalyzer}, si può osservare come il \textit{footprint} dell'applicazione sia molto ridotto (circa \textit{200kb gzipped}); ciò consentirà un caricamento immediato delle risorse dell'applicazione (anche nel caso in cui l'utente rifiuti qualsiasi tipo di cache web sul sistema).
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.18]{img/footprint-manager.png}
+  \caption{Composizione del bundle di produzione di \textit{manager}}
+\end{figure}
+\newpage
+In seguito, è stato misurato il tempo che l'applicazione ha impiegato per ottenere dati aggiornati dei \textit{restrooms} presenti su DB (per un totale di 6), grazie all'utilizzo delle funzioni \textit{console.time()} e \textit{console.timeEnd()} nativamente presenti in ES6.
+
+\begin{lstlisting}
+export class RestroomsListService {
+
+  constructor(private httpClient: HttpClient) { }
+
+  getRestrooms() {
+    console.time("downloadTime");
+    return this.httpClient.post("api/manager/getRestrooms", {}).pipe(map((restrooms: any) => {
+      console.timeEnd("downloadTime");
+      return restrooms.restrooms;
+    }));
+  }
+}
+\end{lstlisting}
+Tale test ha portato ai seguenti risultati:
+\begin{table}[h]
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Connessione N°} & \textbf{Tempo Ricezione}  \\ \hline
+1 & 98,56 ms  \\ \hline
+2 & 119,51 ms \\ \hline
+3 & 83,07 ms  \\ \hline
+4 & 112,06 ms \\ \hline
+5 & 111,16 ms \\ \hline
+\end{tabular}
+\end{table}\\
+per una latenza media risultante di \textit{115,96 ms.}
 \subsubsection{Consumer}
 \subsection{Performance parte centrale}
  
@@ -1058,6 +1093,9 @@ Procedia Engineering 145 ( 2016 ) 396 – 403
 
 \bibitem{onvation}
 \textit{https://www.kcprofessional.com/en-us/workplacesolutions/onvation}
+
+\bibitem{bundleAnalyzer}
+\textit{https://www.npmjs.com/package/webpack-bundle-analyzer}
 
 \end{thebibliography}
 
