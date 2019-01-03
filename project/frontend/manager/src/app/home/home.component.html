@@ -2,9 +2,9 @@
   <mat-sidenav #drawer
                class="sidenav"
                fixedInViewport="false"
-               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-               [mode]="(isHandset$ | async) ? 'over' : 'side'"
-               [opened]="!(isHandset$ | async)">
+               [attr.role]="'navigation'"
+               [mode]="'side'"
+               [opened]="true">
     <mat-toolbar class="menu-toolbar" color="primary">
       <div class="userInfo">
         <div class="fullname">{{user.fullname}}</div>

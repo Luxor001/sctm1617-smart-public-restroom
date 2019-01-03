@@ -11,7 +11,8 @@ import { MatSnackBar } from '@angular/material';
   providers: [ReportService]
 })
 export class ReportComponent {
-
+  name: any;
+  comment: any;
   @ViewChild("fullname") private fullnameInput: ElementRef;
   constructor(private reportService: ReportService, public snackBar: MatSnackBar) { }
 
