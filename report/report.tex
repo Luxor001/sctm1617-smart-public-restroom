@@ -498,7 +498,36 @@ Viene riportato un diagramma dell'architettura logica della progettazione appena
   \caption{Architettura logica del sistema}
 \end{figure}
 \subsection{Progettazione parte locale}
-Ogni parte \textit{locale} del sistema si occuperà di raccogliere i dati di utilizzo di ogni impianto (tramite l'utilizzo  
+Ogni parte \textit{locale} del sistema si occuperà di raccogliere i dati di utilizzo di ogni impianto. Si prevede l'utilizzo delle seguenti componenti:
+\begin{itemize}
+\item Il \textit{Raspberry PI 3 B+} per gestire la comunicazione tra la componente fisica
+ e il server del sistema
+\item Dei \textit{Mega2560} per gestire la componente fisica del sistema
+\item Un insieme di sensori
+\end{itemize}
+
+\subsection{Progettazione parte fisica}
+\paragraph{Sensori}
+Per soddisfare i requisiti è stato necessario selezionare la tipologia di sensori da utilizzare all'interno del locale.
+\begin{itemize}
+\item Un sensore di rilevamento fumo
+\item Sensori a ultrasuoni
+\item Sensori di forza
+\item Delle coppie di emissione e ricezione IR
+\item Dei rilevatori di livello dell'acqua
+\item Interruttori a eccitazione magnetica
+\item Dei transistor di potenza
+\end{itemize}
+
+\subparagraph{Sensore di rilevamento fumo}
+
+
+\paragraph{Microcontrollore}
+Poiché non è possibile conoscere a prescindere la morfologia del locale dove installare il sistema, è necessario tenere in conto che la progettazione di un solo dispositivo elettronico complesso potrebbe non essere sufficiente. Motivo per cui ci si concentra sull'utilizzo del \textit{mega2560}.
+Il \textit{Mega2560} è un microcontrollore programmabile dai costi contenuti il cui utilizzo è quello di realizzare, con grande versatilità, circuiti elettronici più o meno complessi in tempi brevi.
+
+
+
 \newpage
 \subsection{Progettazione parte applicativa}
 Grazie all'analisi dei requisiti effettuata, si è evidenziato come il committente abbia richiesto la creazione di due applicazioni distinte, ognuna con una diversa finalità.\\
