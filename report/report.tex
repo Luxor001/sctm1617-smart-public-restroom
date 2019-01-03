@@ -947,7 +947,7 @@ Tale test ha portato ai seguenti risultati:
 \begin{table}[h]
 \begin{tabular}{|c|c|}
 \hline
-\textbf{Connessione N°} & \textbf{Tempo Ricezione}  \\ \hline
+\textbf{Richiesta N°} & \textbf{Tempo Totale}  \\ \hline
 1 & 98,56 ms  \\ \hline
 2 & 119,51 ms \\ \hline
 3 & 83,07 ms  \\ \hline
@@ -955,10 +955,37 @@ Tale test ha portato ai seguenti risultati:
 5 & 111,16 ms \\ \hline
 \end{tabular}
 \end{table}\\
-per una latenza media risultante di \textit{115,96 ms.}
+per una latenza media risultante di \textit{104,6 ms.}\\
+Dato che tale risultato non si può definire particolarmente performante, si è proceduto ad effettuarne un'analisi approfondita per individuarne cause e possibili soluzioni.\\\\
+Circa il 55\% della latenza è da imputare alla connessione con il DB \textit{mongoDb Atlas}, che ricordiamo essere basato su un cluster gratuito AWS situtato a Francoforte, con memoria RAM condivisa e 512Mb di spazio dedicato.\\
+È chiaro pertanto che, in questo caso, l'utilizzo di una soluzione gratuito ha inciso in maniera rilevante sulle prestazioni del sistema: in fase di produzione si raccomanda pertanto la scelta di un cluster con almeno RAM dedicata e preferibilmente situato nei pressi della locazione del server centrale.\\\\
+Il server, invece, è stato ospitato sulla rete domestica di \textit{Stefano Belli} utilizzando un suo PC personale (composto da una CPU Intel i5 4690k, 8gb di RAM e SSD Sata III, con sistema operativo  Windows 10 Pro x64): non si tratta di quindi di un'hardware \textit{ad hoc} dedicato a ospitare server per SPA, ma un normale PC con memoria condivisa per altri programmi ad uso personale.\\Anche in questo caso, pertanto, si dovrebbe operare sull'infrastruttura per migliorare le performance generali.\\\\
+Infine, si è pensato di effettuare una build in modalità \textit{Release} del server, in modo da sfruttare tutte le ottimizzazioni che tale processo garantisce (ad esempio ignorando completamente il debugging).\\
+Ciò ha permesso di ridurre sensibilmente il tempo di esecuzione totale di ogni richiesta, come si può evincere dalla tabella sottostante:
+\begin{table}[h]
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Richiesta N°} & \textbf{Tempo Totale}  \\ \hline
+1 & 64,45 ms  \\ \hline
+2 & 80,05 ms \\ \hline
+3 & 74,58 ms  \\ \hline
+4 & 71,83 ms \\ \hline
+5 & 72,40 ms \\ \hline
+\end{tabular}
+\end{table}\\
+per una latenza media risultante di \textit{72,66 ms.}\\\\
+Come premesso poco sopra, questi tempi sono da considerare come \textit{Tempi Totali}, cioè al netto della renderizzazione a schermo (e quindi come somma di \textit{Tempo Richiesta} e \textit{Tempo Renderizzazione}).\\
+Ulteriori analisi hanno determinato come il solo \textit{Tempo di Richiesta} incida per il 70\% sul tempo totale.
+\newpage
+Ciò viene anche dimostrato dall'analisi delle richieste effettuate dal \textit{Chrome Developers Tools}:
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.60]{img/network-timings.png}
+  \caption{Tempi di richiesta secondo \textit{Chrome Developers Tools}}
+\end{figure}
+
 \subsubsection{Consumer}
-\subsection{Performance parte centrale}
- 
+Dato che \textit{Consumer} e \textit{Manager} utilizzano le stesse infrastrutture server e DB, le prestazioni della PWA si possono dire molto simili a quelle della SPA; dato che l'applicazione è al momento molto contenuta, non si rilevano criticità a livello di performance rispetto a \textit{Manager}.
 %----------------------------------------------------------------------------------------
 %	ANALISI DI DEPLOYMENT SU LARGA SCALA
 %----------------------------------------------------------------------------------------
