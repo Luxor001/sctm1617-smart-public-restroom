@@ -616,25 +616,38 @@ Verrà però in primo luogo affrontata la parte di gestione dei dati: il DBMS.
 Il particolare contesto in cui quest'applicazione è situata ha chiaramente influenzato la tipologia di DBMS scelto per l'archiviazione dati.\\
 Al termine di alcune considerazioni. il team di sviluppo scelto un DBMS i tipo NOSQL con dati formattati BSON.\\Le motivazioni che hanno portato a questa scelta possono essere così riassunte: 
 \begin{itemize}
-\item Scalabilità orizzontale: %parlare del fatto che i dati possono diventare molto grandi
-\item Semplicità: %parlare di BSON compatibile con restful% 
-\item Budget ridotto: %parlare del cloud ecc.%
+\item Scalabilità orizzontale: \textit{MongoDb} basa la sua scalabilità sulla ridondanza piuttosto che sull'incremento di prestazione di un singolo server (\textit{scalabilità orizzontale}).\\
+Ciò consentirà una notevole flessibilità della capacità del prodotto: sarà possibile infatti mantenere un numero di nodi ospitanti il DBMS coerenti con il numero di adozioni del sistema.
+\item Semplicità: le interfacce RESTFul previste per la parte applicativa del progetto basano il loro input-output su dati in formato JSON.\\ Dato che \textit{MongoDB} supporta nativamente dati in formato BSON (un superset di JSON) ci si aspetta piena compatibilità e facilità di integrazione con il server di gestione di \textit{Manager} e \textit{Consumer}.
+\item Budget ridotto: \textit{MongoDB} è fornito (anche per applicazioni commerciali) tramite licenza AGPL, che permette quindi un suo utilizzo gratuito a fronte di obblighi legali minimali.\\ Oltre a ciò, si ritiene interessante il cluster cloud che l'azienda fornisce per l'hosting del DBMS: i prezzi si sono rilevati competitivi e sicuramente migliori, in termini di costi finali e affidabilità, che una soluzione dedicata in azienda.
 \end{itemize}
 \paragraph{Struttura dati}
 
+Al momento, è stata prevista una struttura piuttosto semplice contenente i dati del sistema, come raffigurato di seguito:
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.60]{img/class-diagram.png}
+  \caption{Classi previste come \textit{Models} per il DBMS}
+\end{figure}
+\newpage
 %parlare delle password hashate
 \subsubsection{Server RESTFul}
 A causa di una maggiore familiarità e compatibilità con le modalità di connessione delle applicazioni frontend, ogni endpoint pubblico del web server RESTFul supporterà unicamente comunicazioni di tipo POST.\\
-Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo di backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
+Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo di backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\
 
 Il server prevede la costruzione di tre diversi controller contenenti gli endpoint pubblici del sistema, chiamati rispettivamente \textit{DevicesController}, \textit{ManagerController} e \textit{ConsumerController}.\\
 Come facilmente intuibile dal loro nome, ognuno è dedicato a servire le richieste di una diversa parte \textit{logica} del sistema: \textit{DevicesController} per la parte locale (invio di dati dei sensori), \textit{ManagerController} per le utenze di \textit{manager} e \textit{ConsumerController} per le richieste di \textit{consumer}.\\\\
-%TODO aggiungere uml!
-Ogni endpoint prevederà un'interfaccia dati standard sia in ingresso che in uscita chiamati rispettivamente \textit{BaseData} e \textit{BaseResult}.\\
-Tali interfacce permettono di stabilire un contratto di comunicazione tra i client e il server omogeneo in tutto il sistema: all'occorrenza esse possono essere ampliate (attraverso ereditarietà) per supportare altri tipi di payload.\\
-A titolo di esempio, viene presentato \\\\%\textit{} :
-%TODO aggiungere uml di getRestroomsData che deriva da baseresult!
-L'utilizzo obbligatorio di \textit{BaseResult} (sia direttamente che attraverso ereditarietà) come valore di ritorno degli endpoint permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate.
+Ogni endpoint prevederà un'interfaccia dati standard per il valore di ritorno ricevuto, chiamato \textit{BaseResult}.\\
+Tale interfaccia permette di stabilire un contratto di comunicazione tra i client e il server omogeneo in tutto il sistema: all'occorrenza esse possono essere ampliate (attraverso ereditarietà) per supportare altri tipi di payload.\\
+\newpage
+A titolo di esempio vengono presentate alcune classi utilizzate come valore di ritorno nelle API di \textit{ManagerController}:
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.60]{img/classeBaseResult.png}
+  \caption{Processo di registrazione di un nuovo impianto}
+\end{figure}
+\\Questo meccanismo consente permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate: ciò facilità enormemente la loro gestione lato frontend.
+\newpage
 \subsection{Registrazione impianto}
 \subsubsection{Configuratore} Per poter efficacemente spiegare il processo di registrazione di un nuovo impianto è necessario introdurre la figura del \textit{configuratore} (o \textit{installatore}) all'interno dell'architettura di sistema.\\
 Questa figura ha il compito di installare fisicamente le \textit{smart restrooms} sparse sul territorio adoperandosi per la cablatura, configurazione e posizionamento di tutte le parti coinvolte.\\
@@ -684,7 +697,7 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \newpage
 \subsection{Implementazione parte Applicativa}
 \subsubsection{Manager}
-\paragraph{Caratteristiche Principali}
+\paragraph{Caratteristiche}
 Il capitolo di progettazione di \textit{manager} prevedeva lo sviluppo di una applicazione web di tipo SPA caratterizzata da una certa complessità, facilità di manutenzione e scalabilità.\\
 Con queste premesse, il team di sviluppo ha deciso di adottare \textit{Angular} come framework per lo sviluppo dell'applicazione.\\\\
 Adottato specificatamente nella versione 6+, \textit{Angular} è un set di librerie frontend open-source studiate appostiamente per una creazione agevole e strutturata di SPA; creata e mantenuta tutt'ora direttamente da \textit{Google}, questo framework si posiziona al primo posto per popolarità per la creazione di progetti enterprise web.\\
@@ -781,7 +794,7 @@ In caso contrario la \textit{Route} viene accettata e fatta proseguire.
 \end{itemize}
 \newpage
 \subsubsection{Consumer}
-\paragraph{Caratteristiche Principali}
+\paragraph{Caratteristiche}
 Il capitolo di progettazione di \textit{consumer} evidenzia la necessità di sviluppare \textit{consumer} come un'applicazione di tipo PWA.\\
 Questa scelta è stata dovuta principalmente ai suoi più rapidi tempi di sviluppo rispetto a una normale app nativa; date le ridotte risorse a disposizione, il team di sviluppo è sempre stato propenso a ridurre i costi, dove possibile.\\
 Pertanto, per evitare di investire tempo nella formazione di personale per l'utilizzo di tecnologie specifiche per PWA, è stato deciso di utilizzare \textit{Angular} per lo sviluppo di \textit{Consumer}.\\\\
@@ -889,7 +902,7 @@ Da questo esempio si evidenziano i seguenti punti fondamentali:
 	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente della buona riuscita dell'operazione.
 \end{itemize}
 \subsubsection{DBMS}
-\paragraph{Caratteristiche Principali}
+\paragraph{Caratteristiche}
 La fase di progettazione relativa al DBMS ipotizzava l'utilizzo di un database NOSQL con dati in formato BSON.\\
 Sebbene esista un ampia scelta di prodotti per database con queste caratteristiche, il team di sviluppo ha scelto \textit{MongoDb} come prodotto commerciale a supporto dell'applicazione a seguito delle seguenti considerazioni: 
 \begin{itemize}
@@ -908,9 +921,18 @@ Precisamente, l'offerta \textit{Free Tier} offre un hosting cloud basato con que
 \item RAM del cluster condivisa con altre utenze.
 \end{itemize}
 Sebbene queste caratteristiche possano sembrare un po' limitanti, si confida in un suo upgrade immediato qualora il progetto non si rilevi fallimentare.
-\newpage
+\paragraph{Connessione}
+L'utilizzo di tecnologie ben supportate e recenti come \textit{MongoDB} e \textit{ASP .NET Core} ha facilitato molto la connessione al database, rendendo minimi gli sforzi per la sua attuazione.\\
+Tutti le operazioni di input-output avvengono infatti attraverso classi c\# (racchiuse nel namespace \textit{Models}) che sanciscono la tipologia di oggetti salvati nel DB: la libreria di \textit{MongoDB} si occuperà poi di trasformare automaticamente tali classi in formato JSON.
 
+\begin{lstlisting}
+// Ottenimento, grazie alla Dependency injection, di un istanza di connessione con il DB
+IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
+// Inserimento di una nuova restroom all'interno del database
+Models.RestRoom newRestroom = new Models.RestRoom(restroom.guid, restroom.address.Split(','), restroom.cityAddress, restroom.company, "");
+restroomsCollection.InsertOne(newRestroom);
 
+\end{lstlisting}
 
 %----------------------------------------------------------------------------------------
 %	TESTING E PERFORMANCE
