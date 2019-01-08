@@ -933,7 +933,7 @@ Models.RestRoom newRestroom = new Models.RestRoom(restroom.guid, restroom.addres
 restroomsCollection.InsertOne(newRestroom);
 
 \end{lstlisting}
-
+\newpage
 %----------------------------------------------------------------------------------------
 %	TESTING E PERFORMANCE
 %----------------------------------------------------------------------------------------
@@ -1062,8 +1062,41 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 
 \newpage
+\subsection{Parte Applicativa}
+\textit{Smart Public Restrooms} è un sistema che riteniamo essere molto scalabile e in generale poco esoso in termini di risorse necessarie: come vedremo, infatti, i volumi dati coinvolti per un cliente di una certa dimensione sono tutto sommato contenuti e comunque gestibili.\\
+Innanzitutto, poniamo qualche stima sul volume dati coinvolto per un cliente con circa 2000 impianti in gestione: 
 
+\begin{itemize}
+\item \textit{Richieste/minuto}: Ogni sistema invia dati al server centrale ogni 5 secondi, per un totale di 12 volte al minuto.\\
+Con un numero di impianti da gestire come sopra (2000), si arriverebbe a circa 24000 cicli di aggiornamento su DB al minuto.
+\item \textit{Spazio/impianto}: L'\textit{Average Size} dei documenti della tabella \textit{Restroom} (contenente i dati essenziali dell'impianto, come nome, indirizzo e gli ultimi dati della sensoristica) è pari a 500 byte.\\
+Con 2000 impianti totali lo spazio occupato su DB si attesterebbe a circa 1MB.
+\item \textit{Bandwidth/impianto}: Il payload di un aggiornamento di un impianto tipico (con 3 celle e 3 pattumiere di servizio) si aggira sui 500 byte.\\
+Con 2000 impianti totali l'infrastruttura di rete del server dovrà riuscire a supportare $~200Kb/s$ in upload e $\frac{N}{5}Mb/s$ in download, dove N è il numero di clients \textit{Manager} connessi.
+\end{itemize}
+Queste semplicistiche stime ci danno un'idea piuttosto chiara delle risorse necessarie per il mantenimento di un sistema \textit{Smart Public Restroom}; un cliente con circa 2000 impianti attivi non dovrebbe avere grossi problemi nel gestire tali traffici dati, eccezion fatta per la \textit{Bandwidth} necessaria in download.\\
+Allo stato attuale, infatti, ogni client \textit{Manager} richiede al server tutte le \textit{Restrooms} disponibili su db ogni 5 secondi, comportando per un ognuno di essi l'ottenimento di circa 1Mb di dati dal server periodicamente: ciò rallenta sia l'applicazione \textit{frontend} che l'intero server.\\
+La soluzione a questo problema è quella di restringere il numero di \textit{Restrooms} ottenute periodicamente dall'applicazione, ad esempio attraverso l'uso di filtri configurabili dall'utente.\\\\
+Supponiamo ora che la software house che ha sviluppato \textit{Smart Public Restrooms} decida di gestire in prima persona tutti i \textit{Restrooms} dei suoi clienti (che supponiamo essere 10, ognuno con qualche migliaio di impianti): il sistema dovrà mantenere delle buone prestazioni (sia in termini di \textit{efficiency} che di \textit{fault tolerance}) nonostante il numero enorme di impianti a cui dovrà far fronte.\\\\
+Data la sua natura centralizzata, l'elemento più a rischio in questa configurazione è sicuramente il server di gestione del sistema: se da un lato le sue prestazioni possono rimanere accettabili con tecniche di scalabilità verticale, rimane comunque una fonte importante di \textit{Single Point of Failure} \textit{(SPoF)}.\\
+Una possibile soluzione a questo problema è quella di applicare tecniche di \textit{Loose Coupling} sui server, in grado quindi di costruire una rete composta una serie di nodi indipendenti sulla quale distribuire le richieste avanzate dai clients.\\
+Nell'ambito dell' \textit{Internet Information Services} \textit{(IIS)} di \textit{Microsoft} (cioè attraverso le tecnologie utilizzate per la realizzazione del server di \textit{Smart Public Restrooms}) ciò è possibile attraverso la configurazione di nodi  \textit{Application Request Routing} (\textit{ARR}), cioè moduli di routing che redirigono il traffico di rete in base a particolari algoritmi di \textit{load balancing}, header HTTP e variabili d'ambiente.
+\begin{figure}[h!]
+\centering
+  \includegraphics[scale=0.80]{img/ARR.png}
+  \caption{Architettura con ARR+NLB}
+\end{figure}
+\newpage
+In generale, architetture di questo tipo consentono una buona \textit{Avaiability} e \textit{Scalability} del sistema, ma rendono difficoltoso sincronizzare gli accessi al DB tra i vari nodi della rete.\\
+Fortunatamente, gli aggiornamenti inviati dagli impianti di \textit{Smart Public Restrooms} si possono considerare stateless e indipendenti, in quanto ogni richiesta temporizzata fa riferimento a un singolo impianto ed è quindi impossibile avere conflitti in scrittura su DB.\\\\
+Inoltre, prevediamo il DBMS sia perfettamente in grado di scalare in modo adeguato alle esigenze dell'applicazione: la sua natura NoSQL e la semplicità dei dati contenuti ben si prestano a tecniche di \textit{scalabilità orizzontale} come lo \textit{Sharding}, che prevediamo adatto a scenari \textit{write-intensive} come questo.\\
+In questo scenario, tuttavia, ci raccomandiamo di affidarci ai cluster  forniti da \textit{MongoDb} per l'hosting del DBMS, in quanto già integrati all'interno dell'applicazione e sicuramente comprovati come affidabili per questo tipo di utilizzi (ad esempio, si prevede che \textit{MongoDb} abbia adeguati strumenti di \textit{Disaster Recovery}).\\\\
+Qualora queste strategie di \textit{Scalability} non siano sufficienti (o siano troppo esose), si prevede possibile aumentare progressivamente la frequenza di aggiornamento delle \textit{Restrooms}: la maggioranza dei dati raccolti non hanno necessità di essere tempestivamente notificate all'utente, eccezion fatta per l'allarme "fumo".\\ 
+In tal caso si può studiare un meccanismo di invio di \textit{push notifications} o messaggi SMS (tramite modulo GMS installato negli impianti) direttamente agli utenti di \textit{Manager}.\\\\
+Infine, raccomandiamo l'utilizzo di servizi come \textit{CloudFlare} per la \textit{DDoS Mitigation} e più in generale per l'ottenimento di un sufficiente livello di \textit{Overload Protection}.
+\subsection{Parte Locale}
 
+\newpage
 %----------------------------------------------------------------------------------------
 %	PIANO DI LAVORO
 %----------------------------------------------------------------------------------------
