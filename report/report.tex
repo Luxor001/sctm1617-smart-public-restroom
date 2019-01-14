@@ -590,7 +590,7 @@ Come per l'applicazione di amministrazione, tuttavia, emergono delle problematic
 Benché questo aspetto vada chiaramente in contrasto con la necessità di rendere \textit{consumer} utilizzata da un gran numero di utenti, i requisiti funzionali richiesti dal committente verranno rispettati nella loro totalità.\\
 L'applicazione sarà comunque utilizzabile come un normale sito web: soltanto alcuni aspetti avanzati come l'installazione nativa, infatti, potranno risultare incompatibili.\newpage
 \paragraph{Design}
-La progettazione grafica di \textit{consumer} si è esclusivamente incentrata sulla creazione di un'app per dispositivi mobili incentrata sulla semplicità e immediatezza.\\
+La progettazione grafica di \textit{consumer} si è esclusivamente incentrata sulla creazione di un'app per dispositivi mobili focalizzata sulla semplicità e immediatezza.\\
 Per il prodotto non sono state infatti previste versioni specificatamente studiate per PC desktop: considerato che la mobilità è un requisito fondamentale per il committente, si può dire che il suo utilizzo attraverso un personal computer sia quanto meno scoraggiato.\\
 A causa della sua maggiore popolarità nel settore mobile verrà utilizzato uno stile \textit{Material Design} per tutte le schermate del prodotto; ciò aiuterà ad orientare meglio l'utente al primo approccio in quanto ricalcherà pattern oramai universali.
 Di seguito viene presentato un primo mockup coerente con i punti precedentemente esposti:
@@ -701,7 +701,7 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 Il capitolo di progettazione di \textit{manager} prevedeva lo sviluppo di una applicazione web di tipo SPA caratterizzata da una certa complessità, facilità di manutenzione e scalabilità.\\
 Con queste premesse, il team di sviluppo ha deciso di adottare \textit{Angular} come framework per lo sviluppo dell'applicazione.\\\\
 Adottato specificatamente nella versione 6+, \textit{Angular} è un set di librerie frontend open-source studiate appostiamente per una creazione agevole e strutturata di SPA; creata e mantenuta tutt'ora direttamente da \textit{Google}, questo framework si posiziona al primo posto per popolarità per la creazione di progetti enterprise web.\\
-Benché infatti si presti anche alla creazione di prodotti di ridotta complessità, lo sviluppo attraverso \textit{Angular} è caratterizzato da una curva di apprendimento ripida e dalla necessità di scrivere molto codice \textit{boilerplate} per sviluppare funzionalità semplici; benché queste caratteristiche lo rendano capace di strutturare adeguatamente progetti frontend complessi, molti team di sviluppo lo ritengono uno strumento troppo potente (e difficile) per le loro necessità.\\
+Benché infatti si presti anche allo sviluppo di prodotti di ridotta complessità, lo sviluppo attraverso \textit{Angular} è caratterizzato da una curva di apprendimento ripida e dalla necessità di scrivere molto codice \textit{boilerplate} per sviluppare funzionalità semplici; benché queste caratteristiche lo rendano capace di strutturare adeguatamente progetti frontend complessi, molti team di sviluppo lo ritengono uno strumento troppo potente (e difficile) per le loro necessità.\\
 Concludendo, questo \textit{framework} è stato scelto rispetto ad altre librerie popolari (come \textit{React} o \textit{Vue}) per i seguenti motivi:
 \begin{itemize}
 \item \textit{Angular} fornisce direttamente funzionalità utili allo sviluppo di SPA come \textit{Dependency Injection}, \textit{AJAX}, gestione token ecc.\\
@@ -723,7 +723,7 @@ Viene unicamente utilizzata per mantenere in memoria il \textit{loginToken}.
 \paragraph{Codice}
 In \textit{Angular}, ogni componente visiva principale dell'applicazione viene modellata come un \textit{Component}, cioè un costrutto composto da un \textit{controller} (cioè una parte nella quale risiede la logica del componente: funzioni, variabili, hooks) e un \textit{template} (cioè, in ambito web, un sezione di HTML e CSS).\\
 Questo elemento è indispensabile per specificare singole funzionalità o parti riusabili dell'applicazione, grazie alla sua sintassi precisa e inedita nel mondo dello sviluppo frontend.\\
-Considerato inoltre che i progetti \textit{Angular} devono passare attraverso una procedura di compilazione (o, più precisamente, transpilazione) dei sorgenti, si può capire come lo sviluppo di applicazioni particolarmente complesse venga agevolata: ogni file sarà esente da errori di compilazione (anche grazie all'uso del paradigma OOP) e il progetto avrà una struttura chiara e definita formalmente.
+Considerato inoltre che i progetti \textit{Angular} devono passare attraverso una procedura di compilazione (o, più precisamente, transpilazione) dei file sorgente, si può capire come lo sviluppo di applicazioni particolarmente complesse venga agevolata: ogni file sarà esente da errori di compilazione (anche grazie all'uso del paradigma OOP) e il progetto avrà una struttura chiara e definita formalmente.
 \newpage
 Come primo esempio viene presentato il \textit{component} dedito alla login utente:
 \begin{lstlisting}
@@ -759,7 +759,7 @@ In caso di successo, viene spostata la navigazione utente alla home della webApp
 In caso contrario, viene mostrata una notifica di errore grazie alla libreria \textit{Angular Material}.
 \end{itemize}
 Un altra sezione di particolare interesse sono le \textit{Routes} e le \textit{Guards}.\\
-Le prime vengono utilizzate dal framework per impostare gli url a cui l'applicazione dovrà rispondere: attraverso di esse sarà possibile specificare quale \textit{Component} mostrare e con quali parametri.\\
+Le prime vengono utilizzate dal framework per impostare gli \textit{url} a cui l'applicazione dovrà rispondere: attraverso di esse sarà possibile specificare quale \textit{Component} mostrare e con quali parametri.\\
 Le seconde, invece, possono essere associate a \textit{routes} per determinare la loro attivazione in base alle condizioni inserite: \textit{manager} utilizza delle \textit{guards} per prevenire che utenti non autenticati possano accedere a sezioni protette dell'applicazione.\\\\
 Un esempio di tale guard viene presentata di seguito:
 \begin{lstlisting}
@@ -787,7 +787,7 @@ export class AuthGuard implements CanActivate {
 Anche qui vengono evidenziati i seguenti punti d'interesse:
 \begin{itemize}
 \item In modo analogo al componente descritto in precedenza, in questa classe viene specificato un decoratore (\textit{@Injectable}) per donare alla classe uno specifico comportamento.
-\item L'implementazione dell'interfaccia \textit{CanActivate} serve a specificare la tipologia di \textit{Guard} che verrà implementata: in questo caso si tratterà della più semplice, cioè per determinare se attivare o no una certa \textit{Route} richiesta (attraverso il metodo \textit{canActivate()}.
+\item L'implementazione dell'interfaccia \textit{CanActivate} serve a specificare la tipologia di \textit{Guard} adottata: in questo caso si tratterà della più semplice, cioè per determinare la validità di una certa \textit{Route} richiesta (attraverso il metodo \textit{canActivate()}).
 \item \textit{this.storage.getItem()} rappresenta è un esempio di utilizzo della libreria \textit{Ngx local storage} descritta nella sezione precedente: in questo caso mostrato il reperimento di un \textit{loginToken} di sessione.\\
 Qualora il token non esista (e quindi l'utente non sia autenticato) allora si rimanda l'applicazione all'indirizzo di login.\\
 In caso contrario la \textit{Route} viene accettata e fatta proseguire.
@@ -812,8 +812,8 @@ Per poter avviare il servizio, inoltre, è stato necessario fornire all'applicaz
 \end{itemize}
 \paragraph{Codice}
 Dato il suo sviluppo in \textit{Angular} come il già analizzato \textit{manager}, non verranno qua analizzate le modalità di costruzione delle funzionalità di \textit{consumer}, che si possono infatti considerare pressoché simili.\\
-Inoltre, dato che gran parte del codice necessario per rendere \textit{consumer} una PWA non è stato sviluppato direttamente dal team ma generato automaticamente dal framework (attraverso un tool di transpilazione chiamato \textit{angular-cli}) non si ritiene meritevole di interesse il suo approfondimento.\\\\
-Tuttavia, si ritiene importante approfondire le modalità con le quali è stato possibile mostrare a schermo una \textit{gmap} interattiva con l'utente, in particolare il lato \textit{template} che è stato tralasciato nella precedente sezione.\\
+Inoltre, dato che gran parte del codice necessario per rendere \textit{consumer} una PWA non è stato sviluppato direttamente dal team ma generato automaticamente dal framework (attraverso un tool di transpilazione chiamato \textit{angular-cli}) il suo approfondimento non si ritiene meritevole di interesse.\\\\
+Tuttavia, si ritiene importante analizzare nel dettaglio le modalità con le quali è stato possibile mostrare a schermo una \textit{gmap} interattiva con l'utente, in particolare il lato \textit{template} che è stato tralasciato nella precedente sezione.\\
 Innanzitutto, \textit{Angular} consente di effettuare un \textit{binding} (cioè un collegamento) tra una variabile presente nel \textit{controller} e il rispettivo \textit{template} attraverso due modalità: \textit{box casing} (cioè racchiudendo l'attributo a cui assegnare una variabile tramite i caratteri []) oppure tramite \textit{double brackets} (cioè racchiudere il nome della variabile assegnata a un certo attributo tramite i caratteri \{\}).\\\\
 Ad esempio, l'implementazione della \textit{gmap} nel componente è stato effettuato attraverso un binding di tipo \textit{box casing}, come mostrato di seguito: 
 \begin{lstlisting}[style=htmlcssjs]
@@ -837,7 +837,7 @@ Oltre al \textit{binding}, si possono notare i seguenti punti d'interesse:
 \begin{itemize}
 	\item \textit{agm-map}, \textit{agm-marker} e \textit{agm-info-window} sono componenti esterni forniti dalla libreria \textit{Angular Material}.\\ Come qualsiasi altro elemento HTML, possono essere  istanziati semplicemente specificando il loro nome nel template. 
 	\item Il componente \textit{agm-marker} viene istanziato tante volte quanti sono gli elementi presenti nell'array \textit{restRooms} del \textit{controller} (grazie alla direttiva \textit{*ngFor}).\\ Visivamente, ciò permette di disegnare i \textit{marker} descritti nell'analisi dei requisiti e mostrati nel mockup della fase di progettazione.
-	\item \textit{app-marker-detail} invece corrisponde a un componente scritto dal team di sviluppo: esso servirà a rappresentare il contenuto esposto (\textit{popover}) al click di un marker.
+	\item \textit{app-marker-detail} invece corrisponde a un componente scritto dal team di sviluppo: esso servirà a rappresentare il contenuto esposto (\textit{popover}) al click di un \textit{marker}.
 \end{itemize}
 \newpage
 \subsection{Implementazione parte centrale}
@@ -857,7 +857,7 @@ Data la notevole somiglianza dei linguaggi C\# e Typescript, infatti, non è sta
 Precisamente, il server implementato in \textit{ASP.NET Core} è di tipo \textit{Web Api}, cioè specifico per la creazione di server RESTFul.\\
 La prossima sezione si dedicherà all'analisi delle API implementate più rilevanti a fini di studio.
 \paragraph{API}
-Strutturalmente, il server è progettato in una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
+Strutturalmente, il server è strutturato da una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
 Ogni controller è caratterizzato da una radice di API diversa: ad esempio tutti gli endpoint di \textit{ConsumerController} sono nella forma:
 \begin{center}
 \textit{https://public-restrooms/api/consumer/api-name}
@@ -874,7 +874,7 @@ public abstract class BaseResult
 \end{lstlisting}
 Questo meccanismo fornisce a tutti i client del sistema un contratto di comunicazione per ogni possibile API esposta dal server.\\ 
 Ne consegue che l'implementazione delle chiamate HTTP è notevolmente semplificata e coerente.\\\\
-Viene qui mostrato un primo esempio di endpoint del server che adotta questo meccanismo, cioè un interfaccia atta alla registrazione di nuove \textit{restRooms} inviate dall'utente:
+Viene qui mostrato un primo esempio di endpoint del server che adotta questo meccanismo, cioè un' interfaccia atta alla registrazione di nuove \textit{restRooms} inviate dall'utente:
 \newpage
 \begin{lstlisting}
 [Route("addRestroom")]
@@ -899,7 +899,7 @@ Da questo esempio si evidenziano i seguenti punti fondamentali:
 	\item Trattandosi di un API per app \textit{manager}, la prima operazione che viene effettuata è il controllo della sessione utente corrente attraverso il metodo \textit{ValidUserSession()}.\\
 	Ciò avverrà ricercando il \textit{loginToken} inviato tra gli headers di ogni richiesta nel DBMS: qualora esista un record di login recente contenente il \textit{loginToken} inviato, allora la richiesta sarà autenticata.
 	\item Grazie al sistema di \textit{Dependency Injection} di \textit{ASP.NET Core}, viene recuperata la sessione di connessione con il DBMS corrente (attraverso il metodo \textit{GetCollection()}).
-	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente della buona riuscita dell'operazione.
+	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente la buona riuscita dell'operazione.
 \end{itemize}
 \subsubsection{DBMS}
 \paragraph{Caratteristiche}
@@ -907,7 +907,7 @@ La fase di progettazione relativa al DBMS ipotizzava l'utilizzo di un database N
 Sebbene esista un ampia scelta di prodotti per database con queste caratteristiche, il team di sviluppo ha scelto \textit{MongoDb} come prodotto commerciale a supporto dell'applicazione a seguito delle seguenti considerazioni: 
 \begin{itemize}
 \item \textit{Maturità}: la progettazione di un sistema di notevole complessità e consistente flusso dati richiede l'utilizzo di tecnologie affidabili e ben supportate.\\
-Considerato che nessun membro del team di sviluppo annovera esperienze di utilizzo di database NOSQL, si è scelto di non cimentarsi nell'utilizzo di prodotti meno conosciuti sul quale vi sarà minore supporto e documentazione.
+Considerato che nessun membro del team di sviluppo annovera esperienze di utilizzo di database NOSQL, si è scelto di non cimentarsi nell'adozione di prodotti meno conosciuti sul quale vi sarà minore supporto e documentazione.
 \item \textit{Integrazione}: sono disponibili gratuitamente dei set di librerie per integrare \textit{ASP.NET Core} con \textit{MongoDB}.\\
 Ciò ha permesso ovviamente di velocizzare i tempi di sviluppo in quanto la connessione con il DBMS ha richiesto una configurazione minimale.
 \item \textit{Hosting}: sono disponibili soluzioni di hosting gratuite (fornite direttamente dalla \textit{MongoDb Inc.}) per l'utilizzo del DBMS su cloud.\\
@@ -920,7 +920,7 @@ Precisamente, l'offerta \textit{Free Tier} offre un hosting cloud basato con que
 \item 512Mb di spazio di storage massimo.
 \item RAM del cluster condivisa con altre utenze.
 \end{itemize}
-Sebbene queste caratteristiche possano sembrare un po' limitanti, si confida in un suo upgrade immediato qualora il progetto non si rilevi fallimentare.
+Sebbene queste caratteristiche possano sembrare un po' limitanti, si confida in un loro upgrade immediato qualora il prodotto abbia successo.
 \paragraph{Connessione}
 L'utilizzo di tecnologie ben supportate e recenti come \textit{MongoDB} e \textit{ASP .NET Core} ha facilitato molto la connessione al database, rendendo minimi gli sforzi per la sua attuazione.\\
 Tutti le operazioni di input-output avvengono infatti attraverso classi c\# (racchiuse nel namespace \textit{Models}) che sanciscono la tipologia di oggetti salvati nel DB: la libreria di \textit{MongoDB} si occuperà poi di trasformare automaticamente tali classi in formato JSON.
