@@ -236,15 +236,16 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 La possibilità di usufruire di servizi igienici in luoghi pubblici viene percepita al giorno d'oggi come un diritto da parte del singolo cittadino, che si aspetta puntalmente di trovare un servizio funzionante, pulito e facilmente accessibile.\\
-Oltre che per una questione di pubblico decoro, le aziende (o enti) sono obbligate per legge\cite{articolo1} a fornire servizi igienici ai propri clienti/dipendenti.\\ Inevitabilmente, tuttavia, la loro manutenzione può incidere in maniera rilevante sul bilancio aziendale di ogni anno; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia} e a quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni italiane).\\
+Oltre che per una questione di pubblico decoro, le aziende (o enti) sono obbligate per legge\cite{articolo1} a fornire servizi igienici ai propri clienti/dipendenti.\\
+Inevitabilmente, tuttavia, la loro manutenzione può incidere in maniera rilevante sul bilancio aziendale annuale; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia} e a quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni italiane).\\
 %parlare che ogni bagno viene gestito localmente..
 \\\\
 In questa relazione presentiamo \textit{Smart Public Restroom}, una soluzione capace di contenere i costi operativi e di mantenimento dei bagni pubblici e di incrementare la percezione del servizio da parte degli utenti.\\
 Nel dettaglio, \textit{Smart Public Restroom} prevede:
 \begin{itemize}
-	\item L'installazione di un sistema di monitoraggio per ognuno dei servizi igienici del cliente, capace (grazie a una serie di microcontrollori e trasduttori) di individuare rapidamente le problematiche che riscontrano negli impianti ( come ad esempio il malfunzionamento di una luce, l'esaurimento del sapone sanitario o il riempimento del bidone della spazzatura).\\
+	\item L'installazione di un sistema di monitoraggio per ognuno dei servizi igienici del cliente, capace (grazie a una serie di microcontrollori e trasduttori) di individuare rapidamente le problematiche che riscontrano negli impianti (come ad esempio il malfunzionamento di una luce, l'esaurimento del sapone sanitario o il riempimento del bidone della spazzatura).\\
 	Tale sistema si configurerà di una parte \textit{locale} a basso costo composta da alcuni sensori (come fotoresistenze, sensori di pressione ecc.) e microcontrollori (come \textit{arduino} e \textit{Raspberry Pi}) e da una parte \textit{Manager} composta da una SPA scritta in \textit{Angular} e \textit{asp.net core}.
-	\item Il rilascio di un'applicazione PWA \textit{Consumer} (scritta anch'essa in \textit{Angular}) studiata per dare la possibilità di segnalare eventuali problematiche riscontrate negli impianti e di individuare (grazie a una mappa interattiva) il più vicino impianto pubblico.\\
+	\item Il rilascio di un'applicazione PWA \textit{Consumer} (scritta anch'essa in \textit{Angular}) studiata per dare la possibilità di segnalare eventuali problematiche riscontrate negli impianti e di individuare (grazie a una mappa interattiva) il più vicino servizio igienico.\\
 \end{itemize}
 Ovviamente, questa tipologia di soluzione è adeguata a una gestione centralizzata dei servizi igienici forniti dall'azienda/ente: avere del personale dedicato alla riparazione e alla pulizia degli impianti (ad esempio su scala nazionale) permetterà di sfruttare appieno le potenzialità di \textit{Smart Public Restroom}.\\\\
 Da un punto di vista puramente didattico i punti di interesse di questo progetto sono molteplici:
@@ -318,7 +319,7 @@ Inoltre, in questo modo non c'è alcuna prevenzione: le problematiche vengono ri
 Si tenga presente, infine, che \textit{Smart Public Restroom} prevede già un sistema di reportistica integrato nell'applicazione \textit{Consumer} PWA.
 	\item \textit{Sistemi di monitoraggio}: sono prodotti che offrono un monitoraggio completo del servizio igienico grazie all'adozione di sistema composto da un'insieme di sensori appositamente posizionati.\\
 	Particolarmente affine si può considerare \textit{Onvation}\cite{onvation}, che sfrutta dispenser smart proprietari di aziende come\textit{Purell} e \textit{Scott} per costruire un sistema smart di monitoraggio e controllo.\\
-	Come in \textit{Smart Public Restrooms}, i dati raccolti possono essere aggregati e analizzati grazie ad apposite applicazioni gestionali analoghe a \textit{Manager}; ciò che manca nell'offerta di \textit{Onvation} è un sistema di raccolta feedback degli utenti, che consentirebbe di raccogliere informazioni non direttamente percepibili da sensori.
+	Come in \textit{Smart Public Restrooms}, i dati raccolti possono essere aggregati e analizzati grazie ad apposite applicazioni gestionali analoghe a \textit{Manager}; ciò che manca nell'offerta di \textit{Onvation} è un sistema di raccolta feedback degli utenti, che consentirebbe di estrapolare informazioni non direttamente percepibili da sensori.
 \end{itemize}
 A seguito di questa breve analisi, riteniamo di poter associare \textit{Smart Public Restrooms} a entrambe le categorie di prodotti. 
 %----------------------------------------------------------------------------------------
@@ -606,7 +607,7 @@ Tali considerazioni profilano la realizzazione di 4 differenti entità:
 \begin{itemize}
 	\item Un web server per la fornitura delle risorse di \textit{manager}.
 	\item Un web server per la fornitura delle risorse di \textit{consumer}.
-	\item Un web server RESTFul atto a rispondere a tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
+	\item Un web server RESTFul dedicato alla gestione di tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
 	\item Un DBMS per archiviare le informazioni inviate dai client.
 \end{itemize}
 Le sottosezioni seguenti non affronteranno l'analisi progettuale dei web server per \textit{manager} e \textit{consumer}, in quanto considerate banali e non di particolare interesse.\\ 
@@ -646,7 +647,7 @@ A titolo di esempio vengono presentate alcune classi utilizzate come valore di r
   \includegraphics[scale=0.60]{img/classeBaseResult.png}
   \caption{Processo di registrazione di un nuovo impianto}
 \end{figure}
-\\Questo meccanismo consente permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate: ciò facilità enormemente la loro gestione lato frontend.
+\\Questo meccanismo fornisce una risposta standardizzata e semplificata delle operazioni effettuate: ciò facilità enormemente la loro gestione lato frontend.
 \newpage
 \subsection{Registrazione impianto}
 \subsubsection{Configuratore} Per poter efficacemente spiegare il processo di registrazione di un nuovo impianto è necessario introdurre la figura del \textit{configuratore} (o \textit{installatore}) all'interno dell'architettura di sistema.\\
@@ -845,7 +846,7 @@ Oltre al \textit{binding}, si possono notare i seguenti punti d'interesse:
 \paragraph{Caratteristiche}
 La progettazione della parte centrale del sistema ha previsto la creazione di un generico server RESTFul in grado di rispondere alle richieste delle altre entità coinvolte nel sistema.\\
 Dato che i requisti del committente non hanno dato alcuna indicazione sul suo ambiente di destinazione e la progettazione non ha individuato vincoli in tal senso, il team di sviluppo ha optato per una soluzione multipiattaforma, gratuita e opensource come \textit{ASP.NET Core}.\\
-Questo framework di sviluppo backend è stato creato e tutt'ora direttamente mantenuto da \textit{Microsoft}, in futura sostituzione del più classico ambiente ASP.NET; dalla sua introduzione (circa 2016) ha ricevuto una crescente popolarità come soluzione general-purpose backend.\\
+Questo framework di sviluppo backend è stato creato e tutt'ora direttamente mantenuto da \textit{Microsoft}, in futura sostituzione del più classico ambiente ASP.NET, che dalla sua introduzione (circa 2016) ha ricevuto una crescente popolarità come soluzione general-purpose backend.\\
 Comunque, le motivazioni che hanno spinto il team di sviluppo a scegliere questa tecnologia possono essere così riassunte: 
 \begin{itemize}
 \item Le elevate prestazioni garantite dal framework (sopratutto in situazioni di elevato carico da parte di host multipli) lo rendono perfettamente adatto al carico di lavoro previsto del progetto.
@@ -857,7 +858,7 @@ Data la notevole somiglianza dei linguaggi C\# e Typescript, infatti, non è sta
 Precisamente, il server implementato in \textit{ASP.NET Core} è di tipo \textit{Web Api}, cioè specifico per la creazione di server RESTFul.\\
 La prossima sezione si dedicherà all'analisi delle API implementate più rilevanti a fini di studio.
 \paragraph{API}
-Strutturalmente, il server è strutturato da una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
+Strutturalmente, il server è composto da una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
 Ogni controller è caratterizzato da una radice di API diversa: ad esempio tutti gli endpoint di \textit{ConsumerController} sono nella forma:
 \begin{center}
 \textit{https://public-restrooms/api/consumer/api-name}
@@ -897,7 +898,7 @@ public ActionResult<AddRestroomResult> AddRestroom(AddRestroomData addRestroomDa
 Da questo esempio si evidenziano i seguenti punti fondamentali:
 \begin{itemize}
 	\item Trattandosi di un API per app \textit{manager}, la prima operazione che viene effettuata è il controllo della sessione utente corrente attraverso il metodo \textit{ValidUserSession()}.\\
-	Ciò avverrà ricercando il \textit{loginToken} inviato tra gli headers di ogni richiesta nel DBMS: qualora esista un record di login recente contenente il \textit{loginToken} inviato, allora la richiesta sarà autenticata.
+	Ciò avviene ricercando il \textit{loginToken} inviato tra gli headers di ogni richiesta nel DBMS: qualora esista un record di login recente contenente il \textit{loginToken} inviato, allora la richiesta verrà autenticata.
 	\item Grazie al sistema di \textit{Dependency Injection} di \textit{ASP.NET Core}, viene recuperata la sessione di connessione con il DBMS corrente (attraverso il metodo \textit{GetCollection()}).
 	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente la buona riuscita dell'operazione.
 \end{itemize}
@@ -1009,8 +1010,8 @@ Tale test ha portato ai seguenti risultati:
 per una latenza media risultante di \textit{104,6 ms.}\\
 Dato che tale risultato non si può definire particolarmente performante, si è proceduto ad effettuarne un'analisi approfondita per individuarne cause e possibili soluzioni.\\\\
 Circa il 55\% della latenza è da imputare alla connessione con il DB \textit{mongoDb Atlas}, che ricordiamo essere basato su un cluster gratuito AWS situtato a Francoforte, con memoria RAM condivisa e 512Mb di spazio dedicato.\\
-È chiaro pertanto che, in questo caso, l'utilizzo di una soluzione gratuito ha inciso in maniera rilevante sulle prestazioni del sistema: in fase di produzione si raccomanda pertanto la scelta di un cluster con almeno RAM dedicata e preferibilmente situato nei pressi della locazione del server centrale.\\\\
-Il server, invece, è stato ospitato sulla rete domestica di \textit{Stefano Belli} utilizzando un suo PC personale (composto da una CPU Intel i5 4690k, 8gb di RAM e SSD Sata III, con sistema operativo  Windows 10 Pro x64): non si tratta di quindi di un'hardware \textit{ad hoc} dedicato a ospitare server per SPA, ma un normale PC con memoria condivisa per altri programmi ad uso personale.\\Anche in questo caso, pertanto, si dovrebbe operare sull'infrastruttura per migliorare le performance generali.\\\\
+È chiaro pertanto che, in questo caso, l'utilizzo di una soluzione gratuita ha inciso in maniera rilevante sulle prestazioni del sistema: in fase di produzione si raccomanda pertanto la scelta di un cluster con almeno RAM dedicata e preferibilmente situato nei pressi della locazione del server centrale.\\\\
+Il server, invece, è stato ospitato sulla rete domestica di \textit{Stefano Belli} utilizzando un suo PC personale (composto da una CPU Intel i5 4690k, 8gb di RAM e SSD Sata III, con sistema operativo  Windows 10 Pro x64): non si tratta di quindi di un hardware \textit{ad hoc} dedicato a ospitare server per SPA, ma un normale PC con memoria condivisa per altri programmi ad uso personale.\\Anche in questo caso, pertanto, si dovrebbe operare sull'infrastruttura per migliorare le performance generali.\\\\
 Infine, si è pensato di effettuare una build in modalità \textit{Release} del server, in modo da sfruttare tutte le ottimizzazioni che tale processo garantisce (ad esempio ignorando completamente il debugging).\\
 Ciò ha permesso di ridurre sensibilmente il tempo di esecuzione totale di ogni richiesta, come si può evincere dalla tabella sottostante:
 \begin{table}[h]
@@ -1036,7 +1037,7 @@ Ciò viene anche dimostrato dall'analisi delle richieste effettuate dal \textit{
 \end{figure}
 
 \subsubsection{Consumer}
-Dato che \textit{Consumer} e \textit{Manager} utilizzano le stesse infrastrutture server e DB, le prestazioni della PWA si possono dire molto simili a quelle della SPA; dato che l'applicazione è al momento molto contenuta, non si rilevano criticità a livello di performance rispetto a \textit{Manager}.
+\textit{Consumer} e \textit{Manager} utilizzano le stesse infrastrutture server e DB e pertanto le prestazioni della PWA si possono dire molto simili a quelle della SPA; dato che l'applicazione è al momento molto contenuta, non si rilevano criticità a livello di performance rispetto a \textit{Manager}.
 %----------------------------------------------------------------------------------------
 %	ANALISI DI DEPLOYMENT SU LARGA SCALA
 %----------------------------------------------------------------------------------------
@@ -1091,7 +1092,7 @@ In generale, architetture di questo tipo consentono una buona \textit{Avaiabilit
 Fortunatamente, gli aggiornamenti inviati dagli impianti di \textit{Smart Public Restrooms} si possono considerare stateless e indipendenti, in quanto ogni richiesta temporizzata fa riferimento a un singolo impianto ed è quindi impossibile avere conflitti in scrittura su DB.\\\\
 Inoltre, prevediamo il DBMS sia perfettamente in grado di scalare in modo adeguato alle esigenze dell'applicazione: la sua natura NoSQL e la semplicità dei dati contenuti ben si prestano a tecniche di \textit{scalabilità orizzontale} come lo \textit{Sharding}, che prevediamo adatto a scenari \textit{write-intensive} come questo.\\
 In questo scenario, tuttavia, ci raccomandiamo di affidarci ai cluster  forniti da \textit{MongoDb} per l'hosting del DBMS, in quanto già integrati all'interno dell'applicazione e sicuramente comprovati come affidabili per questo tipo di utilizzi (ad esempio, si prevede che \textit{MongoDb} abbia adeguati strumenti di \textit{Disaster Recovery}).\\\\
-Qualora queste strategie di \textit{Scalability} non siano sufficienti (o siano troppo esose), si prevede possibile aumentare progressivamente la frequenza di aggiornamento delle \textit{Restrooms}: la maggioranza dei dati raccolti non hanno necessità di essere tempestivamente notificate all'utente, eccezion fatta per l'allarme "fumo".\\ 
+Qualora queste strategie di \textit{Scalability} non siano sufficienti (o siano troppo esose), si ritiene possibile aumentare progressivamente la frequenza di aggiornamento delle \textit{Restrooms}: la maggioranza dei dati raccolti non hanno necessità di essere tempestivamente notificate all'utente, eccezion fatta per l'allarme "fumo".\\ 
 In tal caso si può studiare un meccanismo di invio di \textit{push notifications} o messaggi SMS (tramite modulo GMS installato negli impianti) direttamente agli utenti di \textit{Manager}.\\\\
 Infine, raccomandiamo l'utilizzo di servizi come \textit{CloudFlare} per la \textit{DDoS Mitigation} e più in generale per l'ottenimento di un sufficiente livello di \textit{Overload Protection}.
 \subsection{Parte Locale}
@@ -1161,11 +1162,11 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
  \hline
 \end{tabular}
 \newpage
-Questo progetto rappresenta un valido caso di studio per la mesa in pratica delle principali nozioni di \textit{Smart City e tecnologie mobili} viste durante il corso di Sistemi Autonomi presieduto dal prof. Maio.\\
+Questo progetto rappresenta un valido caso di studio per la messa in pratica delle principali nozioni di \textit{Smart City e tecnologie mobili} viste durante il corso di Sistemi Autonomi presieduto dal prof. Maio.\\
 Innanzitutto, è stato progettato un sistema di monitoraggio completo e vicino a un contesto reale: sono stati coperti aspetti che spaziano dalle modalità di installazione degli impianti alla copertura delle esigenze degli utenti finali.\\
 Il sistema si è rivelato sia economico nella sua realizzazione (in termini di costi dei materiali e tempistiche di sviluppo) che flessibile per eventuali sviluppi futuri: l'adozione di tecnologie come \textit{MongoDB} e la creazione di SPA con \textit{Angular} sono solo alcune delle scelte architetturali che riteniamo importanti per garantire al sistema la capacità di scalare gradualmente con la sua adozione in massa.\\\\
 Tuttavia, la sua possibile resa economica pone alcuni interrogativi, che derivano dal fatto che \textit{Smart Public Restrooms} è un prodotto particolare adatto soltanto a una ristretta cerchia di clienti: le dimensioni delle aziende target devono essere tali infatti da porre la necessità di ridurre i costi di manutenzione dei bagni pubblici offerti nei propri servizi.\\
-Si ritiene improbabile, pertanto, che il sistema da noi progettato possa fare essere il \textit{core business} di un'ipotetica Startup, perché i tempi necessari per approdare nel mercato possono essere importanti; ciò è anche aggravato dal fatto che esistono già alcune soluzioni sul mercato comparabili con \textit{Smart Public Restrooms}.\\
+Si ritiene improbabile, pertanto, che il sistema da noi progettato possa di fatto essere il \textit{core business} di un'ipotetica Startup, perché i tempi necessari per approdare nel mercato possono essere importanti; ciò è anche aggravato dal fatto che esistono già alcune soluzioni sul mercato comparabili con \textit{Smart Public Restrooms}.\\
 Il suo sviluppo può essere tuttavia interessante per Software House di una certa dimensione e già affermate nel settore (con quindi altri introiti derivanti da altri prodotti); in quest'ottica, per aumentare i ricavi si potrebbe offrire direttamente anche il servizio di manutenzione e monitoraggio dei servizi pubblici dei clienti.\\\\
 Ciononostante, \textit{Smart Public Restrooms} rimane un sistema flessibile con interessanti potenzialità; riteniamo di aver ideato un prototipo di un prodotto realisticamente piazzabile sul mercato e didatticamente rilevante.
 \newpage
