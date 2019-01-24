@@ -770,9 +770,9 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \subsection{Implementazione parte locale}
 Verranno di seguito illustrate le implementazioni per il software eseguito dal raspberry e il software eseguito dall'Arduino.
 \subsubsection{Implementazione software Arduino}
-Come riportato nella fase di progettazione, l'Arduino ha bisogno di un software leggero e poco complessso. Il software è scritto in C++ e usa principalmente le librerie di base predisposte da Arduino e le librerie di terze parti per la lettura dei sensori digitali complessi.
+Come riportato nella fase di progettazione, l'Arduino ha bisogno di un software leggero e computazionalmente poco complessso. Il software è scritto in C++; usa principalmente le librerie di base predisposte da Arduino e le librerie di terze parti per la lettura dei sensori digitali complessi.
 \paragraph{Codice}
-\subparagraph{ENTRYPOINT}
+\subparagraph{Entrypoint}
 [IMMAGINE DI CONCETTO SETUP AND LOOP]
 L'entrypoint di un Arduino è determinato da file in estensione .cpp contenente due metodi:
 \begin{itemize}
@@ -791,16 +791,16 @@ Affinché il mapping lato codice sia effettuato con cura è necessario creare un
 \item getOutputMapping(int value) Metodo che preso il numero di pin come parametro restituisce il nome del sensore se il sensore d'interesse esiste (ed è collegato) e ha lo scopo di ricevere dell'input da Arduino per un possibile cambio di stato del sensore stesso.
 \item evaluateMappingType(int value) Metodo che preso il numero di pin come parametro restituisce il tipo di sensore collegato a quel pin; esempio se è digitale o analogico.
 \subparagraph{Lettura di pin di input}
-Se la request include il comando di lettura di un pin, prima di leggere lo stato del pin bisogna conoscere la tipologia di sensore collegato. Generalmente le librerie Arduino permettono di conoscere se il pin è in stato High o in stato Low, ottimo per sensori digitali semplici come gli interruttori; se invece è necessario leggere lo stato di un sensore digitale complesso come il dht, la libreria standard di Arduino non è più sufficiente. La community di Arduino mette a disposizione librerie di terze parti per i sensori al momento più conosciuti. In questo caso quindi è necessario installare le librerie di terze parti e cambiare il comportamento della lettura del pin in base al sensore ad esso collegato. [codice readFromPin(int pin)]
+Se la request include il comando di lettura di un pin, prima di leggere lo stato del pin bisogna conoscere la tipologia di sensore collegato. Generalmente le librerie Arduino permettono di conoscere lo stato del pin (HIGH o LOW), ottimo per sensori digitali semplici come gli interruttori; se invece è necessario leggere lo stato di un sensore digitale complesso come il dht, la libreria standard di Arduino non è più sufficiente. La community di Arduino mette a disposizione librerie di terze parti per i sensori al momento più conosciuti. In questo caso quindi è necessario installare le librerie di terze parti e cambiare il comportamento della lettura del pin in base al sensore ad esso collegato. [codice readFromPin(int pin)]
 \end{itemize}
 \subsubsection{Implementazione software Raspberry}
 \paragraph{Caratteristiche}
-Come anticipato in piccola parte nel capitolo di progettazione, il software che viene eseguito sul raspberry verrà scritto in Java 8. Questa scelta è stata influenzata dalle proprietà principali che Java 8 offre:
+Come anticipato in parte nel capitolo di progettazione, il software che viene eseguito sul raspberry verrà scritto in Java 8. Questa scelta è stata influenzata dalle proprietà principali che Java 8 offre:
 \begin{itemize}
-\item Un supporto enorme dalla community di Java
+\item Un grande supporto dalla community di Java
 \item Numerose librerie di terze parti disponibili
 \item Il recente inserimento del paradigma alla programmazione funzionale e programmazione reattiva
-\item Possibilità di eseguire Java su ogni computer
+\item Possibilità di eseguire Java su tutte le architetture più diffuse
 \end{itemize}
 \subparagraph{Librerie di terze parti}
 Per l'uso e la sincronizzazione di librerie di terze parti si è scelto di usare Maven.
@@ -816,9 +816,8 @@ Tra le librerie third-party si prevede l'utilizzo di:
 \paragraph{Codice}
 Il codice d'implementazione rispecchia concettualmente quello che è stato già definito in fase progettuale. Verrà descritto quindi il codice relativo alla componente sensori e il codice relativo al manager.
 \subparagraph{Sensori}
-L'interfaccia ISensor si occupa di esporre i metodi basilari che ogni sensore virtuale deve avere all'interno del sistema ed estende l'interfaccia Runnable in modo da integrare la logica di thread al suo interno. ISensor verrà implementato parzialmente da AbstractSensor, una classe astratta che incorpora il comportamento principale che ogni sensore deve avere.
-L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un ulteriore comportamento, la sua parte reattiva. Tutti i sensori virtuali che derivano da abstractSensor possono aggiornare gli osservatori tramite la funzione implementata dal loro padre:
-
+L'interfaccia ISensor si occupa di esporre i metodi basilari che ogni sensore virtuale deve poi implementare; estende l'interfaccia Runnable in modo da integrare la logica dei Java.Thread al suo interno. ISensor verrà implementato parzialmente da AbstractSensor, una classe astratta che incorpora il comportamento principale che ogni sensore deve avere.
+L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un ulteriore comportamento, la sua parte reattiva. Grazie all'implementazione dell'Observable in AbstractSensor è possibile modificare lo stato di tutti gli oggetti di tipo Observer che si sono iscritti.
 \begin{lstlisting}
 	protected boolean updateObserver(EntrySet entry)
 	{
@@ -828,16 +827,40 @@ L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un u
 		return true;
 	}
 \end{lstlisting}
-L'abstractSensor viene a sua volta implementato da ArduinoSensor, una seconda classe astratta che implementa a sua volta la classe Observer. In questo modo ArduinoSensor è in grado non solo di aggiornare possibili subscribers ma anche di iscriversi ad un observable e di reagire ai suoi aggiornamenti.
+L'abstractSensor viene a sua volta implementato da ArduinoSensor, una seconda classe astratta che implementa a sua volta la classe Observer. In questo modo ArduinoSensor è in grado non solo di aggiornare possibili subscribers ma anche di iscriversi ad un'altro Observable e di reagire ai suoi aggiornamenti. Grazie a questa implementazione, l'ArduinoSensor reagisce alle risposte da parte dell'Arduino e può iscriversi ad un altro ArduinoSensor per reagire alle variazioni di stato del sensore virtuale a cui si è iscritto.
 Le classi finali sono ArduinoReadingSensor e ArduinoWritingSensor.
-Il comportamento di queste due classi sono simili; la differenza sostanziale sta nel fatto che l'ArduinoReadingSensor, una volta che riceve le informazioni dall'Arduino, aggiorna il Manager. 
+Il comportamento di queste due classi sono simili; la differenza sostanziale sta nel fatto che l'ArduinoReadingSensor, una volta che riceve le informazioni dall'Arduino, aggiorna il Manager mentre l'ArduinoWritingSensor ha il solo scopo di cambiare lo stato dei pin relativi ai Sensori fisici di output (come il pin di un led); entrambi le classi sfruttano il Manager per comunicare con l'Arduino.
+La ragione principale per cui si è creato un livello di astrazione così profondo è quella di tenere alta la libertà di usare, in futuro, un dispositivo differente da Arduino per la gestione fisica dei sensori. 
 \subparagraph{Manager}
-Il manager è composto dalle seguenti componenti:
+Il manager è composto da:
 \begin{itemize}
 \item RestroomSM: responsabile del coordinamento delle seguenti componenti
-\item IOComm: responsabile della comunicazione tra manager e arduino e sensori e arduino
+\item IOComm: responsabile della comunicazione tra manager-arduino e sensori virtuali-arduino
 \item RestClient: responsabile della comunicazione tra manager e server
 \end{itemize}
+L'\textbf{IOComm} è la classe responsabile alla comunicazione tra Raspberry e Arduino e implementa l'interfaccia Observer per reagire alle risposte da parte di Arduino. Per inizializzare un oggetto di questa classe è richiesta la lista di porte seriali a cui i vari Arduino sono fisicamente connessi al Raspberry. 
+Durante l'inizializzazione, la classe interroga ogni Arduino connesso per ricevere la lista delle mappature dei sensori fisici utilizzati e crea le strutture necessarie a memorizzare queste mappature e legarle concettualmente all'Arduino interrogato. Per ogni stringa di mappatura ricevuta dagli Arduino, l'IOComm inizializza i sensori virtuali di tipo ArduinoSensor passando loro informazioni utili al loro funzionamento; le principali informazioni sono:
+\begin{itemize}
+\item relative all'Arduino fisico a cui concettualmente appartiene come la porta seriale e il numero di pin a cui il sensore fisico è cablato.
+\item relative alle proprietà funzionali del sensore virtuale come il delay che ci deve essere tra un'interrogazione all'Arduino e un'altra.
+\end{itemize}
+Una volta conclusa l'inizializzazione è possibile comunicare con l'Arduino con l'ausilio di due metodi di classe esposti:
+\begin{itemize}
+\item sendWriteRequestToArduino(), metodo che serve a cambiare lo stato di un pin di un Arduino
+\item sendReadRequestToArduino(), metodo che serve a leggere lo stato di un pin di un Arduino
+\end{itemize}
+Il \textbf{RestClient} è una classe che permette al Raspberry di comunicare ad un server con tecnologia Rest. Durante la sua inizializzazione, viene richiesto l'indirizzo URL a cui il Raspberry si connetterà e vengono impostate le metodologie di comunicazione, come l'utilizzo dell'http post con struttra dei messaggi in Json.
+La classe espone il metodo sendData() che prende come parametro l'informazione strutturata da spedire.
+Il metodo serializza l'informazione in formato Json, crea la struttura di request e response e spedisce il messaggio. E' possibile conoscere l'esito dell'operazione tramite il metodo .getStatusLine().getStatusCode() della struttura di response; il risultato del metodo sopra citato è un intero che rappresenta il codice di stato http. Se l'esito è andato a buon fine, lo status code sarà uguale a 200. All'interno della response inoltre c'è un oggetto Json deserializzabile in un oggetto di classe RestResponse che riporta il risultato dell'operazione di business e un possibile messaggio.
+\textbf{RestroomSM} (Restroom sensor manager) è la classe principale del software; essa implementa sia le funzioni di Observable che le funzioni di Observer. Questa classe serve a collegare i sensori virtuali con l'IOComm, si collega al RestClient e tiene in memoria una struttura dati ben definita da aggiornare e/o inviare al Server durante il suo ciclo di vita.
+Durante la sua inizializzazione, il RestroomSM recupera, dal file di configurazione dell'applicazione, tutte le informazioni necessarie a inizializzare correttamente l'IOComm, il RestClient e la struttura dati. Inoltre il manager mappa il nome delle porte ai dispositivi arduino e i dispositivi arduino alle strutture dati. Infine,se necessario , crea le dipendenze tra i vari ArduinoSensors.
+Il RSM espone due funzioni:
+\begin{itemize}
+\item Start() Abilita tutti i sensori virtuali ad esso collegati
+\item Stop() Ferma tutti i sensori virtuali ad esso collegati
+\end{itemize}
+Una volta avviatosi, il cuore della classe è rappresentata dalla funzione onNext() metodo derivato da Observer.
+Questo metodo viene chiamato dai vari sensori virtuali come Observable e ha il compito di smistare le informazioni per aggiornare la struttura dati. Al termine dello smistamento dei dati, viene chiesto l'invio della struttura dati tramite l'ausilio della classe RestClient.
 \newpage
 \subsection{Implementazione parte Applicativa}
 \subsubsection{Manager}
