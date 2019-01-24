@@ -236,16 +236,15 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 La possibilità di usufruire di servizi igienici in luoghi pubblici viene percepita al giorno d'oggi come un diritto da parte del singolo cittadino, che si aspetta puntalmente di trovare un servizio funzionante, pulito e facilmente accessibile.\\
-Oltre che per una questione di pubblico decoro, le aziende (o enti) sono obbligate per legge\cite{articolo1} a fornire servizi igienici ai propri clienti/dipendenti.\\
-Inevitabilmente, tuttavia, la loro manutenzione può incidere in maniera rilevante sul bilancio aziendale annuale; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia} e a quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni italiane).\\
+Oltre che per una questione di pubblico decoro, le aziende (o enti) sono obbligate per legge\cite{articolo1} a fornire servizi igienici ai propri clienti/dipendenti.\\ Inevitabilmente, tuttavia, la loro manutenzione può incidere in maniera rilevante sul bilancio aziendale di ogni anno; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia} e a quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni italiane).\\
 %parlare che ogni bagno viene gestito localmente..
 \\\\
 In questa relazione presentiamo \textit{Smart Public Restroom}, una soluzione capace di contenere i costi operativi e di mantenimento dei bagni pubblici e di incrementare la percezione del servizio da parte degli utenti.\\
 Nel dettaglio, \textit{Smart Public Restroom} prevede:
 \begin{itemize}
-	\item L'installazione di un sistema di monitoraggio per ognuno dei servizi igienici del cliente, capace (grazie a una serie di microcontrollori e trasduttori) di individuare rapidamente le problematiche che riscontrano negli impianti (come ad esempio il malfunzionamento di una luce, l'esaurimento del sapone sanitario o il riempimento del bidone della spazzatura).\\
+	\item L'installazione di un sistema di monitoraggio per ognuno dei servizi igienici del cliente, capace (grazie a una serie di microcontrollori e trasduttori) di individuare rapidamente le problematiche che riscontrano negli impianti ( come ad esempio il malfunzionamento di una luce, l'esaurimento del sapone sanitario o il riempimento del bidone della spazzatura).\\
 	Tale sistema si configurerà di una parte \textit{locale} a basso costo composta da alcuni sensori (come fotoresistenze, sensori di pressione ecc.) e microcontrollori (come \textit{arduino} e \textit{Raspberry Pi}) e da una parte \textit{Manager} composta da una SPA scritta in \textit{Angular} e \textit{asp.net core}.
-	\item Il rilascio di un'applicazione PWA \textit{Consumer} (scritta anch'essa in \textit{Angular}) studiata per dare la possibilità di segnalare eventuali problematiche riscontrate negli impianti e di individuare (grazie a una mappa interattiva) il più vicino servizio igienico.\\
+	\item Il rilascio di un'applicazione PWA \textit{Consumer} (scritta anch'essa in \textit{Angular}) studiata per dare la possibilità di segnalare eventuali problematiche riscontrate negli impianti e di individuare (grazie a una mappa interattiva) il più vicino impianto pubblico.\\
 \end{itemize}
 Ovviamente, questa tipologia di soluzione è adeguata a una gestione centralizzata dei servizi igienici forniti dall'azienda/ente: avere del personale dedicato alla riparazione e alla pulizia degli impianti (ad esempio su scala nazionale) permetterà di sfruttare appieno le potenzialità di \textit{Smart Public Restroom}.\\\\
 Da un punto di vista puramente didattico i punti di interesse di questo progetto sono molteplici:
@@ -319,7 +318,7 @@ Inoltre, in questo modo non c'è alcuna prevenzione: le problematiche vengono ri
 Si tenga presente, infine, che \textit{Smart Public Restroom} prevede già un sistema di reportistica integrato nell'applicazione \textit{Consumer} PWA.
 	\item \textit{Sistemi di monitoraggio}: sono prodotti che offrono un monitoraggio completo del servizio igienico grazie all'adozione di sistema composto da un'insieme di sensori appositamente posizionati.\\
 	Particolarmente affine si può considerare \textit{Onvation}\cite{onvation}, che sfrutta dispenser smart proprietari di aziende come\textit{Purell} e \textit{Scott} per costruire un sistema smart di monitoraggio e controllo.\\
-	Come in \textit{Smart Public Restrooms}, i dati raccolti possono essere aggregati e analizzati grazie ad apposite applicazioni gestionali analoghe a \textit{Manager}; ciò che manca nell'offerta di \textit{Onvation} è un sistema di raccolta feedback degli utenti, che consentirebbe di estrapolare informazioni non direttamente percepibili da sensori.
+	Come in \textit{Smart Public Restrooms}, i dati raccolti possono essere aggregati e analizzati grazie ad apposite applicazioni gestionali analoghe a \textit{Manager}; ciò che manca nell'offerta di \textit{Onvation} è un sistema di raccolta feedback degli utenti, che consentirebbe di raccogliere informazioni non direttamente percepibili da sensori.
 \end{itemize}
 A seguito di questa breve analisi, riteniamo di poter associare \textit{Smart Public Restrooms} a entrambe le categorie di prodotti. 
 %----------------------------------------------------------------------------------------
@@ -499,36 +498,109 @@ Viene riportato un diagramma dell'architettura logica della progettazione appena
   \caption{Architettura logica del sistema}
 \end{figure}
 \subsection{Progettazione parte locale}
-Ogni parte \textit{locale} del sistema si occuperà di raccogliere i dati di utilizzo di ogni impianto. Si prevede l'utilizzo delle seguenti componenti:
+La progettazione della parte locale prevede il sistema di produzione dei dati grezzi, dalla loro generazione fino all'invio al server.
+Sulla base dei requisiti non funzionali, il progetto della parte locale deve tenere in considerazione due fattori principali:
 \begin{itemize}
-\item Il \textit{Raspberry PI 3 B+} per gestire la comunicazione tra la componente fisica
- e il server del sistema
-\item Dei \textit{Mega2560} per gestire la componente fisica del sistema
-\item Un insieme di sensori
-\end{itemize}
-
-\subsection{Progettazione parte fisica}
+	\item \textbf{Versatilità del sistema.}
+	Il sistema deve essere progettato in modo tale da poter essere riutilizzabile e adattabile a qualsiasi tipo e forma di locale in esercizio. 
+	\item \textbf{Costo di realizzazione dell'impianto.}
+	Il costo dell'impianto deve essere contenuto per non vanificare lo scopo dell'intero progetto. Si considera però che i dati vengono prodotti principalmente da sensori, i quali la loro qualità di monitoraggio e longevità è strettamente legata al loro costo di produzione e vendita. Senza venir a meno al costo dell'installazione dell'impianto in relazione all'efficacia dei dati raccolti.
+\end{itemize}  
+\subsubsection{Progettazione hardware}
+La scelta dell'hardware incide molto sui fattori di versatilità e costi. Occorre quindi pensare a come ottenere i dati necessari in modo economico e affidabile. Per la progettazione dell'hardware si procede con la tecnica bottom-up, si illustrano prima i dispositivi scelti e il pensiero dietro di essi in modo da ricavare i dati grezzi. Poi si assemblano le varie componenti insieme per ottenere una struttura più complessa, consistente e uniforme. Di seguito i vari concept.
 \paragraph{Sensori}
-Per soddisfare i requisiti è stato necessario selezionare la tipologia di sensori da utilizzare all'interno del locale.
+I sensori sfruttati sono i seguenti
 \begin{itemize}
-\item Un sensore di rilevamento fumo
-\item Sensori a ultrasuoni
+\item Fotoresistori
+\item Emettitori laser
+\item DHT21 (Rilevamento temperatura e umidità)
+\item Sensori ultrasuoni
 \item Sensori di forza
-\item Delle coppie di emissione e ricezione IR
-\item Dei rilevatori di livello dell'acqua
-\item Interruttori a eccitazione magnetica
-\item Dei transistor di potenza
+\item Sensori di fumo
 \end{itemize}
-
-\subparagraph{Sensore di rilevamento fumo}
-
-
-\paragraph{Microcontrollore}
-Poiché non è possibile conoscere a prescindere la morfologia del locale dove installare il sistema, è necessario tenere in conto che la progettazione di un solo dispositivo elettronico complesso potrebbe non essere sufficiente. Motivo per cui ci si concentra sull'utilizzo del \textit{mega2560}.
-Il \textit{Mega2560} è un microcontrollore programmabile dai costi contenuti il cui utilizzo è quello di realizzare, con grande versatilità, circuiti elettronici più o meno complessi in tempi brevi.
-
-
-
+\subparagraph*{Porta chiusa e disponibilità carta igienica - Coppia emettitore laser e fotoresistore}
+L'\textit{emettitore laser} è un dispositivo elettronico rappresentabile da un diodo che emette un fascio di luce concentrato verso una direzione.
+Il \textit{fotoresistore} è un dispositivo elettronico rappresentabile da una resistore (o resistenza variabile) che regola la sua resistenza in base alla luce che riceve sulla sua componente fotosensibile; più è la luce che riceve, minore è la resistenza.
+Le due componenti le si possono utilizzare per concentrare la luce in un unico punto del fotoresistore trasformando la coppia di sensori in un interruttore di luce.
+E' possibile sfruttare questa coppia per sapere se una porta è chiusa o se la carta igienica è disponibile.
+[FOTO CONCEPT PORTA] Una porta si definisce chiusa quando la luce del laser è concentrata sul fotoresistore, aperta altrimenti.
+[FOTO CONCEPT CARTA IGIENICA] La carta igienica si definisce esaurita quando la luce del laser è concentrata sul fotoresistore,disponibile altrimenti.
+[PROBLEMI DEFORMAZIONE CARTONE CARTA IGIENICA E SOLUZIONI] Poichè il cartone di supporto del rotolo di carta igienica tende alla deformazione, è possibile che il laser non tocchi il fotoresistore anche se la carta igienica è finita. Per ovviare al problema è sufficiente aggiungere una doppia coppia di laser che puntano allo stesso fotoresistore da punti differenti.
+[FOTO SOLUZIONE DEFORMAZIONE CARTONE CARTA IGIENICA]
+\subparagraph{Guasto luce - fotoresistore}
+Un singolo fotoresistore è in grado di avvertirci se c'è un guasto alla luce
+[FOTO SEMPLICE GUASTO LUCE]
+\subparagraph{Rilevamento umidità celle - DHT21}
+Il DigitalHumidityTemperature (DHT) è un sensore digitale complesso che permette di rilevare l'umidità e la temperatura dell'ambiente che lo circonda. Non richiede installazioni complesse, è sufficiente installarlo a mezzo metro dal soffitto per un rilevamento ideale.
+\subparagraph{Rilevamento spazzatura - Sensore a ultrasuoni}
+Il sensore a ultrasuoni è un sensore digitale complesso che permette di calcolare le distanze di un oggetto di fronte ad esso. Il sensore emette un ultrasuono e stima la distanza aspettando e calcolando il tempo di ritorno di quel suono.
+L'idea è di piazzare il sensore sotto il coperchio del bidone della spazzatura e puntarlo verso la base del bidone. Man mano che il bidone si riempie il sensore dovrebbe stimare distanze sempre minori fino a raggiungere la distanza minima e avvertire quindi che il bidone è pieno.
+[FOTO FUNZIONAMENTO SENSORE]
+\subparagraph{Rilevamento presenza sapone - Sensore di forza}
+Il sensore di forza è un sensore analogico rappresentabile da un resistore che permette di rilevare il peso degli oggetti che si trovano su di esso. Sensori simili, come i piezoelettrici, vengono usati all'interno dei serbatoi dei veicoli per la stima del carburante residuo. L'idea quindi è quella di piazzare il sensore sotto il contenitore dei saponie stimare quindi la rimanenza di sapone all'interno del contenitore.
+[FOTO FUNZIONAMENTO SENSORE]
+\subparagraph{Rilevatore di fumo}
+Il rilevatore di fumo è un sensore analogico complesso rappresentabile da un resistore che varia la sua resistenza interna in base alla presenza di gas nell'atmosfera a se circostante. Non richiede installazioni complesse se non il montaggio su soffitto per rilevare la presenza di gas leggeri come il monossido di carbonio o il fumo in generale.
+\paragraph{Arduino-like}
+Poiché il personale non ha conoscenze approfondite in ingegneria elettronica, per risparmiare tempo e contenere i costi di progettazione di un possibile circuito elettronico, per mettere insieme tutti i pezzi si è deciso di sfruttare i microcontrollori programmabili come l'arduino.
+Dall'analisi s'illustra che è necessario installare un dispositivo arduino-like per la gestione dei dispositivi in ogni cella e un unico dipositivo arduino-like per la gestione dei dispositivi ai lavabi.
+[FOTO CIRCUITO ELETTRONICO ARDUINO-CELLA]
+[FOTO CIRCUITO ELETTRONICO ARDUINO-LAVABO]
+Da come si evince dalle immagini sopra riportate, l'arduino è alimentabile da porta usb ma per una maggiore stabilità verranno sfruttati degli alimentatori da 220Vin-7VOut.
+Ogni arduino è in grado di alimentare tutti i sensori ad esso collegati, di leggere il loro stato (come per il dht) o cambiare il loro stato (come per l'emettitore laser)
+L'arduino tuttavia ha grosse limitazioni per quanto riguarda la memoria disponibile e la potenza computazionale; motivo per cui tutto il carico di lavoro che riguarda la manipolazione dei dati grezzi e il delivering dei dati strutturati viene spostato su un dispositivo più prestante e adatto al compito: il raspberry.
+\paragraph{Raspberry}
+Il raspberry è un dispositivo IOT sufficientemente potente da poter essere sfruttato come client produttore di dati per l'intero sistema. Tramite le porte usb ha il compito di connettersi e comunicare con i dispositivi arduino raccogliendo quindi i dati grezzi.
+Una volta manipolati i dati grezzi, il raspberry ha il compito di spedire i dati elaborati al server dove infine verranno salvati.
+\subsubsection{Progettazione software arduino}
+L'arduino è il dispositivo responsabile alla comunicazione dei sensori con il raspberry.
+In base all'analisi dei requisiti si può dedurre che l'arduino ha bisogno di essere configurato per due tipi di ambienti:
+\begin{itemize}
+\item L'ambiente della cella
+\item L'ambiente dei lavabi
+\end{itemize}
+L'Arduino ha lo svantaggio di avere poca memoria interna e un'architettura non in grado di gestire il multithreading. La complessità della struttura del programma che verrà caricato sul dispositivo potrebbe compromettere l'affidabilità dell'intero sistema hardware; questo problema ci obbliga a progettare un software molto leggero e poco dinamico.
+Di seguito viene riportato quindi un UML di progetto compatibile con due software molto simili tra loro affinché l'Arduino possa essere installato in entrambi i tipi di ambiente. 
+[UML SOFTWARE ARDUINO]
+\subsubsection{Progettazione software raspberry}
+Il Raspberry è un computer economico con architettura Arm a basso consumo energetico; in questo progetto il suo compito è quello di ricevere i dati grezzi dall'Arduino, di manipolarli e poi spedire i dati elaborati al server centrale.
+\paragraph{Ambiente di sviluppo}
+Il Raspberry supporta un qualsiasi sistema operativo Arm ma è Raspbian il sistema operativo scelto poiché il più supportato dalla community nonché il più performante tra tutti. Verranno usati principalmente tre paradigmi di programmazione: OOP, programmazione funzionale e programmazione reattiva. 
+\paragraph{Concetto del software lato raspberry}
+[IMMAGINE MOTORE SENSORS MANAGER]
+Si è progettato il software del raspberry in modo che i concetti di business coincidano il più possibile con le problematiche tecniche da risolvere.
+Il software può essere diviso concettualmente in due parti:
+\begin{itemize}
+\item Sensori
+\item Manager
+\end{itemize}
+\subparagraph{Sensori virtuali}
+[UML RELATIVO ALL'ISensor e sue implementazioni]
+I sensori virtuali sono componenti software gestiti da thread indipendenti l'uno dall'altro che hanno il compito di recuperare i dati dai sensori fisici e spedirli al Manager.
+E' possibile che un sensore sia dipendente da altri sensori per il corretto funzionamento; in questo caso il sensore dovrà abilitare il sensore padre prima di avviare la lettura.
+\subparagraph{Manager}
+[UML RELATIVO ALL'IManager e sue implementazioni]
+Il manager è un componente software che ha il compito di eseguire le seguenti funzioni:
+\begin{itemize}
+\item Connettersi ai vari dispositivi Arduino
+\item Inizializzare tutti i sensori virtuali mappandoli con i sensori fisici.
+\item Attivare o disattivare la lettura dei sensori virtuali
+\item Attendere la ricezione dei dati da parte dei sensori virtuali
+\item Aggregare i dati ricevuti in un'unica struttura
+\item Inviare i dati strutturati,se necessario con politiche di temporizzazione, al server
+\end{itemize}
+\subsubsection{Progettazione interazione raspberry arduino}
+Come precedentemente scritto, i sensori virtuali dovranno essere gestiti da thread indipendenti l'uno dall'altro ma è stato anche specificato che devono interfacciarsi con l'Arduino, un microcontrollore con risorse computazionali molto basse. La progettazione della parte locale deve quindi prevedere una metodologia efficace affinché l'Arduino possa ricevere un input consistente da ogni thread interessato a interrogarlo e rispondere a questi thread di conseguenza.
+\paragraph{Concetto arduino-server like}
+L'idea è quella di far interagire il raspberry con l'arduino come se l'arduino fosse un server e il raspberry il suo client. La comunicazione avverrà tramite la porta seriale quindi si useranno le stringhe per inviare e ricevere messaggi.  
+[IMMAGINE INTERAZIONE RASPBERRY-ARDUINO CLIENT-SERVER]
+\subparagraph{Arduino as a server}
+L'arduino espone un numero definito di metodi. E' possibile accedere a questi metodi tramite una linea di stringa strutturata. L'Arduino si mette in attesa di possibili stringhe di richiesta da parte del Raspberry e accumula le riceventi all'interno del buffer della sua seriale.
+Ogni linea di richiesta viene presa dal buffer consumandola per poi effettuare un rapido parsing di conformità. Se la richiesta è valida, l'Arduino elabora la risposta e la manda indietro attraverso la porta seriale sotto forma di messaggio strutturato.
+\subparagraph{Raspberry as a Client}
+Dal lato raspberry un sensore virtuale, per comunicare col raspberry, deve creare una nuova stringa di richiesta e inserirla in una coda. 
+Il manager si occupa quindi di svuotare la coda mandando messaggi di richiesta all'Arduino solo quando quest'ultimo è in grado di ascoltare. Nel frattempo il manager si mette in ricezione di possibili messaggi di risposta dall'Arduino. Ogni messaggio di risposta andrà poi a popolare una coda di ricezione; il manager si occuperà quindi di svuotare la coda smistando i messaggi di risposta ai destinatari corretti.
+Questo tipo d'interazione viene sfruttato principalmente dal manager stesso per recuperare dai vari Arduino le loro mappature; in questo modo il manager potrà inizializzare correttamente i sensori virtuali.
 \newpage
 \subsection{Progettazione parte applicativa}
 Grazie all'analisi dei requisiti effettuata, si è evidenziato come il committente abbia richiesto la creazione di due applicazioni distinte, ognuna con una diversa finalità.\\
@@ -591,7 +663,7 @@ Come per l'applicazione di amministrazione, tuttavia, emergono delle problematic
 Benché questo aspetto vada chiaramente in contrasto con la necessità di rendere \textit{consumer} utilizzata da un gran numero di utenti, i requisiti funzionali richiesti dal committente verranno rispettati nella loro totalità.\\
 L'applicazione sarà comunque utilizzabile come un normale sito web: soltanto alcuni aspetti avanzati come l'installazione nativa, infatti, potranno risultare incompatibili.\newpage
 \paragraph{Design}
-La progettazione grafica di \textit{consumer} si è esclusivamente incentrata sulla creazione di un'app per dispositivi mobili focalizzata sulla semplicità e immediatezza.\\
+La progettazione grafica di \textit{consumer} si è esclusivamente incentrata sulla creazione di un'app per dispositivi mobili incentrata sulla semplicità e immediatezza.\\
 Per il prodotto non sono state infatti previste versioni specificatamente studiate per PC desktop: considerato che la mobilità è un requisito fondamentale per il committente, si può dire che il suo utilizzo attraverso un personal computer sia quanto meno scoraggiato.\\
 A causa della sua maggiore popolarità nel settore mobile verrà utilizzato uno stile \textit{Material Design} per tutte le schermate del prodotto; ciò aiuterà ad orientare meglio l'utente al primo approccio in quanto ricalcherà pattern oramai universali.
 Di seguito viene presentato un primo mockup coerente con i punti precedentemente esposti:
@@ -607,7 +679,7 @@ Tali considerazioni profilano la realizzazione di 4 differenti entità:
 \begin{itemize}
 	\item Un web server per la fornitura delle risorse di \textit{manager}.
 	\item Un web server per la fornitura delle risorse di \textit{consumer}.
-	\item Un web server RESTFul dedicato alla gestione di tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
+	\item Un web server RESTFul atto a rispondere a tutte le richieste dei clients del sistema.\\Esso sarà l'unico con una connessione diretta con il DBMS.
 	\item Un DBMS per archiviare le informazioni inviate dai client.
 \end{itemize}
 Le sottosezioni seguenti non affronteranno l'analisi progettuale dei web server per \textit{manager} e \textit{consumer}, in quanto considerate banali e non di particolare interesse.\\ 
@@ -617,38 +689,25 @@ Verrà però in primo luogo affrontata la parte di gestione dei dati: il DBMS.
 Il particolare contesto in cui quest'applicazione è situata ha chiaramente influenzato la tipologia di DBMS scelto per l'archiviazione dati.\\
 Al termine di alcune considerazioni. il team di sviluppo scelto un DBMS i tipo NOSQL con dati formattati BSON.\\Le motivazioni che hanno portato a questa scelta possono essere così riassunte: 
 \begin{itemize}
-\item Scalabilità orizzontale: \textit{MongoDb} basa la sua scalabilità sulla ridondanza piuttosto che sull'incremento di prestazione di un singolo server (\textit{scalabilità orizzontale}).\\
-Ciò consentirà una notevole flessibilità della capacità del prodotto: sarà possibile infatti mantenere un numero di nodi ospitanti il DBMS coerenti con il numero di adozioni del sistema.
-\item Semplicità: le interfacce RESTFul previste per la parte applicativa del progetto basano il loro input-output su dati in formato JSON.\\ Dato che \textit{MongoDB} supporta nativamente dati in formato BSON (un superset di JSON) ci si aspetta piena compatibilità e facilità di integrazione con il server di gestione di \textit{Manager} e \textit{Consumer}.
-\item Budget ridotto: \textit{MongoDB} è fornito (anche per applicazioni commerciali) tramite licenza AGPL, che permette quindi un suo utilizzo gratuito a fronte di obblighi legali minimali.\\ Oltre a ciò, si ritiene interessante il cluster cloud che l'azienda fornisce per l'hosting del DBMS: i prezzi si sono rilevati competitivi e sicuramente migliori, in termini di costi finali e affidabilità, che una soluzione dedicata in azienda.
+\item Scalabilità orizzontale: %parlare del fatto che i dati possono diventare molto grandi
+\item Semplicità: %parlare di BSON compatibile con restful% 
+\item Budget ridotto: %parlare del cloud ecc.%
 \end{itemize}
 \paragraph{Struttura dati}
 
-Al momento, è stata prevista una struttura piuttosto semplice contenente i dati del sistema, come raffigurato di seguito:
-\begin{figure}[h!]
-\centering
-  \includegraphics[scale=0.60]{img/class-diagram.png}
-  \caption{Classi previste come \textit{Models} per il DBMS}
-\end{figure}
-\newpage
 %parlare delle password hashate
 \subsubsection{Server RESTFul}
 A causa di una maggiore familiarità e compatibilità con le modalità di connessione delle applicazioni frontend, ogni endpoint pubblico del web server RESTFul supporterà unicamente comunicazioni di tipo POST.\\
-Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo di backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\
+Sebbene questo procedimento non si possa considerare accademicamente corretto (in genere sarebbe meglio progettare un server RESTFul affinché supporti una comunicazione di tipo CRUD) le risorse assegnate al team di sviluppo sono tali da non consentire altra scelta; considerando la notevole esperienza pregressa nello sviluppo di backend così improntati, inoltre, è evidente come questa sia l'unica strada percorribile per rientrare nei costi e nei tempi preventivati.\\\\
 
 Il server prevede la costruzione di tre diversi controller contenenti gli endpoint pubblici del sistema, chiamati rispettivamente \textit{DevicesController}, \textit{ManagerController} e \textit{ConsumerController}.\\
 Come facilmente intuibile dal loro nome, ognuno è dedicato a servire le richieste di una diversa parte \textit{logica} del sistema: \textit{DevicesController} per la parte locale (invio di dati dei sensori), \textit{ManagerController} per le utenze di \textit{manager} e \textit{ConsumerController} per le richieste di \textit{consumer}.\\\\
-Ogni endpoint prevederà un'interfaccia dati standard per il valore di ritorno ricevuto, chiamato \textit{BaseResult}.\\
-Tale interfaccia permette di stabilire un contratto di comunicazione tra i client e il server omogeneo in tutto il sistema: all'occorrenza esse possono essere ampliate (attraverso ereditarietà) per supportare altri tipi di payload.\\
-\newpage
-A titolo di esempio vengono presentate alcune classi utilizzate come valore di ritorno nelle API di \textit{ManagerController}:
-\begin{figure}[h!]
-\centering
-  \includegraphics[scale=0.60]{img/classeBaseResult.png}
-  \caption{Processo di registrazione di un nuovo impianto}
-\end{figure}
-\\Questo meccanismo fornisce una risposta standardizzata e semplificata delle operazioni effettuate: ciò facilità enormemente la loro gestione lato frontend.
-\newpage
+%TODO aggiungere uml!
+Ogni endpoint prevederà un'interfaccia dati standard sia in ingresso che in uscita chiamati rispettivamente \textit{BaseData} e \textit{BaseResult}.\\
+Tali interfacce permettono di stabilire un contratto di comunicazione tra i client e il server omogeneo in tutto il sistema: all'occorrenza esse possono essere ampliate (attraverso ereditarietà) per supportare altri tipi di payload.\\
+A titolo di esempio, viene presentato \\\\%\textit{} :
+%TODO aggiungere uml di getRestroomsData che deriva da baseresult!
+L'utilizzo obbligatorio di \textit{BaseResult} (sia direttamente che attraverso ereditarietà) come valore di ritorno degli endpoint permette di fornire una risposta standardizzata e semplificata delle operazioni effettuate.
 \subsection{Registrazione impianto}
 \subsubsection{Configuratore} Per poter efficacemente spiegare il processo di registrazione di un nuovo impianto è necessario introdurre la figura del \textit{configuratore} (o \textit{installatore}) all'interno dell'architettura di sistema.\\
 Questa figura ha il compito di installare fisicamente le \textit{smart restrooms} sparse sul territorio adoperandosi per la cablatura, configurazione e posizionamento di tutte le parti coinvolte.\\
@@ -695,14 +754,97 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \end{tabular}
 \newpage
 \subsection{Implementazione parte locale}
+Verranno di seguito illustrate le implementazioni per il software eseguito dal raspberry e il software eseguito dall'Arduino.
+\subsubsection{Implementazione software Arduino}
+Come riportato nella fase di progettazione, l'Arduino ha bisogno di un software leggero e poco complessso. Il software è scritto in C++ e usa principalmente le librerie di base predisposte da Arduino e le librerie di terze parti per la lettura dei sensori digitali complessi.
+\paragraph{Codice}
+\subparagraph{ENTRYPOINT}
+[IMMAGINE DI CONCETTO SETUP AND LOOP]
+L'entrypoint di un Arduino è determinato da file in estensione .cpp contenente due metodi:
+\begin{itemize}
+\item setup() Vero entrypoint del software, il metodo viene eseguito solo una volta, all'avvio.
+\item loop() Metodo eseguito dopo il primo e che viene rieseguito al suo termine finché l'Arduino rimane alimentato.
+\end{itemize}
+Durante l'esecuzione del metodo di setup, verrà attivata la comunicazione attraverso la porta seriale [codice beginSerial()] e verranno inizializzati tutti i pin di input e output. Attraverso il file di intestazione con suffisso Mapping.h è possibile determinare quale pin è di input e quale è di output.
+Al termine dell'inizializzazione verrà eseguito un rapido check sulle porte per determinare se il mapping è stato eseguito in maniera errata. Un mapping si definisce errato quando almeno uno dei pin è sia di input che di output.
+[codice checkConflict()]
+Se non ci sono conflitti, il setup termina e il dispositivo esegue il loop.\\
+All'inizio di ogni loop, ci si chiede se è arrivato un messaggio di request dal raspberry. Se c'è allora viene consumata la prima string line disponibile. Su questa stringa viene effettuato un parsing preliminare per sapere di che comando si tratta e se riconosciuto si conclude il parsing in modo da ottenere i parametri necessari all'esecuzione del comando richiesto. Infine, se necessario, l'Arduino manda indietro la risposta con l'esito o risultato del comando. [codice loop.switch()]
+\subparagraph{Mapping}
+Affinché il mapping lato codice sia effettuato con cura è necessario creare un file header contenente tre metodi principali:
+\begin{itemize}
+\item getInputMapping(int value) Metodo che preso il numero di pin come parametro restituisce il nome del sensore se il sensore d'interesse esiste (ed è collegato) e ha lo scopo di inviare dati al sistema.
+\item getOutputMapping(int value) Metodo che preso il numero di pin come parametro restituisce il nome del sensore se il sensore d'interesse esiste (ed è collegato) e ha lo scopo di ricevere dell'input da Arduino per un possibile cambio di stato del sensore stesso.
+\item evaluateMappingType(int value) Metodo che preso il numero di pin come parametro restituisce il tipo di sensore collegato a quel pin; esempio se è digitale o analogico.
+\subparagraph{Lettura di pin di input}
+Se la request include il comando di lettura di un pin, prima di leggere lo stato del pin bisogna conoscere la tipologia di sensore collegato. Generalmente le librerie Arduino permettono di conoscere se il pin è in stato High o in stato Low, ottimo per sensori digitali semplici come gli interruttori; se invece è necessario leggere lo stato di un sensore digitale complesso come il dht, la libreria standard di Arduino non è più sufficiente. La community di Arduino mette a disposizione librerie di terze parti per i sensori al momento più conosciuti. In questo caso quindi è necessario installare le librerie di terze parti e cambiare il comportamento della lettura del pin in base al sensore ad esso collegato. [codice readFromPin(int pin)]
+\end{itemize}
+\subsubsection{Implementazione software Raspberry}
+\paragraph{Caratteristiche}
+Come anticipato in piccola parte nel capitolo di progettazione, il software che viene eseguito sul raspberry verrà scritto in Java 8. Questa scelta è stata influenzata dalle proprietà principali che Java 8 offre:
+\begin{itemize}
+\item Un supporto enorme dalla community di Java
+\item Numerose librerie di terze parti disponibili
+\item Il recente inserimento del paradigma alla programmazione funzionale e programmazione reattiva
+\item Possibilità di eseguire Java su ogni computer
+\end{itemize}
+\subparagraph{Librerie di terze parti}
+Per l'uso e la sincronizzazione di librerie di terze parti si è scelto di usare Maven.
+Tra le librerie third-party si prevede l'utilizzo di:
+\begin{itemize}
+\item RXTX.dll per la comunicazione con Arduino
+\item rxjava per implementare le componenti reattive
+\item gson per la costruzione della stringa Json da inviare al server centrale
+\item httpclient per implementare la classe di connessione al server centrale
+\end{itemize}
+
+
+\paragraph{Codice}
+Il codice d'implementazione rispecchia concettualmente quello che è stato già definito in fase progettuale. Verrà descritto quindi il codice relativo alla componente sensori e il codice relativo al manager.
+\subparagraph{Sensori}
+L'interfaccia ISensor si occupa di esporre i metodi basilari che ogni sensore virtuale deve avere all'interno del sistema ed estende l'interfaccia Runnable in modo da integrare la logica di thread al suo interno. ISensor verrà implementato parzialmente da AbstractSensor, una classe astratta che incorpora il comportamento principale che ogni sensore deve avere.
+L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un ulteriore comportamento, la sua parte reattiva. Tutti i sensori virtuali che derivano da abstractSensor possono aggiornare gli osservatori tramite la funzione implementata dal loro padre:
+
+\begin{lstlisting}
+	protected boolean updateObserver(EntrySet entry)
+	{
+		if (!this.connectedObserver.isPresent())
+			return false;
+		this.connectedObserver.get().onNext(entry);
+		return true;
+	}
+\end{lstlisting}
+L'abstractSensor viene a sua volta implementato da ArduinoSensor, una seconda classe astratta che implementa a sua volta la classe Observer. In questo modo ArduinoSensor è in grado non solo di aggiornare possibili subscribers ma anche di iscriversi ad un observable e di reagire ai suoi aggiornamenti.
+Le classi finali sono ArduinoReadingSensor e ArduinoWritingSensor.
+Il comportamento di queste due classi sono simili; la differenza sostanziale sta nel fatto che l'ArduinoReadingSensor, una volta che riceve le informazioni dall'Arduino, aggiorna il Manager. 
+\subparagraph{Manager}
+Il manager è composto dalle seguenti componenti:
+\begin{itemize}
+\item RestroomSM: responsabile del coordinamento delle seguenti componenti
+\item IOComm: responsabile della comunicazione tra manager e arduino e sensori e arduino
+\item RestClient: responsabile della comunicazione tra manager e server
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
 \newpage
 \subsection{Implementazione parte Applicativa}
 \subsubsection{Manager}
-\paragraph{Caratteristiche}
+\paragraph{Caratteristiche Principali}
 Il capitolo di progettazione di \textit{manager} prevedeva lo sviluppo di una applicazione web di tipo SPA caratterizzata da una certa complessità, facilità di manutenzione e scalabilità.\\
 Con queste premesse, il team di sviluppo ha deciso di adottare \textit{Angular} come framework per lo sviluppo dell'applicazione.\\\\
 Adottato specificatamente nella versione 6+, \textit{Angular} è un set di librerie frontend open-source studiate appostiamente per una creazione agevole e strutturata di SPA; creata e mantenuta tutt'ora direttamente da \textit{Google}, questo framework si posiziona al primo posto per popolarità per la creazione di progetti enterprise web.\\
-Benché infatti si presti anche allo sviluppo di prodotti di ridotta complessità, lo sviluppo attraverso \textit{Angular} è caratterizzato da una curva di apprendimento ripida e dalla necessità di scrivere molto codice \textit{boilerplate} per sviluppare funzionalità semplici; benché queste caratteristiche lo rendano capace di strutturare adeguatamente progetti frontend complessi, molti team di sviluppo lo ritengono uno strumento troppo potente (e difficile) per le loro necessità.\\
+Benché infatti si presti anche alla creazione di prodotti di ridotta complessità, lo sviluppo attraverso \textit{Angular} è caratterizzato da una curva di apprendimento ripida e dalla necessità di scrivere molto codice \textit{boilerplate} per sviluppare funzionalità semplici; benché queste caratteristiche lo rendano capace di strutturare adeguatamente progetti frontend complessi, molti team di sviluppo lo ritengono uno strumento troppo potente (e difficile) per le loro necessità.\\
 Concludendo, questo \textit{framework} è stato scelto rispetto ad altre librerie popolari (come \textit{React} o \textit{Vue}) per i seguenti motivi:
 \begin{itemize}
 \item \textit{Angular} fornisce direttamente funzionalità utili allo sviluppo di SPA come \textit{Dependency Injection}, \textit{AJAX}, gestione token ecc.\\
@@ -724,7 +866,7 @@ Viene unicamente utilizzata per mantenere in memoria il \textit{loginToken}.
 \paragraph{Codice}
 In \textit{Angular}, ogni componente visiva principale dell'applicazione viene modellata come un \textit{Component}, cioè un costrutto composto da un \textit{controller} (cioè una parte nella quale risiede la logica del componente: funzioni, variabili, hooks) e un \textit{template} (cioè, in ambito web, un sezione di HTML e CSS).\\
 Questo elemento è indispensabile per specificare singole funzionalità o parti riusabili dell'applicazione, grazie alla sua sintassi precisa e inedita nel mondo dello sviluppo frontend.\\
-Considerato inoltre che i progetti \textit{Angular} devono passare attraverso una procedura di compilazione (o, più precisamente, transpilazione) dei file sorgente, si può capire come lo sviluppo di applicazioni particolarmente complesse venga agevolata: ogni file sarà esente da errori di compilazione (anche grazie all'uso del paradigma OOP) e il progetto avrà una struttura chiara e definita formalmente.
+Considerato inoltre che i progetti \textit{Angular} devono passare attraverso una procedura di compilazione (o, più precisamente, transpilazione) dei sorgenti, si può capire come lo sviluppo di applicazioni particolarmente complesse venga agevolata: ogni file sarà esente da errori di compilazione (anche grazie all'uso del paradigma OOP) e il progetto avrà una struttura chiara e definita formalmente.
 \newpage
 Come primo esempio viene presentato il \textit{component} dedito alla login utente:
 \begin{lstlisting}
@@ -760,7 +902,7 @@ In caso di successo, viene spostata la navigazione utente alla home della webApp
 In caso contrario, viene mostrata una notifica di errore grazie alla libreria \textit{Angular Material}.
 \end{itemize}
 Un altra sezione di particolare interesse sono le \textit{Routes} e le \textit{Guards}.\\
-Le prime vengono utilizzate dal framework per impostare gli \textit{url} a cui l'applicazione dovrà rispondere: attraverso di esse sarà possibile specificare quale \textit{Component} mostrare e con quali parametri.\\
+Le prime vengono utilizzate dal framework per impostare gli url a cui l'applicazione dovrà rispondere: attraverso di esse sarà possibile specificare quale \textit{Component} mostrare e con quali parametri.\\
 Le seconde, invece, possono essere associate a \textit{routes} per determinare la loro attivazione in base alle condizioni inserite: \textit{manager} utilizza delle \textit{guards} per prevenire che utenti non autenticati possano accedere a sezioni protette dell'applicazione.\\\\
 Un esempio di tale guard viene presentata di seguito:
 \begin{lstlisting}
@@ -788,14 +930,14 @@ export class AuthGuard implements CanActivate {
 Anche qui vengono evidenziati i seguenti punti d'interesse:
 \begin{itemize}
 \item In modo analogo al componente descritto in precedenza, in questa classe viene specificato un decoratore (\textit{@Injectable}) per donare alla classe uno specifico comportamento.
-\item L'implementazione dell'interfaccia \textit{CanActivate} serve a specificare la tipologia di \textit{Guard} adottata: in questo caso si tratterà della più semplice, cioè per determinare la validità di una certa \textit{Route} richiesta (attraverso il metodo \textit{canActivate()}).
+\item L'implementazione dell'interfaccia \textit{CanActivate} serve a specificare la tipologia di \textit{Guard} che verrà implementata: in questo caso si tratterà della più semplice, cioè per determinare se attivare o no una certa \textit{Route} richiesta (attraverso il metodo \textit{canActivate()}.
 \item \textit{this.storage.getItem()} rappresenta è un esempio di utilizzo della libreria \textit{Ngx local storage} descritta nella sezione precedente: in questo caso mostrato il reperimento di un \textit{loginToken} di sessione.\\
 Qualora il token non esista (e quindi l'utente non sia autenticato) allora si rimanda l'applicazione all'indirizzo di login.\\
 In caso contrario la \textit{Route} viene accettata e fatta proseguire.
 \end{itemize}
 \newpage
 \subsubsection{Consumer}
-\paragraph{Caratteristiche}
+\paragraph{Caratteristiche Principali}
 Il capitolo di progettazione di \textit{consumer} evidenzia la necessità di sviluppare \textit{consumer} come un'applicazione di tipo PWA.\\
 Questa scelta è stata dovuta principalmente ai suoi più rapidi tempi di sviluppo rispetto a una normale app nativa; date le ridotte risorse a disposizione, il team di sviluppo è sempre stato propenso a ridurre i costi, dove possibile.\\
 Pertanto, per evitare di investire tempo nella formazione di personale per l'utilizzo di tecnologie specifiche per PWA, è stato deciso di utilizzare \textit{Angular} per lo sviluppo di \textit{Consumer}.\\\\
@@ -813,8 +955,8 @@ Per poter avviare il servizio, inoltre, è stato necessario fornire all'applicaz
 \end{itemize}
 \paragraph{Codice}
 Dato il suo sviluppo in \textit{Angular} come il già analizzato \textit{manager}, non verranno qua analizzate le modalità di costruzione delle funzionalità di \textit{consumer}, che si possono infatti considerare pressoché simili.\\
-Inoltre, dato che gran parte del codice necessario per rendere \textit{consumer} una PWA non è stato sviluppato direttamente dal team ma generato automaticamente dal framework (attraverso un tool di transpilazione chiamato \textit{angular-cli}) il suo approfondimento non si ritiene meritevole di interesse.\\\\
-Tuttavia, si ritiene importante analizzare nel dettaglio le modalità con le quali è stato possibile mostrare a schermo una \textit{gmap} interattiva con l'utente, in particolare il lato \textit{template} che è stato tralasciato nella precedente sezione.\\
+Inoltre, dato che gran parte del codice necessario per rendere \textit{consumer} una PWA non è stato sviluppato direttamente dal team ma generato automaticamente dal framework (attraverso un tool di transpilazione chiamato \textit{angular-cli}) non si ritiene meritevole di interesse il suo approfondimento.\\\\
+Tuttavia, si ritiene importante approfondire le modalità con le quali è stato possibile mostrare a schermo una \textit{gmap} interattiva con l'utente, in particolare il lato \textit{template} che è stato tralasciato nella precedente sezione.\\
 Innanzitutto, \textit{Angular} consente di effettuare un \textit{binding} (cioè un collegamento) tra una variabile presente nel \textit{controller} e il rispettivo \textit{template} attraverso due modalità: \textit{box casing} (cioè racchiudendo l'attributo a cui assegnare una variabile tramite i caratteri []) oppure tramite \textit{double brackets} (cioè racchiudere il nome della variabile assegnata a un certo attributo tramite i caratteri \{\}).\\\\
 Ad esempio, l'implementazione della \textit{gmap} nel componente è stato effettuato attraverso un binding di tipo \textit{box casing}, come mostrato di seguito: 
 \begin{lstlisting}[style=htmlcssjs]
@@ -838,7 +980,7 @@ Oltre al \textit{binding}, si possono notare i seguenti punti d'interesse:
 \begin{itemize}
 	\item \textit{agm-map}, \textit{agm-marker} e \textit{agm-info-window} sono componenti esterni forniti dalla libreria \textit{Angular Material}.\\ Come qualsiasi altro elemento HTML, possono essere  istanziati semplicemente specificando il loro nome nel template. 
 	\item Il componente \textit{agm-marker} viene istanziato tante volte quanti sono gli elementi presenti nell'array \textit{restRooms} del \textit{controller} (grazie alla direttiva \textit{*ngFor}).\\ Visivamente, ciò permette di disegnare i \textit{marker} descritti nell'analisi dei requisiti e mostrati nel mockup della fase di progettazione.
-	\item \textit{app-marker-detail} invece corrisponde a un componente scritto dal team di sviluppo: esso servirà a rappresentare il contenuto esposto (\textit{popover}) al click di un \textit{marker}.
+	\item \textit{app-marker-detail} invece corrisponde a un componente scritto dal team di sviluppo: esso servirà a rappresentare il contenuto esposto (\textit{popover}) al click di un marker.
 \end{itemize}
 \newpage
 \subsection{Implementazione parte centrale}
@@ -846,7 +988,7 @@ Oltre al \textit{binding}, si possono notare i seguenti punti d'interesse:
 \paragraph{Caratteristiche}
 La progettazione della parte centrale del sistema ha previsto la creazione di un generico server RESTFul in grado di rispondere alle richieste delle altre entità coinvolte nel sistema.\\
 Dato che i requisti del committente non hanno dato alcuna indicazione sul suo ambiente di destinazione e la progettazione non ha individuato vincoli in tal senso, il team di sviluppo ha optato per una soluzione multipiattaforma, gratuita e opensource come \textit{ASP.NET Core}.\\
-Questo framework di sviluppo backend è stato creato e tutt'ora direttamente mantenuto da \textit{Microsoft}, in futura sostituzione del più classico ambiente ASP.NET, che dalla sua introduzione (circa 2016) ha ricevuto una crescente popolarità come soluzione general-purpose backend.\\
+Questo framework di sviluppo backend è stato creato e tutt'ora direttamente mantenuto da \textit{Microsoft}, in futura sostituzione del più classico ambiente ASP.NET; dalla sua introduzione (circa 2016) ha ricevuto una crescente popolarità come soluzione general-purpose backend.\\
 Comunque, le motivazioni che hanno spinto il team di sviluppo a scegliere questa tecnologia possono essere così riassunte: 
 \begin{itemize}
 \item Le elevate prestazioni garantite dal framework (sopratutto in situazioni di elevato carico da parte di host multipli) lo rendono perfettamente adatto al carico di lavoro previsto del progetto.
@@ -858,7 +1000,7 @@ Data la notevole somiglianza dei linguaggi C\# e Typescript, infatti, non è sta
 Precisamente, il server implementato in \textit{ASP.NET Core} è di tipo \textit{Web Api}, cioè specifico per la creazione di server RESTFul.\\
 La prossima sezione si dedicherà all'analisi delle API implementate più rilevanti a fini di studio.
 \paragraph{API}
-Strutturalmente, il server è composto da una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
+Strutturalmente, il server è progettato in una serie di file chiamati \textit{controller} che separano le API dedicate di ogni parte logica del sistema.\\
 Ogni controller è caratterizzato da una radice di API diversa: ad esempio tutti gli endpoint di \textit{ConsumerController} sono nella forma:
 \begin{center}
 \textit{https://public-restrooms/api/consumer/api-name}
@@ -875,7 +1017,7 @@ public abstract class BaseResult
 \end{lstlisting}
 Questo meccanismo fornisce a tutti i client del sistema un contratto di comunicazione per ogni possibile API esposta dal server.\\ 
 Ne consegue che l'implementazione delle chiamate HTTP è notevolmente semplificata e coerente.\\\\
-Viene qui mostrato un primo esempio di endpoint del server che adotta questo meccanismo, cioè un' interfaccia atta alla registrazione di nuove \textit{restRooms} inviate dall'utente:
+Viene qui mostrato un primo esempio di endpoint del server che adotta questo meccanismo, cioè un interfaccia atta alla registrazione di nuove \textit{restRooms} inviate dall'utente:
 \newpage
 \begin{lstlisting}
 [Route("addRestroom")]
@@ -898,17 +1040,17 @@ public ActionResult<AddRestroomResult> AddRestroom(AddRestroomData addRestroomDa
 Da questo esempio si evidenziano i seguenti punti fondamentali:
 \begin{itemize}
 	\item Trattandosi di un API per app \textit{manager}, la prima operazione che viene effettuata è il controllo della sessione utente corrente attraverso il metodo \textit{ValidUserSession()}.\\
-	Ciò avviene ricercando il \textit{loginToken} inviato tra gli headers di ogni richiesta nel DBMS: qualora esista un record di login recente contenente il \textit{loginToken} inviato, allora la richiesta verrà autenticata.
+	Ciò avverrà ricercando il \textit{loginToken} inviato tra gli headers di ogni richiesta nel DBMS: qualora esista un record di login recente contenente il \textit{loginToken} inviato, allora la richiesta sarà autenticata.
 	\item Grazie al sistema di \textit{Dependency Injection} di \textit{ASP.NET Core}, viene recuperata la sessione di connessione con il DBMS corrente (attraverso il metodo \textit{GetCollection()}).
-	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente la buona riuscita dell'operazione.
+	\item Viene infine ricostruito il dato inviato dall'utente in un formato compatibile con il modello di DB e inviato al DBMS.\\ Come ultimo step, viene notificato all'utente della buona riuscita dell'operazione.
 \end{itemize}
 \subsubsection{DBMS}
-\paragraph{Caratteristiche}
+\paragraph{Caratteristiche Principali}
 La fase di progettazione relativa al DBMS ipotizzava l'utilizzo di un database NOSQL con dati in formato BSON.\\
 Sebbene esista un ampia scelta di prodotti per database con queste caratteristiche, il team di sviluppo ha scelto \textit{MongoDb} come prodotto commerciale a supporto dell'applicazione a seguito delle seguenti considerazioni: 
 \begin{itemize}
 \item \textit{Maturità}: la progettazione di un sistema di notevole complessità e consistente flusso dati richiede l'utilizzo di tecnologie affidabili e ben supportate.\\
-Considerato che nessun membro del team di sviluppo annovera esperienze di utilizzo di database NOSQL, si è scelto di non cimentarsi nell'adozione di prodotti meno conosciuti sul quale vi sarà minore supporto e documentazione.
+Considerato che nessun membro del team di sviluppo annovera esperienze di utilizzo di database NOSQL, si è scelto di non cimentarsi nell'utilizzo di prodotti meno conosciuti sul quale vi sarà minore supporto e documentazione.
 \item \textit{Integrazione}: sono disponibili gratuitamente dei set di librerie per integrare \textit{ASP.NET Core} con \textit{MongoDB}.\\
 Ciò ha permesso ovviamente di velocizzare i tempi di sviluppo in quanto la connessione con il DBMS ha richiesto una configurazione minimale.
 \item \textit{Hosting}: sono disponibili soluzioni di hosting gratuite (fornite direttamente dalla \textit{MongoDb Inc.}) per l'utilizzo del DBMS su cloud.\\
@@ -921,20 +1063,11 @@ Precisamente, l'offerta \textit{Free Tier} offre un hosting cloud basato con que
 \item 512Mb di spazio di storage massimo.
 \item RAM del cluster condivisa con altre utenze.
 \end{itemize}
-Sebbene queste caratteristiche possano sembrare un po' limitanti, si confida in un loro upgrade immediato qualora il prodotto abbia successo.
-\paragraph{Connessione}
-L'utilizzo di tecnologie ben supportate e recenti come \textit{MongoDB} e \textit{ASP .NET Core} ha facilitato molto la connessione al database, rendendo minimi gli sforzi per la sua attuazione.\\
-Tutti le operazioni di input-output avvengono infatti attraverso classi c\# (racchiuse nel namespace \textit{Models}) che sanciscono la tipologia di oggetti salvati nel DB: la libreria di \textit{MongoDB} si occuperà poi di trasformare automaticamente tali classi in formato JSON.
-
-\begin{lstlisting}
-// Ottenimento, grazie alla Dependency injection, di un istanza di connessione con il DB
-IMongoCollection<Models.RestRoom> restroomsCollection = _db.GetCollection<Models.RestRoom>("Restroom");
-// Inserimento di una nuova restroom all'interno del database
-Models.RestRoom newRestroom = new Models.RestRoom(restroom.guid, restroom.address.Split(','), restroom.cityAddress, restroom.company, "");
-restroomsCollection.InsertOne(newRestroom);
-
-\end{lstlisting}
+Sebbene queste caratteristiche possano sembrare un po' limitanti, si confida in un suo upgrade immediato qualora il progetto non si rilevi fallimentare.
 \newpage
+
+
+
 %----------------------------------------------------------------------------------------
 %	TESTING E PERFORMANCE
 %----------------------------------------------------------------------------------------
@@ -963,81 +1096,24 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 \subsection{Performance parte Locale}
+\subsubsection{Parte hardware}
+La longevità dell'impianto elettrico dipende dalla qualità dei sensori utilizzati. Tuttavia, data la progettazione semplificata e l'installazione non invasiva, è possibile sostituire qualsiasi tipo di guasto elettronico.
+\subsubsection{Parte software}
+Molto più preoccupante la stabilità del sistema software; data la scarsità di risorse disponibili per lo sviluppo di tutto il progetto, si è tralasciata una sezione molto importante del progetto: la gestione degli errori. In un primo rilascio dell'intero progetto infatti la gestione degli errori è stata ridotta all'osso. Questo significa che per qualsiasi malfunzionamento l'applicazione lato raspberry potrebbe rompersi; occorre quindi un riavvio manuale da remoto dell'applicazione per ristabilire il corretto funzionamento del sistema.
+
 \subsection{Performance parte applicativa}
-Nell'ambito di applicazioni RESTful le performance finali si possono considerare dipendenti da due fattori:
+Applicazioni frontend con un uso intensivo di dati come \textit{Manager} e \textit{Consumer} devono la loro responsività a due fattori principali:
 \begin{itemize}
-\item \textit{Tempo richiesta:} è il tempo che intercorre tra l'invio l'invio della richiesta e la ricezione della sua risposta dal server.
-\item \textit{Tempo renderizzazione:} è il tempo impiegato per la processione dei dati ricevuti e per la loro effettiva visualizzazione a schermo.
+\item \textit{Tempo scaricamento:}
+\item \textit{Tempo renderizzazione:}
 \end{itemize}
-Quindi, un utente percepisce la responsività di un'applicazione RESTful come la \textit{somma} del tempo di richiesta e il tempo di renderizzazione per una specifica azione; tutte le successive analisi presenti in questa sezione pertanto terranno conto di questa suddivisione.
+Le applicazioni frontend (\textit{Manager} e \textit{Consumer}) possono risentire 
 \subsubsection{Manager}
-Come già analizzato nei capitoli precedenti, \textit{Manager} è un applicazione studiata per il monitoraggio di un numero di impianti consistente ad aggiornamento continuo.\\
-Innanzitutto, partendo dall'analisi fornitaci dal \textit{Webpack Bundle Analizer}\cite{bundleAnalyzer}, si può osservare come il \textit{footprint} dell'applicazione sia molto ridotto (circa \textit{200kb gzipped}); ciò consentirà un caricamento immediato delle risorse dell'applicazione (anche nel caso in cui l'utente rifiuti qualsiasi tipo di cache web sul sistema).
-\begin{figure}[h!]
-\centering
-  \includegraphics[scale=0.18]{img/footprint-manager.png}
-  \caption{Composizione del bundle di produzione di \textit{manager}}
-\end{figure}
-\newpage
-In seguito, è stato misurato il tempo che l'applicazione ha impiegato per ottenere dati aggiornati dei \textit{restrooms} presenti su DB (per un totale di 6), grazie all'utilizzo delle funzioni \textit{console.time()} e \textit{console.timeEnd()} nativamente presenti in ES6.
-
-\begin{lstlisting}
-export class RestroomsListService {
-
-  constructor(private httpClient: HttpClient) { }
-
-  getRestrooms() {
-    console.time("downloadTime");
-    return this.httpClient.post("api/manager/getRestrooms", {}).pipe(map((restrooms: any) => {
-      console.timeEnd("downloadTime");
-      return restrooms.restrooms;
-    }));
-  }
-}
-\end{lstlisting}
-Tale test ha portato ai seguenti risultati:
-\begin{table}[h]
-\begin{tabular}{|c|c|}
-\hline
-\textbf{Richiesta N°} & \textbf{Tempo Totale}  \\ \hline
-1 & 98,56 ms  \\ \hline
-2 & 119,51 ms \\ \hline
-3 & 83,07 ms  \\ \hline
-4 & 112,06 ms \\ \hline
-5 & 111,16 ms \\ \hline
-\end{tabular}
-\end{table}\\
-per una latenza media risultante di \textit{104,6 ms.}\\
-Dato che tale risultato non si può definire particolarmente performante, si è proceduto ad effettuarne un'analisi approfondita per individuarne cause e possibili soluzioni.\\\\
-Circa il 55\% della latenza è da imputare alla connessione con il DB \textit{mongoDb Atlas}, che ricordiamo essere basato su un cluster gratuito AWS situtato a Francoforte, con memoria RAM condivisa e 512Mb di spazio dedicato.\\
-È chiaro pertanto che, in questo caso, l'utilizzo di una soluzione gratuita ha inciso in maniera rilevante sulle prestazioni del sistema: in fase di produzione si raccomanda pertanto la scelta di un cluster con almeno RAM dedicata e preferibilmente situato nei pressi della locazione del server centrale.\\\\
-Il server, invece, è stato ospitato sulla rete domestica di \textit{Stefano Belli} utilizzando un suo PC personale (composto da una CPU Intel i5 4690k, 8gb di RAM e SSD Sata III, con sistema operativo  Windows 10 Pro x64): non si tratta di quindi di un hardware \textit{ad hoc} dedicato a ospitare server per SPA, ma un normale PC con memoria condivisa per altri programmi ad uso personale.\\Anche in questo caso, pertanto, si dovrebbe operare sull'infrastruttura per migliorare le performance generali.\\\\
-Infine, si è pensato di effettuare una build in modalità \textit{Release} del server, in modo da sfruttare tutte le ottimizzazioni che tale processo garantisce (ad esempio ignorando completamente il debugging).\\
-Ciò ha permesso di ridurre sensibilmente il tempo di esecuzione totale di ogni richiesta, come si può evincere dalla tabella sottostante:
-\begin{table}[h]
-\begin{tabular}{|c|c|}
-\hline
-\textbf{Richiesta N°} & \textbf{Tempo Totale}  \\ \hline
-1 & 64,45 ms  \\ \hline
-2 & 80,05 ms \\ \hline
-3 & 74,58 ms  \\ \hline
-4 & 71,83 ms \\ \hline
-5 & 72,40 ms \\ \hline
-\end{tabular}
-\end{table}\\
-per una latenza media risultante di \textit{72,66 ms.}\\\\
-Come premesso poco sopra, questi tempi sono da considerare come \textit{Tempi Totali}, cioè al netto della renderizzazione a schermo (e quindi come somma di \textit{Tempo Richiesta} e \textit{Tempo Renderizzazione}).\\
-Ulteriori analisi hanno determinato come il solo \textit{Tempo di Richiesta} incida per il 70\% sul tempo totale.
-\newpage
-Ciò viene anche dimostrato dall'analisi delle richieste effettuate dal \textit{Chrome Developers Tools}:
-\begin{figure}[h!]
-\centering
-  \includegraphics[scale=0.60]{img/network-timings.png}
-  \caption{Tempi di richiesta secondo \textit{Chrome Developers Tools}}
-\end{figure}
-
+Come già analizzato nei capitoli precedenti, \textit{Manager} è un applicazione studiata per il monitoraggio di un numero di impianti consistente.
+Allo stato attuale del progetto presentato non si prevedono grosse criticitàLe performance riguardanti \textit{Manager}.
 \subsubsection{Consumer}
-\textit{Consumer} e \textit{Manager} utilizzano le stesse infrastrutture server e DB e pertanto le prestazioni della PWA si possono dire molto simili a quelle della SPA; dato che l'applicazione è al momento molto contenuta, non si rilevano criticità a livello di performance rispetto a \textit{Manager}.
+\subsection{Performance parte centrale}
+ 
 %----------------------------------------------------------------------------------------
 %	ANALISI DI DEPLOYMENT SU LARGA SCALA
 %----------------------------------------------------------------------------------------
@@ -1063,41 +1139,8 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 
 \newpage
-\subsection{Parte Applicativa}
-\textit{Smart Public Restrooms} è un sistema che riteniamo essere molto scalabile e in generale poco esoso in termini di risorse necessarie: come vedremo, infatti, i volumi dati coinvolti per un cliente di una certa dimensione sono tutto sommato contenuti e comunque gestibili.\\
-Innanzitutto, poniamo qualche stima sul volume dati coinvolto per un cliente con circa 2000 impianti in gestione: 
 
-\begin{itemize}
-\item \textit{Richieste/minuto}: Ogni sistema invia dati al server centrale ogni 5 secondi, per un totale di 12 volte al minuto.\\
-Con un numero di impianti da gestire come sopra (2000), si arriverebbe a circa 24000 cicli di aggiornamento su DB al minuto.
-\item \textit{Spazio/impianto}: L'\textit{Average Size} dei documenti della tabella \textit{Restroom} (contenente i dati essenziali dell'impianto, come nome, indirizzo e gli ultimi dati della sensoristica) è pari a 500 byte.\\
-Con 2000 impianti totali lo spazio occupato su DB si attesterebbe a circa 1MB.
-\item \textit{Bandwidth/impianto}: Il payload di un aggiornamento di un impianto tipico (con 3 celle e 3 pattumiere di servizio) si aggira sui 500 byte.\\
-Con 2000 impianti totali l'infrastruttura di rete del server dovrà riuscire a supportare $~200Kb/s$ in upload e $\frac{N}{5}Mb/s$ in download, dove N è il numero di clients \textit{Manager} connessi.
-\end{itemize}
-Queste semplicistiche stime ci danno un'idea piuttosto chiara delle risorse necessarie per il mantenimento di un sistema \textit{Smart Public Restroom}; un cliente con circa 2000 impianti attivi non dovrebbe avere grossi problemi nel gestire tali traffici dati, eccezion fatta per la \textit{Bandwidth} necessaria in download.\\
-Allo stato attuale, infatti, ogni client \textit{Manager} richiede al server tutte le \textit{Restrooms} disponibili su db ogni 5 secondi, comportando per un ognuno di essi l'ottenimento di circa 1Mb di dati dal server periodicamente: ciò rallenta sia l'applicazione \textit{frontend} che l'intero server.\\
-La soluzione a questo problema è quella di restringere il numero di \textit{Restrooms} ottenute periodicamente dall'applicazione, ad esempio attraverso l'uso di filtri configurabili dall'utente.\\\\
-Supponiamo ora che la software house che ha sviluppato \textit{Smart Public Restrooms} decida di gestire in prima persona tutti i \textit{Restrooms} dei suoi clienti (che supponiamo essere 10, ognuno con qualche migliaio di impianti): il sistema dovrà mantenere delle buone prestazioni (sia in termini di \textit{efficiency} che di \textit{fault tolerance}) nonostante il numero enorme di impianti a cui dovrà far fronte.\\\\
-Data la sua natura centralizzata, l'elemento più a rischio in questa configurazione è sicuramente il server di gestione del sistema: se da un lato le sue prestazioni possono rimanere accettabili con tecniche di scalabilità verticale, rimane comunque una fonte importante di \textit{Single Point of Failure} \textit{(SPoF)}.\\
-Una possibile soluzione a questo problema è quella di applicare tecniche di \textit{Loose Coupling} sui server, in grado quindi di costruire una rete composta una serie di nodi indipendenti sulla quale distribuire le richieste avanzate dai clients.\\
-Nell'ambito dell' \textit{Internet Information Services} \textit{(IIS)} di \textit{Microsoft} (cioè attraverso le tecnologie utilizzate per la realizzazione del server di \textit{Smart Public Restrooms}) ciò è possibile attraverso la configurazione di nodi  \textit{Application Request Routing} (\textit{ARR}), cioè moduli di routing che redirigono il traffico di rete in base a particolari algoritmi di \textit{load balancing}, header HTTP e variabili d'ambiente.
-\begin{figure}[h!]
-\centering
-  \includegraphics[scale=0.80]{img/ARR.png}
-  \caption{Architettura con ARR+NLB}
-\end{figure}
-\newpage
-In generale, architetture di questo tipo consentono una buona \textit{Avaiability} e \textit{Scalability} del sistema, ma rendono difficoltoso sincronizzare gli accessi al DB tra i vari nodi della rete.\\
-Fortunatamente, gli aggiornamenti inviati dagli impianti di \textit{Smart Public Restrooms} si possono considerare stateless e indipendenti, in quanto ogni richiesta temporizzata fa riferimento a un singolo impianto ed è quindi impossibile avere conflitti in scrittura su DB.\\\\
-Inoltre, prevediamo il DBMS sia perfettamente in grado di scalare in modo adeguato alle esigenze dell'applicazione: la sua natura NoSQL e la semplicità dei dati contenuti ben si prestano a tecniche di \textit{scalabilità orizzontale} come lo \textit{Sharding}, che prevediamo adatto a scenari \textit{write-intensive} come questo.\\
-In questo scenario, tuttavia, ci raccomandiamo di affidarci ai cluster  forniti da \textit{MongoDb} per l'hosting del DBMS, in quanto già integrati all'interno dell'applicazione e sicuramente comprovati come affidabili per questo tipo di utilizzi (ad esempio, si prevede che \textit{MongoDb} abbia adeguati strumenti di \textit{Disaster Recovery}).\\\\
-Qualora queste strategie di \textit{Scalability} non siano sufficienti (o siano troppo esose), si ritiene possibile aumentare progressivamente la frequenza di aggiornamento delle \textit{Restrooms}: la maggioranza dei dati raccolti non hanno necessità di essere tempestivamente notificate all'utente, eccezion fatta per l'allarme "fumo".\\ 
-In tal caso si può studiare un meccanismo di invio di \textit{push notifications} o messaggi SMS (tramite modulo GMS installato negli impianti) direttamente agli utenti di \textit{Manager}.\\\\
-Infine, raccomandiamo l'utilizzo di servizi come \textit{CloudFlare} per la \textit{DDoS Mitigation} e più in generale per l'ottenimento di un sufficiente livello di \textit{Overload Protection}.
-\subsection{Parte Locale}
 
-\newpage
 %----------------------------------------------------------------------------------------
 %	PIANO DI LAVORO
 %----------------------------------------------------------------------------------------
@@ -1130,7 +1173,7 @@ La divisione dei compiti è stata netta e basata sull'affinità di ogni membro d
 	Più dettagliatamente, si è occupato della progettazione e sviluppo del server scritto in \textit{ASP.NET Core} e della relativa connessione con il DBMS.\\
 	Si è inoltre incentrato sulla realizzazione del database in MongoDB e del relativo deploy su cloud \textit{Atlas} come descritto nel capitolo 6.\\
 	Infine, si è dedicato alla realizzazione delle applicazioni \textit{manager} e \textit{consumer} e della relativa progettazione.
-	\item \textit{Andrea Vecchiotti}
+	\item \textit{Andrea Vecchiotti} ha preso in carico lo sviluppo del lato locale; si è occupato quindi della realizzazione del progetto lato hardware e nella progettazione e sviluppo dei software eseguibili su arduino e raspberry, interazione tra le due componenti e la comunicazione tra raspberry e il server centrale.
 \end{itemize}
 Nella stesura di questa documentazione di progetto ogni membro si è dedicato al suo specifico ambito di lavoro; altre sezioni generiche (come la qui presente) si possono considerare soggette a un lavoro collettivo.\\\\
 Per quanto riguarda le tempistiche, \textit{Stefano Belli}  ha riportato:
@@ -1139,6 +1182,14 @@ Per quanto riguarda le tempistiche, \textit{Stefano Belli}  ha riportato:
 \item Circa 18 giorni/uomo per lo sviluppo del frontend dell'app \textit{manager}.
 \item Circa 8 giorni/uomo per lo sviluppo (e deploy) della parte server.
 \item Circa 25 giorni/uomo per la stesura della relazione.
+\end{itemize}
+
+\textit{Andrea Vecchiotti} ha riportato invece:
+\begin{itemize}
+\item Circa 20 giorni  per lo sviluppo del software eseguibile su raspberry
+\item Circa 5 giorni per lo sviluppo del software eseguibile da arduino
+\item Circa 6 giorni per la progettazione e montaggio dell'hardware
+\item Circa 5 giorni per la stesura della relazione
 \end{itemize}
 \newpage
 
@@ -1161,14 +1212,7 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
  3 componenti & 1500 & 3000 \\
  \hline
 \end{tabular}
-\newpage
-Questo progetto rappresenta un valido caso di studio per la messa in pratica delle principali nozioni di \textit{Smart City e tecnologie mobili} viste durante il corso di Sistemi Autonomi presieduto dal prof. Maio.\\
-Innanzitutto, è stato progettato un sistema di monitoraggio completo e vicino a un contesto reale: sono stati coperti aspetti che spaziano dalle modalità di installazione degli impianti alla copertura delle esigenze degli utenti finali.\\
-Il sistema si è rivelato sia economico nella sua realizzazione (in termini di costi dei materiali e tempistiche di sviluppo) che flessibile per eventuali sviluppi futuri: l'adozione di tecnologie come \textit{MongoDB} e la creazione di SPA con \textit{Angular} sono solo alcune delle scelte architetturali che riteniamo importanti per garantire al sistema la capacità di scalare gradualmente con la sua adozione in massa.\\\\
-Tuttavia, la sua possibile resa economica pone alcuni interrogativi, che derivano dal fatto che \textit{Smart Public Restrooms} è un prodotto particolare adatto soltanto a una ristretta cerchia di clienti: le dimensioni delle aziende target devono essere tali infatti da porre la necessità di ridurre i costi di manutenzione dei bagni pubblici offerti nei propri servizi.\\
-Si ritiene improbabile, pertanto, che il sistema da noi progettato possa di fatto essere il \textit{core business} di un'ipotetica Startup, perché i tempi necessari per approdare nel mercato possono essere importanti; ciò è anche aggravato dal fatto che esistono già alcune soluzioni sul mercato comparabili con \textit{Smart Public Restrooms}.\\
-Il suo sviluppo può essere tuttavia interessante per Software House di una certa dimensione e già affermate nel settore (con quindi altri introiti derivanti da altri prodotti); in quest'ottica, per aumentare i ricavi si potrebbe offrire direttamente anche il servizio di manutenzione e monitoraggio dei servizi pubblici dei clienti.\\\\
-Ciononostante, \textit{Smart Public Restrooms} rimane un sistema flessibile con interessanti potenzialità; riteniamo di aver ideato un prototipo di un prodotto realisticamente piazzabile sul mercato e didatticamente rilevante.
+
 \newpage
 
 
@@ -1212,9 +1256,6 @@ Procedia Engineering 145 ( 2016 ) 396 – 403
 
 \bibitem{onvation}
 \textit{https://www.kcprofessional.com/en-us/workplacesolutions/onvation}
-
-\bibitem{bundleAnalyzer}
-\textit{https://www.npmjs.com/package/webpack-bundle-analyzer}
 
 \end{thebibliography}
 
