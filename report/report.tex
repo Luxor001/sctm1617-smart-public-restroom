@@ -499,36 +499,109 @@ Viene riportato un diagramma dell'architettura logica della progettazione appena
   \caption{Architettura logica del sistema}
 \end{figure}
 \subsection{Progettazione parte locale}
-Ogni parte \textit{locale} del sistema si occuperà di raccogliere i dati di utilizzo di ogni impianto. Si prevede l'utilizzo delle seguenti componenti:
+La progettazione della parte locale prevede il sistema di produzione dei dati grezzi, dalla loro generazione fino all'invio al server.
+Sulla base dei requisiti non funzionali, il progetto della parte locale deve tenere in considerazione due fattori principali:
 \begin{itemize}
-\item Il \textit{Raspberry PI 3 B+} per gestire la comunicazione tra la componente fisica
- e il server del sistema
-\item Dei \textit{Mega2560} per gestire la componente fisica del sistema
-\item Un insieme di sensori
-\end{itemize}
-
-\subsection{Progettazione parte fisica}
+	\item \textbf{Versatilità del sistema.}
+	Il sistema deve essere progettato in modo tale da poter essere riutilizzabile e adattabile a qualsiasi tipo e forma di locale in esercizio. 
+	\item \textbf{Costo di realizzazione dell'impianto.}
+	Il costo dell'impianto deve essere contenuto per non vanificare lo scopo dell'intero progetto. Si considera però che i dati vengono prodotti principalmente da sensori, i quali la loro qualità di monitoraggio e longevità è strettamente legata al loro costo di produzione e vendita. Senza venir a meno al costo dell'installazione dell'impianto in relazione all'efficacia dei dati raccolti.
+\end{itemize}  
+\subsubsection{Progettazione hardware}
+La scelta dell'hardware incide molto sui fattori di versatilità e costi. Occorre quindi pensare a come ottenere i dati necessari in modo economico e affidabile. Per la progettazione dell'hardware si procede con la tecnica bottom-up, si illustrano prima i dispositivi scelti e il pensiero dietro di essi in modo da ricavare i dati grezzi. Poi si assemblano le varie componenti insieme per ottenere una struttura più complessa, consistente e uniforme. Di seguito i vari concept.
 \paragraph{Sensori}
-Per soddisfare i requisiti è stato necessario selezionare la tipologia di sensori da utilizzare all'interno del locale.
+I sensori sfruttati sono i seguenti
 \begin{itemize}
-\item Un sensore di rilevamento fumo
-\item Sensori a ultrasuoni
+\item Fotoresistori
+\item Emettitori laser
+\item DHT21 (Rilevamento temperatura e umidità)
+\item Sensori ultrasuoni
 \item Sensori di forza
-\item Delle coppie di emissione e ricezione IR
-\item Dei rilevatori di livello dell'acqua
-\item Interruttori a eccitazione magnetica
-\item Dei transistor di potenza
+\item Sensori di fumo
 \end{itemize}
-
-\subparagraph{Sensore di rilevamento fumo}
-
-
-\paragraph{Microcontrollore}
-Poiché non è possibile conoscere a prescindere la morfologia del locale dove installare il sistema, è necessario tenere in conto che la progettazione di un solo dispositivo elettronico complesso potrebbe non essere sufficiente. Motivo per cui ci si concentra sull'utilizzo del \textit{mega2560}.
-Il \textit{Mega2560} è un microcontrollore programmabile dai costi contenuti il cui utilizzo è quello di realizzare, con grande versatilità, circuiti elettronici più o meno complessi in tempi brevi.
-
-
-
+\subparagraph*{Porta chiusa e disponibilità carta igienica - Coppia emettitore laser e fotoresistore}
+L'\textit{emettitore laser} è un dispositivo elettronico rappresentabile da un diodo che emette un fascio di luce concentrato verso una direzione.
+Il \textit{fotoresistore} è un dispositivo elettronico rappresentabile da una resistore (o resistenza variabile) che regola la sua resistenza in base alla luce che riceve sulla sua componente fotosensibile; più è la luce che riceve, minore è la resistenza.
+Le due componenti le si possono utilizzare per concentrare la luce in un unico punto del fotoresistore trasformando la coppia di sensori in un interruttore di luce.
+E' possibile sfruttare questa coppia per sapere se una porta è chiusa o se la carta igienica è disponibile.
+[FOTO CONCEPT PORTA] Una porta si definisce chiusa quando la luce del laser è concentrata sul fotoresistore, aperta altrimenti.
+[FOTO CONCEPT CARTA IGIENICA] La carta igienica si definisce esaurita quando la luce del laser è concentrata sul fotoresistore,disponibile altrimenti.
+[PROBLEMI DEFORMAZIONE CARTONE CARTA IGIENICA E SOLUZIONI] Poichè il cartone di supporto del rotolo di carta igienica tende alla deformazione, è possibile che il laser non tocchi il fotoresistore anche se la carta igienica è finita. Per ovviare al problema è sufficiente aggiungere una doppia coppia di laser che puntano allo stesso fotoresistore da punti differenti.
+[FOTO SOLUZIONE DEFORMAZIONE CARTONE CARTA IGIENICA]
+\subparagraph{Guasto luce - fotoresistore}
+Un singolo fotoresistore è in grado di avvertirci se c'è un guasto alla luce
+[FOTO SEMPLICE GUASTO LUCE]
+\subparagraph{Rilevamento umidità celle - DHT21}
+Il DigitalHumidityTemperature (DHT) è un sensore digitale complesso che permette di rilevare l'umidità e la temperatura dell'ambiente che lo circonda. Non richiede installazioni complesse, è sufficiente installarlo a mezzo metro dal soffitto per un rilevamento ideale.
+\subparagraph{Rilevamento spazzatura - Sensore a ultrasuoni}
+Il sensore a ultrasuoni è un sensore digitale complesso che permette di calcolare le distanze di un oggetto di fronte ad esso. Il sensore emette un ultrasuono e stima la distanza aspettando e calcolando il tempo di ritorno di quel suono.
+L'idea è di piazzare il sensore sotto il coperchio del bidone della spazzatura e puntarlo verso la base del bidone. Man mano che il bidone si riempie il sensore dovrebbe stimare distanze sempre minori fino a raggiungere la distanza minima e avvertire quindi che il bidone è pieno.
+[FOTO FUNZIONAMENTO SENSORE]
+\subparagraph{Rilevamento presenza sapone - Sensore di forza}
+Il sensore di forza è un sensore analogico rappresentabile da un resistore che permette di rilevare il peso degli oggetti che si trovano su di esso. Sensori simili, come i piezoelettrici, vengono usati all'interno dei serbatoi dei veicoli per la stima del carburante residuo. L'idea quindi è quella di piazzare il sensore sotto il contenitore dei saponie stimare quindi la rimanenza di sapone all'interno del contenitore.
+[FOTO FUNZIONAMENTO SENSORE]
+\subparagraph{Rilevatore di fumo}
+Il rilevatore di fumo è un sensore analogico complesso rappresentabile da un resistore che varia la sua resistenza interna in base alla presenza di gas nell'atmosfera a se circostante. Non richiede installazioni complesse se non il montaggio su soffitto per rilevare la presenza di gas leggeri come il monossido di carbonio o il fumo in generale.
+\paragraph{Arduino-like}
+Poiché il personale non ha conoscenze approfondite in ingegneria elettronica, per risparmiare tempo e contenere i costi di progettazione di un possibile circuito elettronico, per mettere insieme tutti i pezzi si è deciso di sfruttare i microcontrollori programmabili come l'arduino.
+Dall'analisi s'illustra che è necessario installare un dispositivo arduino-like per la gestione dei dispositivi in ogni cella e un unico dipositivo arduino-like per la gestione dei dispositivi ai lavabi.
+[FOTO CIRCUITO ELETTRONICO ARDUINO-CELLA]
+[FOTO CIRCUITO ELETTRONICO ARDUINO-LAVABO]
+Da come si evince dalle immagini sopra riportate, l'arduino è alimentabile da porta usb ma per una maggiore stabilità verranno sfruttati degli alimentatori da 220Vin-7VOut.
+Ogni arduino è in grado di alimentare tutti i sensori ad esso collegati, di leggere il loro stato (come per il dht) o cambiare il loro stato (come per l'emettitore laser)
+L'arduino tuttavia ha grosse limitazioni per quanto riguarda la memoria disponibile e la potenza computazionale; motivo per cui tutto il carico di lavoro che riguarda la manipolazione dei dati grezzi e il delivering dei dati strutturati viene spostato su un dispositivo più prestante e adatto al compito: il raspberry.
+\paragraph{Raspberry}
+Il raspberry è un dispositivo IOT sufficientemente potente da poter essere sfruttato come client produttore di dati per l'intero sistema. Tramite le porte usb ha il compito di connettersi e comunicare con i dispositivi arduino raccogliendo quindi i dati grezzi.
+Una volta manipolati i dati grezzi, il raspberry ha il compito di spedire i dati elaborati al server dove infine verranno salvati.
+\subsubsection{Progettazione software arduino}
+L'arduino è il dispositivo responsabile alla comunicazione dei sensori con il raspberry.
+In base all'analisi dei requisiti si può dedurre che l'arduino ha bisogno di essere configurato per due tipi di ambienti:
+\begin{itemize}
+\item L'ambiente della cella
+\item L'ambiente dei lavabi
+\end{itemize}
+L'Arduino ha lo svantaggio di avere poca memoria interna e un'architettura non in grado di gestire il multithreading. La complessità della struttura del programma che verrà caricato sul dispositivo potrebbe compromettere l'affidabilità dell'intero sistema hardware; questo problema ci obbliga a progettare un software molto leggero e poco dinamico.
+Di seguito viene riportato quindi un UML di progetto compatibile con due software molto simili tra loro affinché l'Arduino possa essere installato in entrambi i tipi di ambiente. 
+[UML SOFTWARE ARDUINO]
+\subsubsection{Progettazione software raspberry}
+Il Raspberry è un computer economico con architettura Arm a basso consumo energetico; in questo progetto il suo compito è quello di ricevere i dati grezzi dall'Arduino, di manipolarli e poi spedire i dati elaborati al server centrale.
+\paragraph{Ambiente di sviluppo}
+Il Raspberry supporta un qualsiasi sistema operativo Arm ma è Raspbian il sistema operativo scelto poiché il più supportato dalla community nonché il più performante tra tutti. Verranno usati principalmente tre paradigmi di programmazione: OOP, programmazione funzionale e programmazione reattiva. 
+\paragraph{Concetto del software lato raspberry}
+[IMMAGINE MOTORE SENSORS MANAGER]
+Si è progettato il software del raspberry in modo che i concetti di business coincidano il più possibile con le problematiche tecniche da risolvere.
+Il software può essere diviso concettualmente in due parti:
+\begin{itemize}
+\item Sensori
+\item Manager
+\end{itemize}
+\subparagraph{Sensori virtuali}
+[UML RELATIVO ALL'ISensor e sue implementazioni]
+I sensori virtuali sono componenti software gestiti da thread indipendenti l'uno dall'altro che hanno il compito di recuperare i dati dai sensori fisici e spedirli al Manager.
+E' possibile che un sensore sia dipendente da altri sensori per il corretto funzionamento; in questo caso il sensore dovrà abilitare il sensore padre prima di avviare la lettura.
+\subparagraph{Manager}
+[UML RELATIVO ALL'IManager e sue implementazioni]
+Il manager è un componente software che ha il compito di eseguire le seguenti funzioni:
+\begin{itemize}
+\item Connettersi ai vari dispositivi Arduino
+\item Inizializzare tutti i sensori virtuali mappandoli con i sensori fisici.
+\item Attivare o disattivare la lettura dei sensori virtuali
+\item Attendere la ricezione dei dati da parte dei sensori virtuali
+\item Aggregare i dati ricevuti in un'unica struttura
+\item Inviare i dati strutturati,se necessario con politiche di temporizzazione, al server
+\end{itemize}
+\subsubsection{Progettazione interazione raspberry arduino}
+Come precedentemente scritto, i sensori virtuali dovranno essere gestiti da thread indipendenti l'uno dall'altro ma è stato anche specificato che devono interfacciarsi con l'Arduino, un microcontrollore con risorse computazionali molto basse. La progettazione della parte locale deve quindi prevedere una metodologia efficace affinché l'Arduino possa ricevere un input consistente da ogni thread interessato a interrogarlo e rispondere a questi thread di conseguenza.
+\paragraph{Concetto arduino-server like}
+L'idea è quella di far interagire il raspberry con l'arduino come se l'arduino fosse un server e il raspberry il suo client. La comunicazione avverrà tramite la porta seriale quindi si useranno le stringhe per inviare e ricevere messaggi.  
+[IMMAGINE INTERAZIONE RASPBERRY-ARDUINO CLIENT-SERVER]
+\subparagraph{Arduino as a server}
+L'arduino espone un numero definito di metodi. E' possibile accedere a questi metodi tramite una linea di stringa strutturata. L'Arduino si mette in attesa di possibili stringhe di richiesta da parte del Raspberry e accumula le riceventi all'interno del buffer della sua seriale.
+Ogni linea di richiesta viene presa dal buffer consumandola per poi effettuare un rapido parsing di conformità. Se la richiesta è valida, l'Arduino elabora la risposta e la manda indietro attraverso la porta seriale sotto forma di messaggio strutturato.
+\subparagraph{Raspberry as a Client}
+Dal lato raspberry un sensore virtuale, per comunicare col raspberry, deve creare una nuova stringa di richiesta e inserirla in una coda. 
+Il manager si occupa quindi di svuotare la coda mandando messaggi di richiesta all'Arduino solo quando quest'ultimo è in grado di ascoltare. Nel frattempo il manager si mette in ricezione di possibili messaggi di risposta dall'Arduino. Ogni messaggio di risposta andrà poi a popolare una coda di ricezione; il manager si occuperà quindi di svuotare la coda smistando i messaggi di risposta ai destinatari corretti.
+Questo tipo d'interazione viene sfruttato principalmente dal manager stesso per recuperare dai vari Arduino le loro mappature; in questo modo il manager potrà inizializzare correttamente i sensori virtuali.
 \newpage
 \subsection{Progettazione parte applicativa}
 Grazie all'analisi dei requisiti effettuata, si è evidenziato come il committente abbia richiesto la creazione di due applicazioni distinte, ognuna con una diversa finalità.\\
@@ -695,6 +768,76 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 \end{tabular}
 \newpage
 \subsection{Implementazione parte locale}
+Verranno di seguito illustrate le implementazioni per il software eseguito dal raspberry e il software eseguito dall'Arduino.
+\subsubsection{Implementazione software Arduino}
+Come riportato nella fase di progettazione, l'Arduino ha bisogno di un software leggero e poco complessso. Il software è scritto in C++ e usa principalmente le librerie di base predisposte da Arduino e le librerie di terze parti per la lettura dei sensori digitali complessi.
+\paragraph{Codice}
+\subparagraph{ENTRYPOINT}
+[IMMAGINE DI CONCETTO SETUP AND LOOP]
+L'entrypoint di un Arduino è determinato da file in estensione .cpp contenente due metodi:
+\begin{itemize}
+\item setup() Vero entrypoint del software, il metodo viene eseguito solo una volta, all'avvio.
+\item loop() Metodo eseguito dopo il primo e che viene rieseguito al suo termine finché l'Arduino rimane alimentato.
+\end{itemize}
+Durante l'esecuzione del metodo di setup, verrà attivata la comunicazione attraverso la porta seriale [codice beginSerial()] e verranno inizializzati tutti i pin di input e output. Attraverso il file di intestazione con suffisso Mapping.h è possibile determinare quale pin è di input e quale è di output.
+Al termine dell'inizializzazione verrà eseguito un rapido check sulle porte per determinare se il mapping è stato eseguito in maniera errata. Un mapping si definisce errato quando almeno uno dei pin è sia di input che di output.
+[codice checkConflict()]
+Se non ci sono conflitti, il setup termina e il dispositivo esegue il loop.\\
+All'inizio di ogni loop, ci si chiede se è arrivato un messaggio di request dal raspberry. Se c'è allora viene consumata la prima string line disponibile. Su questa stringa viene effettuato un parsing preliminare per sapere di che comando si tratta e se riconosciuto si conclude il parsing in modo da ottenere i parametri necessari all'esecuzione del comando richiesto. Infine, se necessario, l'Arduino manda indietro la risposta con l'esito o risultato del comando. [codice loop.switch()]
+\subparagraph{Mapping}
+Affinché il mapping lato codice sia effettuato con cura è necessario creare un file header contenente tre metodi principali:
+\begin{itemize}
+\item getInputMapping(int value) Metodo che preso il numero di pin come parametro restituisce il nome del sensore se il sensore d'interesse esiste (ed è collegato) e ha lo scopo di inviare dati al sistema.
+\item getOutputMapping(int value) Metodo che preso il numero di pin come parametro restituisce il nome del sensore se il sensore d'interesse esiste (ed è collegato) e ha lo scopo di ricevere dell'input da Arduino per un possibile cambio di stato del sensore stesso.
+\item evaluateMappingType(int value) Metodo che preso il numero di pin come parametro restituisce il tipo di sensore collegato a quel pin; esempio se è digitale o analogico.
+\subparagraph{Lettura di pin di input}
+Se la request include il comando di lettura di un pin, prima di leggere lo stato del pin bisogna conoscere la tipologia di sensore collegato. Generalmente le librerie Arduino permettono di conoscere se il pin è in stato High o in stato Low, ottimo per sensori digitali semplici come gli interruttori; se invece è necessario leggere lo stato di un sensore digitale complesso come il dht, la libreria standard di Arduino non è più sufficiente. La community di Arduino mette a disposizione librerie di terze parti per i sensori al momento più conosciuti. In questo caso quindi è necessario installare le librerie di terze parti e cambiare il comportamento della lettura del pin in base al sensore ad esso collegato. [codice readFromPin(int pin)]
+\end{itemize}
+\subsubsection{Implementazione software Raspberry}
+\paragraph{Caratteristiche}
+Come anticipato in piccola parte nel capitolo di progettazione, il software che viene eseguito sul raspberry verrà scritto in Java 8. Questa scelta è stata influenzata dalle proprietà principali che Java 8 offre:
+\begin{itemize}
+\item Un supporto enorme dalla community di Java
+\item Numerose librerie di terze parti disponibili
+\item Il recente inserimento del paradigma alla programmazione funzionale e programmazione reattiva
+\item Possibilità di eseguire Java su ogni computer
+\end{itemize}
+\subparagraph{Librerie di terze parti}
+Per l'uso e la sincronizzazione di librerie di terze parti si è scelto di usare Maven.
+Tra le librerie third-party si prevede l'utilizzo di:
+\begin{itemize}
+\item RXTX.dll per la comunicazione con Arduino
+\item rxjava per implementare le componenti reattive
+\item gson per la costruzione della stringa Json da inviare al server centrale
+\item httpclient per implementare la classe di connessione al server centrale
+\end{itemize}
+
+
+\paragraph{Codice}
+Il codice d'implementazione rispecchia concettualmente quello che è stato già definito in fase progettuale. Verrà descritto quindi il codice relativo alla componente sensori e il codice relativo al manager.
+\subparagraph{Sensori}
+L'interfaccia ISensor si occupa di esporre i metodi basilari che ogni sensore virtuale deve avere all'interno del sistema ed estende l'interfaccia Runnable in modo da integrare la logica di thread al suo interno. ISensor verrà implementato parzialmente da AbstractSensor, una classe astratta che incorpora il comportamento principale che ogni sensore deve avere.
+L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un ulteriore comportamento, la sua parte reattiva. Tutti i sensori virtuali che derivano da abstractSensor possono aggiornare gli osservatori tramite la funzione implementata dal loro padre:
+
+\begin{lstlisting}
+	protected boolean updateObserver(EntrySet entry)
+	{
+		if (!this.connectedObserver.isPresent())
+			return false;
+		this.connectedObserver.get().onNext(entry);
+		return true;
+	}
+\end{lstlisting}
+L'abstractSensor viene a sua volta implementato da ArduinoSensor, una seconda classe astratta che implementa a sua volta la classe Observer. In questo modo ArduinoSensor è in grado non solo di aggiornare possibili subscribers ma anche di iscriversi ad un observable e di reagire ai suoi aggiornamenti.
+Le classi finali sono ArduinoReadingSensor e ArduinoWritingSensor.
+Il comportamento di queste due classi sono simili; la differenza sostanziale sta nel fatto che l'ArduinoReadingSensor, una volta che riceve le informazioni dall'Arduino, aggiorna il Manager. 
+\subparagraph{Manager}
+Il manager è composto dalle seguenti componenti:
+\begin{itemize}
+\item RestroomSM: responsabile del coordinamento delle seguenti componenti
+\item IOComm: responsabile della comunicazione tra manager e arduino e sensori e arduino
+\item RestClient: responsabile della comunicazione tra manager e server
+\end{itemize}
 \newpage
 \subsection{Implementazione parte Applicativa}
 \subsubsection{Manager}
@@ -963,6 +1106,10 @@ Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nel
 
 \newpage
 \subsection{Performance parte Locale}
+\subsubsection{Parte hardware}
+La longevità dell'impianto elettrico dipende dalla qualità dei sensori utilizzati. Tuttavia, data la progettazione semplificata e l'installazione non invasiva, è possibile sostituire qualsiasi tipo di guasto elettronico.
+\subsubsection{Parte software}
+Molto più preoccupante la stabilità del sistema software; data la scarsità di risorse disponibili per lo sviluppo di tutto il progetto, si è tralasciata una sezione molto importante del progetto: la gestione degli errori. In un primo rilascio dell'intero progetto infatti la gestione degli errori è stata ridotta all'osso. Questo significa che per qualsiasi malfunzionamento l'applicazione lato raspberry potrebbe rompersi; occorre quindi un riavvio manuale da remoto dell'applicazione per ristabilire il corretto funzionamento del sistema.
 \subsection{Performance parte applicativa}
 Nell'ambito di applicazioni RESTful le performance finali si possono considerare dipendenti da due fattori:
 \begin{itemize}
@@ -1130,7 +1277,7 @@ La divisione dei compiti è stata netta e basata sull'affinità di ogni membro d
 	Più dettagliatamente, si è occupato della progettazione e sviluppo del server scritto in \textit{ASP.NET Core} e della relativa connessione con il DBMS.\\
 	Si è inoltre incentrato sulla realizzazione del database in MongoDB e del relativo deploy su cloud \textit{Atlas} come descritto nel capitolo 6.\\
 	Infine, si è dedicato alla realizzazione delle applicazioni \textit{manager} e \textit{consumer} e della relativa progettazione.
-	\item \textit{Andrea Vecchiotti}
+	\item \textit{Andrea Vecchiotti} ha preso in carico lo sviluppo del lato locale; si è occupato quindi della realizzazione del progetto lato hardware e nella progettazione e sviluppo dei software eseguibili su arduino e raspberry, interazione tra le due componenti e la comunicazione tra raspberry e il server centrale.
 \end{itemize}
 Nella stesura di questa documentazione di progetto ogni membro si è dedicato al suo specifico ambito di lavoro; altre sezioni generiche (come la qui presente) si possono considerare soggette a un lavoro collettivo.\\\\
 Per quanto riguarda le tempistiche, \textit{Stefano Belli}  ha riportato:
@@ -1139,6 +1286,14 @@ Per quanto riguarda le tempistiche, \textit{Stefano Belli}  ha riportato:
 \item Circa 18 giorni/uomo per lo sviluppo del frontend dell'app \textit{manager}.
 \item Circa 8 giorni/uomo per lo sviluppo (e deploy) della parte server.
 \item Circa 25 giorni/uomo per la stesura della relazione.
+\end{itemize}
+
+\textit{Andrea Vecchiotti} ha riportato invece:
+\begin{itemize}
+\item Circa 20 giorni  per lo sviluppo del software eseguibile su raspberry
+\item Circa 5 giorni per lo sviluppo del software eseguibile da arduino
+\item Circa 6 giorni per la progettazione e montaggio dell'hardware
+\item Circa 5 giorni per la stesura della relazione
 \end{itemize}
 \newpage
 
