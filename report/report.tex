@@ -524,30 +524,77 @@ L'\textit{emettitore laser} è un dispositivo elettronico rappresentabile da un 
 Il \textit{fotoresistore} è un dispositivo elettronico rappresentabile da una resistore (o resistenza variabile) che regola la sua resistenza in base alla luce che riceve sulla sua componente fotosensibile; più è la luce che riceve, minore è la resistenza.
 Le due componenti le si possono utilizzare per concentrare la luce in un unico punto del fotoresistore trasformando la coppia di sensori in un interruttore; si considera il l'interruttore chiuso quando il fotoresistore mostra una resistenza al di sotto di una certa soglia.
 E' possibile sfruttare questa coppia per sapere se una porta è chiusa o se la carta igienica è disponibile.
-[FOTO CONCEPT PORTA] Una porta si definisce chiusa quando la luce del laser è concentrata sul fotoresistore, aperta altrimenti.
-[FOTO CONCEPT CARTA IGIENICA] La carta igienica si definisce esaurita quando la luce del laser è concentrata sul fotoresistore,disponibile altrimenti.
-[PROBLEMI DEFORMAZIONE CARTONE CARTA IGIENICA E SOLUZIONI] Poichè il cartone di supporto del rotolo di carta igienica tende alla deformazione, è possibile che il laser non tocchi il fotoresistore anche se la carta igienica è finita. Per ovviare al problema è sufficiente aggiungere un altro emettitore laser che puntano allo stesso fotoresistore da un punto differente rispetto al primo.
-[FOTO SOLUZIONE DEFORMAZIONE CARTONE CARTA IGIENICA]
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.45]{img/parteLocale/PortaAperta.png} 
+    \caption{Interruttore aperto}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.45]{img/parteLocale/PortaChiusa.png} 
+    \caption{Interruttore aperto}
+\end{figure}
+Una porta si definisce chiusa quando la luce del laser è concentrata sul fotoresistore, aperta altrimenti.
+
+
+\newpage
+La carta igienica si definisce esaurita quando la luce del laser è concentrata sul fotoresistore,disponibile altrimenti.
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/CartaIgienicaDisponibile.png}  
+    \caption{Interruttore aperto}
+\end{figure}
+
+ 
+ \begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/CartaIgienicaEsaurita.png}  
+    \caption{Interruttore chiuso}
+\end{figure}
+Poichè il cartone di supporto del rotolo di carta igienica tende alla deformazione, è possibile che il laser non tocchi il fotoresistore anche se la carta igienica è finita.
+ \begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/DeformazioneTubo.png}  
+    \caption{Deformazione del tubo di supporto alla carta igienica}
+\end{figure}
+ \begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/ProblemaDeformazione.png}  
+    \caption{Interruttore erroneamente aperto}
+\end{figure}
+Per ovviare al problema è sufficiente aggiungere un altro emettitore laser che puntano allo stesso fotoresistore da un punto differente rispetto al primo.
+ \begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/SoluzioneDeformazione.png}  
+    \caption{Interruttore chiuso}
+\end{figure}
 \subparagraph{Guasto luce - fotoresistore}
 Un singolo fotoresistore è in grado di avvertirci se c'è un guasto alla luce
-[FOTO SEMPLICE GUASTO LUCE]
+
 \subparagraph{Rilevamento umidità celle - DHT21}
 Il DigitalHumidityTemperature (DHT) è un sensore digitale complesso che permette di rilevare l'umidità e la temperatura dell'ambiente che lo circonda. Non richiede installazioni complesse, è sufficiente installarlo a mezzo metro dal soffitto per un rilevamento ideale.
 \subparagraph{Rilevamento spazzatura - Sensore a ultrasuoni}
 Il sensore a ultrasuoni è un sensore digitale complesso che permette di calcolare la distanza tra esso e l'oggetto che ha di fronte. Il sensore emette un segnale a ultrasuoni e stima la distanza aspettando e calcolando il tempo di ritorno di quel segnale.
 L'idea è di piazzare il sensore sotto il coperchio del bidone della spazzatura e puntarlo verso la base del bidone. Man mano che il bidone si riempie il sensore dovrebbe stimare distanze sempre minori fino a raggiungere la distanza minima e avvertire quindi che il bidone è pieno.
-[FOTO FUNZIONAMENTO SENSORE]
 \subparagraph{Rilevamento presenza sapone - Sensore di forza}
 Il sensore di forza è un sensore di tipo analogico rappresentabile da un resistore che permette di rilevare il peso degli oggetti posizionati su di esso. L'idea quindi è quella di piazzare il sensore sotto il contenitore del sapone liquido, stimando la quantità di sapone rimasto nel contenitore in base al suo peso. Se il contenitore è pieno si avrà più peso sul sensore. 
-[FOTO FUNZIONAMENTO SENSORE]
 \subparagraph{Rilevatore di fumo}
 Il rilevatore di fumo è un sensore analogico complesso rappresentabile da un resistore che varia la sua resistenza interna in base alla presenza di gas nell'atmosfera a se circostante. Non richiede installazioni complesse se non il montaggio su soffitto per rilevare la presenza di gas leggeri come il monossido di carbonio o il fumo in generale.
 \paragraph{Arduino-like}
 Poiché il personale non ha conoscenze approfondite in ingegneria elettronica, per risparmiare tempo e contenere i costi di progettazione di un possibile circuito elettronico, si è sfruttato l'utilizzo dei microcontrollori programmabili come l'Arduino..
-Dall'analisi s'illustra che è necessario installare un dispositivo Arduino-like per la gestione dei dispositivi in ogni cella e un unico dipositivo Arduino-like per la gestione dei dispositivi ai lavabi.
-[FOTO CIRCUITO ELETTRONICO ARDUINO-CELLA]
-[FOTO CIRCUITO ELETTRONICO ARDUINO-LAVABO]
-Da come si evince dalle immagini sopra riportate, l'Arduino è alimentabile da porta usb ma per una maggiore stabilità verranno sfruttati degli alimentatori da 220Vin-7VOut.
+Dall'analisi s'illustra che è necessario installare un dispositivo Arduino-like per la gestione dei dispositivi in ogni cella e un unico dipositivo Arduino-like per la gestione dei dispositivi ai lavabi.\\
+ \begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.45]{img/RestroomCell_bb.png}  
+    \caption{Circuito cella}
+\end{figure}
+ \begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.45]{img/RestroomEntry_bb.png}  
+    \caption{Circuito lavabo}
+\end{figure}
+\\Da come si evince dalle immagini sopra riportate, l'Arduino è alimentabile da porta usb ma per una maggiore stabilità verranno sfruttati degli alimentatori da 220Vin-7VOut.
 Ogni Arduino è in grado di alimentare tutti i sensori ad esso collegati, di leggere il loro stato (come per il dht) o cambiare il loro stato (come per l'emettitore laser)
 L'Arduino tuttavia ha grosse limitazioni per quanto riguarda la memoria disponibile e la potenza computazionale; motivo per cui tutto il carico di lavoro che riguarda la manipolazione dei dati grezzi e il delivering dei dati strutturati viene spostato su un dispositivo più prestante e adatto al compito: il Raspberry.
 \paragraph{Raspberry}
@@ -562,18 +609,21 @@ In base all'analisi dei requisiti si può dedurre che l'Arduino ha bisogno di es
 \end{itemize}
 L'Arduino ha lo svantaggio di avere poca memoria interna e un'architettura non in grado di gestire il multithreading. La complessità della struttura del programma che verrà caricato sul dispositivo potrebbe compromettere l'affidabilità dell'intero sistema hardware; questo problema ci obbliga a progettare un software molto leggero e statico.
 Di seguito viene riportato quindi un UML di progetto compatibile con due software molto simili tra loro affinché l'Arduino possa essere installato in entrambi i tipi di ambiente. 
-[UML SOFTWARE ARDUINO]
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/SoftwareArduino.png}  
+    \caption{Classe principale del software Arduino}
+\end{figure}
 \subsubsection{Progettazione software raspberry}
 Il Raspberry è un computer economico con architettura Arm a basso consumo energetico; in questo progetto il suo compito è quello di ricevere i dati grezzi dall'Arduino, di manipolarli e poi spedire i dati elaborati al server centrale.
 \paragraph{Ambiente di sviluppo}
 Il Raspberry supporta un qualsiasi sistema operativo Arm ma è Raspbian il sistema operativo scelto poiché il più supportato dalla community nonché il più ottimizzato tra tutti. Verranno usati principalmente tre paradigmi di programmazione: 
-\beign{itemize}
+\begin{itemize}
 \item OOP
 \item Programmazione funzionale 
 \item Programmazione reattiva. 
 \end{itemize}
 \paragraph{Concetto del software lato raspberry}
-[IMMAGINE MOTORE SENSORS MANAGER]
 Si è progettato il software del raspberry in modo che i concetti di business coincidano il più possibile con le problematiche tecniche da risolvere.
 Il software può essere diviso concettualmente in due parti:
 \begin{itemize}
@@ -581,9 +631,19 @@ Il software può essere diviso concettualmente in due parti:
 \item Manager
 \end{itemize}
 \subparagraph{Sensori virtuali}
-[UML RELATIVO ALL'ISensor e sue implementazioni]
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.35]{img/parteLocale/SoftwareSensorsRaspberry.png}  
+    \caption{Classe principale del software Arduino}
+\end{figure}
 I sensori virtuali sono componenti software gestiti da thread indipendenti l'uno dall'altro che hanno il compito di recuperare i dati dai sensori fisici e spedirli al Manager.
 E' possibile che un sensore sia dipendente da altri sensori per il corretto funzionamento; in questo caso il sensore dovrà abilitare il sensore padre prima di avviare la lettura.
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.43]{img/parteLocale/SoftwareSensorsRaspberry.png}  
+    \caption{Classe principale del software Arduino}
+\end{figure}
+\newpage
 \subparagraph{Manager}
 [UML RELATIVO ALL'IManager e sue implementazioni]
 Il manager è un componente software che ha il compito di eseguire le seguenti funzioni:
