@@ -188,14 +188,14 @@ showstringspaces=false,      % Leerzeichen in Strings anzeigen ?
 \textsc{\Large Relazione di progetto di "Smart City e Tecnologie Mobili"}\\[0.5cm]
 
 \HRule \\[0.4cm]
-{ \huge \bfseries Smart Public Restrooms }\\[0.4cm]
+{ \huge \bfseries Smart Public Restroom }\\[0.4cm]
 \HRule \\[1.5cm]
 
 \vfill
 
 \begin{flushleft}
-\emph{Numero del gruppo: 60}\\[1cm]
-\emph{Componenti del gruppo: \textit{Stefano Belli}; \textit{Andrea Vecchiotti}}\\[3cm]
+\emph{Numero del gruppo:}\\[1cm]
+\emph{Componenti del gruppo:}\\[3cm]
 \end{flushleft}
 
 
@@ -215,6 +215,26 @@ showstringspaces=false,      % Leerzeichen in Strings anzeigen ?
 %----------------------------------------------------------------------------------------
 
 \section{Introduzione}
+
+Esporre l’obiettivo del progetto dandone una visione complessiva.\\
+
+Devono essere illustrate le caratteristiche salienti del progetto; deve essere chiara la distinzione tra le tecnologie usate/assemblate durante lo svolgimento dell'elaborato e il contributo tecnologico/scientifico effettivamente apportato dal gruppo.\\
+
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 2000 & 3000 \\
+ 2 componenti & 2500 & 4500 \\
+ 3 componenti & 3000 & 6000 \\
+ \hline
+\end{tabular}
+
+
+\newpage
 La possibilità di usufruire di servizi igienici in luoghi pubblici viene percepita al giorno d'oggi come un diritto da parte del singolo cittadino, che si aspetta puntalmente di trovare un servizio funzionante, pulito e facilmente accessibile.\\
 Oltre che per una questione di pubblico decoro, le aziende (o enti) sono obbligate per legge\cite{articolo1} a fornire servizi igienici ai propri clienti/dipendenti.\\
 Inevitabilmente, tuttavia, la loro manutenzione può incidere in maniera rilevante sul bilancio aziendale annuale; sebbene in alcune realtà tale costo sia tutto sommato contenuto, in altre può essere piuttosto ingente (si pensi ad esempio al caso di \textit{Trenitalia} e a quanti milioni di viaggiatori utilizzano i servizi igienici gratuiti sparsi per le stazioni italiane).\\
@@ -258,14 +278,33 @@ Ad esempio, per il \textit{frontend} è stato utilizzato \textit{Angular} e \tex
 
 \section{Stato dell'arte}
 
-La letteratura accademica annovera un discreto numero di pubblicazioni riguardanti l'integrazione di sistemi  \textit{smart} di toilette.\\\\
+Riassumere le soluzioni presenti in letteratura inerenti al problema in esame. Per ciascuna, discutere le principali diversità o affinità rispetto al progetto presentato. Nel caso non siano presenti soluzioni direttamente comparabili a quella presentata descrivere comunque le principali tecniche note per affrontare la tematica trattata.\\
+
+Le soluzioni esposte devono essere corredate degli opportuni riferimenti bibliografici. Nel caso si tratti di soluzioni già operative sul mercato, devono essere indicate le fonti (online) dove poter accedere al servizio o approfondirne i contenuti.\\
+
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 2000 & 3000 \\
+ 2 componenti & 2500 & 4500 \\
+ 3 componenti & 3000 & 6000 \\
+ \hline
+\end{tabular}
+
+\newpage
+
+La letteratura accademica annovera un discreto numero di pubblicazioni riguardanti l'integrazione di sistemi\textit{smart} di toilette.\\\\
 A titolo di esempio, \textit{Koa et al.}\cite{KooBathroom} presentano una soluzione di informatizzazione di un bagno privato di un appartamento, grazie all'utilizzo di una serie di sensori suddivisi in "nodi" logici.\\
 Sebbene l'architettura proposta a livello di sensoristica non sia direttamente comparabile a quella presentata in questo documento (vengono infatti adottati dei trasduttori completamente differenti) si possono individuare delle analogie con la suddivisione logica del sistema.\\
 Viene infatti teorizzata la creazione di un nodo di comunicazione per ogni parte suddivisibile della struttura: uno per il settore doccia, uno per il pavimento ecc.
 Ognuno di questi nodi verrà connesso a un \textit{Gateway} (un \textit{arduino Yun}) tramite trasmittenti \textit{ZigBee}.
 \textit{Smart Public Restrooms} adotta una suddivisione logica molto simile simile: ogni cella singola celle e la struttura nel suo insieme vengono gestite da un singolo \textit{Arduino}, che invia i dati a un \textit{Raspberry Pi} operante da \textit{Gateway}.\\\\
 \begin{figure}[h!]
-  \includegraphics[scale=0.35]{img/paperbathroom.png}
+  \includegraphics[scale=0.42]{img/paperbathroom.png}
   \caption{La soluzione proposta nel paper}
   \label{fig:usecase_manager}
 \end{figure}
@@ -415,6 +454,25 @@ In tal modo sarà possibile adattare il sistema a molteplici scenari e integrarl
 %----------------------------------------------------------------------------------------
 \newpage
 \section{Progettazione}
+
+Devono essere esposte le scelte progettuali operate nelle varie fasi di sviluppo dell'elaborato.\\
+
+In questa sezione devono essere documentati gli schemi di progetto relativamente all'architettura complessiva del sistema e alle sue componenti di rilievo che possano meritare un'analisi di dettaglio. Per le componenti software si può ricorrere ad esempio a diagrammi delle classi, di sequenza, stato, attività. Per le componenti hardware è possibile includere opportuni schemi in grado di descrivere l'architettura fisica adottata.\\
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 9000 & 18000 \\
+ 2 componenti & 12000 & 21000 \\
+ 3 componenti & 15000 & 24000 \\
+ \hline
+\end{tabular}
+
+
+\newpage
 \subsection{Architettura del sistema}
 
 Una breve analisi dei requisiti in un ottica progettuale ci porta a una suddivisione del sistema in tre parti logiche ben distinte: 
@@ -564,8 +622,14 @@ Il Raspberry supporta un qualsiasi sistema operativo Arm ma è Raspbian il siste
 \item OOP
 \item Programmazione funzionale 
 \item Programmazione reattiva. 
+\newpage
 \end{itemize}
-\paragraph{Concetto del software lato raspberry}
+\paragraph{Concetto del software lato Raspberry}
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.60]{img/parteLocale/[SmartCity]MappaConcettualeSWRaspberry.png}  
+    \caption{UML relativo alla parte dei sensori dell'IOHandler}
+\end{figure}
 Si è progettato il software del raspberry in modo che i concetti di business coincidano il più possibile con le problematiche tecniche da risolvere.
 Il software può essere diviso concettualmente in due parti:
 \begin{itemize}
@@ -573,21 +637,20 @@ Il software può essere diviso concettualmente in due parti:
 \item Manager
 \end{itemize}
 \subparagraph{Sensori virtuali}
-\begin{figure}[h!]
-\centering
-	\includegraphics[scale=0.35]{img/parteLocale/SoftwareSensorsRaspberry.png}  
-    \caption{Classe principale del software Arduino}
-\end{figure}
 I sensori virtuali sono componenti software gestiti da thread indipendenti l'uno dall'altro che hanno il compito di recuperare i dati dai sensori fisici e spedirli al Manager.
 E' possibile che un sensore sia dipendente da altri sensori per il corretto funzionamento; in questo caso il sensore dovrà abilitare il sensore padre prima di avviare la lettura.
 \begin{figure}[h!]
 \centering
 	\includegraphics[scale=0.43]{img/parteLocale/SoftwareSensorsRaspberry.png}  
-    \caption{Classe principale del software Arduino}
+    \caption{Diagramma rappresentativo dei sensori dell'IOHandler}
 \end{figure}
 \newpage
 \subparagraph{Manager}
-[UML RELATIVO ALL'IManager e sue implementazioni]
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.55]{img/parteLocale/UmlManager.png}  
+    \caption{UML relativo alla parte di management dell'IOHandler}
+\end{figure}
 Il manager è un componente software che ha il compito di eseguire le seguenti funzioni:
 \begin{itemize}
 \item Connettersi ai vari dispositivi Arduino
@@ -601,7 +664,7 @@ Il manager è un componente software che ha il compito di eseguire le seguenti f
 Come precedentemente scritto, i sensori virtuali dovranno essere gestiti da thread indipendenti l'uno dall'altro ma è stato anche specificato che devono interfacciarsi con l'Arduino, un microcontrollore con risorse computazionali molto basse. La progettazione della parte locale deve quindi prevedere una metodologia efficace affinché l'Arduino possa ricevere un input consistente da ogni thread interessato a interrogarlo e rispondere a questi thread di conseguenza.
 \paragraph{Concetto arduino-server like}
 L'idea è quella di far interagire il Raspberry con l'Arduino come se l'Arduino fosse un server e il Raspberry il suo client. La comunicazione avverrà tramite la porta seriale quindi si useranno le stringhe per inviare e ricevere messaggi.  
-[IMMAGINE INTERAZIONE RASPBERRY-ARDUINO CLIENT-SERVER]
+
 \subparagraph{Arduino as a server}
 L'arduino espone un numero definito di metodi. E' possibile accedere a questi metodi tramite una linea di stringa strutturata. L'Arduino si mette in attesa di possibili stringhe di richiesta da parte del Raspberry e accumula le riceventi all'interno del buffer della sua seriale.
 Ogni linea di richiesta viene presa dal buffer consumandola per poi effettuare un rapido parsing di conformità. Se la richiesta è valida, l'Arduino elabora la risposta e la manda indietro attraverso la porta seriale sotto forma di messaggio strutturato.
@@ -609,6 +672,11 @@ Ogni linea di richiesta viene presa dal buffer consumandola per poi effettuare u
 Dal lato raspberry un sensore virtuale, per comunicare col raspberry, deve creare una nuova stringa di richiesta e inserirla in una coda. 
 Il manager si occupa quindi di svuotare la coda mandando messaggi di richiesta all'Arduino solo quando quest'ultimo è in grado di ascoltare. Nel frattempo il manager si mette in ricezione di possibili messaggi di risposta dall'Arduino. Ogni messaggio di risposta andrà poi a popolare una coda di ricezione; il manager si occuperà quindi di svuotare la coda smistando i messaggi di risposta ai destinatari corretti.
 Questo tipo d'interazione verrà sfruttato principalmente dal manager stesso per recuperare dai vari Arduino le loro mappature; in questo modo il manager potrà inizializzare correttamente i sensori virtuali.
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.75]{img/parteLocale/RaspArduInterationDiagram.png}  
+    \caption{Esempio di interazione tra Raspberry e Arduino con n pin}
+\end{figure}
 \newpage
 \subsection{Progettazione parte applicativa}
 Grazie all'analisi dei requisiti effettuata, si è evidenziato come il committente abbia richiesto la creazione di due applicazioni distinte, ognuna con una diversa finalità.\\
@@ -756,6 +824,24 @@ Il processo sopra riportato può essere efficacemente schematizzato attraverso u
 %----------------------------------------------------------------------------------------
 
 \section{Implementazione}\label{sec:implementazione}
+
+Esporre i principali problemi affrontati durante l'effettiva realizzazione delle componenti hardware/software e illustrare le soluzioni implementative adottate. Se l'elaborato ha previsto l'utilizzo di tecnologie già disponibili sul mercato, discuterne brevemente le caratteristiche e motivarne l'adozione rispetto ad altre soluzioni assimilabili.\\
+
+\textbf{NOTA: in questa sezione devono essere riportate esclusivamente le porzioni di codice ritenute particolarmente significative. Il codice sorgente nella sua interezza, opportunamente commentato, deve essere consegnato separatamente dalla relazione in un archivio compresso.}\\
+
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 5000 & 11000 \\
+ 2 componenti & 8000 & 16000 \\
+ 3 componenti & 10000 & 21000 \\
+ \hline
+\end{tabular}
+\newpage
 \subsection{Implementazione parte locale}
 Verranno di seguito illustrate le implementazioni per il software eseguito dal raspberry e il software eseguito dall'Arduino.
 \subsubsection{Implementazione software Arduino}
@@ -1100,6 +1186,28 @@ restroomsCollection.InsertOne(newRestroom);
 %----------------------------------------------------------------------------------------
 
 \section{Testing e performance}
+
+Esporre lo stato di funzionamento effettivo del sistema progettato ad elaborato concluso. Per ciascuna delle funzionalità salienti devono essere tabellate e discusse le performance riscontrate mediante opportuni test eseguiti in fase di validazione del progetto.\\
+
+I tempi di esecuzione/comunicazione devono essere accompagnati dalle caratteristiche dell'hardware sul quale è eseguito il software.\\
+
+Qualora l'elaborato includa algoritmi innovativi, indicarne la complessità computazionale (avendo cura di esporre lo pseudo codice nella sezione \ref{sec:implementazione}).\\
+
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 2000 & 3000 \\
+ 2 componenti & 2500 & 4500 \\
+ 3 componenti & 3000 & 6000 \\
+ \hline
+\end{tabular}
+
+
+\newpage
 \subsection{Performance parte Locale}
 \subsubsection{Parte hardware}
 La longevità dell'impianto elettrico dipende dalla qualità dei sensori utilizzati. Tuttavia, data la progettazione semplificata e l'installazione non invasiva, è possibile sostituire qualsiasi tipo di guasto elettronico.
@@ -1186,6 +1294,26 @@ Ciò viene anche dimostrato dall'analisi delle richieste effettuate dal \textit{
 %----------------------------------------------------------------------------------------
 
 \section{Analisi di deployment su larga scala}
+
+In questa sezione va discussa, eventualmente con l'ausilio di opportuni diagrammi (componenti, deployment), l'evoluzione del progetto presentato immaginando che venga adottato su larga scala. I dettagli qui esposti devono quindi astrarre dalle specifiche dell'elaborato qualora l'implementazione sia stata focalizzata su uno scenario isolato.\\
+
+A titolo d’esempio, qualora applicabile, devono essere evidenziate le criticità che si potrebbero incontrare e devono essere proposte soluzioni tipiche in contesti di \textit{cloud architecture} per garantire un'adeguata \textit{resilienza}, in termini di \textit{availability} e \textit{scalability} del sistema.\\
+
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 3000 & 6000 \\
+ 2 componenti & 4500 & 9000 \\
+ 3 componenti & 6000 & 12000 \\
+ \hline
+\end{tabular}
+
+
+\newpage
 \subsection{Parte Applicativa}
 \textit{Smart Public Restrooms} è un sistema che riteniamo essere molto scalabile e in generale poco esoso in termini di risorse necessarie: come vedremo, infatti, i volumi dati coinvolti per un cliente di una certa dimensione sono tutto sommato contenuti e comunque gestibili.\\
 Innanzitutto, poniamo qualche stima sul volume dati coinvolto per un cliente con circa 2000 impianti in gestione: 
@@ -1224,6 +1352,28 @@ Infine, raccomandiamo l'utilizzo di servizi come \textit{CloudFlare} per la \tex
 %----------------------------------------------------------------------------------------
 %	PIANO DI LAVORO
 %----------------------------------------------------------------------------------------
+
+\section{Piano di lavoro}
+
+In questa sezione devono essere chiariti i compiti svolti da ciascun candidato nel caso in cui il gruppo abbia più di un componente.\\
+
+Deve essere inoltre esposto il piano di lavoro adottato. A tal fine, per ogni attività svolta durante la preparazione dell'elaborato (ad esempio: studio di una tecnologia, progettazione di un componente, implementazione di un algoritmo ecc…) deve essere chiarita la collocazione temporale e devono essere indicate le risorse impiegate per svolgerla (giorni/uomo). I candidati possono ricorrere a opportuni diagrammi come quello di Gantt.\\
+
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 1000 & 2000 \\
+ 2 componenti & 1500 & 3000 \\
+ 3 componenti & 2000 & 4000 \\
+ \hline
+\end{tabular}
+
+\newpage
+
 Il progetto appena presentato è stato interamente realizzato da un team di due persone, \textit{Stefano Beli} e \textit{Andrea Vecchiotti}.\\
 La divisione dei compiti è stata netta e basata sull'affinità di ogni membro del gruppo di lavoro:
 \begin{itemize}
@@ -1257,6 +1407,21 @@ Per quanto riguarda le tempistiche, \textit{Stefano Belli}  ha riportato:
 %----------------------------------------------------------------------------------------
 
 \section{Conclusioni}
+
+Esporre brevemente le considerazioni conclusive sul progetto presentato, indicando anche i possibili sviluppi futuri.\\
+
+Vincoli circa la lunghezza della sezione (escluse didascalie, tabelle, testo nelle immagini, schemi):
+
+\vspace{1cm}
+\begin{tabular}{l|rr}
+ & Numero minimo di battute & Numero massimo di battute \\
+ \hline
+ 1 componente & 500 & 1000 \\
+ 2 componenti & 1000 & 2000 \\
+ 3 componenti & 1500 & 3000 \\
+ \hline
+\end{tabular}
+\newpage
 Questo progetto rappresenta un valido caso di studio per la messa in pratica delle principali nozioni di \textit{Smart City e tecnologie mobili} viste durante il corso di Sistemi Autonomi presieduto dal prof. Maio.\\
 Innanzitutto, è stato progettato un sistema di monitoraggio completo e vicino a un contesto reale: sono stati coperti aspetti che spaziano dalle modalità di installazione degli impianti alla copertura delle esigenze degli utenti finali.\\
 Il sistema si è rivelato sia economico nella sua realizzazione (in termini di costi dei materiali e tempistiche di sviluppo) che flessibile per eventuali sviluppi futuri: l'adozione di tecnologie come \textit{MongoDB} e la creazione di SPA con \textit{Angular} sono solo alcune delle scelte architetturali che riteniamo importanti per garantire al sistema la capacità di scalare gradualmente con la sua adozione in massa.\\\\
@@ -1270,6 +1435,14 @@ Ciononostante, \textit{Smart Public Restrooms} rimane un sistema flessibile con 
 %----------------------------------------------------------------------------------------
 %	APPENDICE
 %----------------------------------------------------------------------------------------
+
+\appendix
+\addcontentsline{toc}{section}{Appendice}
+\section*{Appendice}
+Laddove necessario è possibile avvalersi di appendici alla relazione per includere materiale di approfondimento.\\
+
+A titolo esemplificativo possono essere incluse le schede tecniche dei componenti adottati, la normativa di riferimento che regola un particolare dominio applicativo, ecc.
+
 
 \newpage
 
