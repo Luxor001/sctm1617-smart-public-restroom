@@ -621,6 +621,9 @@ Questo tipo d'interazione verrà sfruttato principalmente dal manager stesso per
 	\includegraphics[scale=0.75]{img/parteLocale/RaspArduInterationDiagram.png}  
     \caption{Esempio di interazione tra Raspberry e Arduino con n pin}
 \end{figure}
+\phantom{dsadas}
+\newpage
+\phantom{dsadas}
 \newpage
 \subsection{Progettazione parte applicativa}
 Grazie all'analisi dei requisiti effettuata, si è evidenziato come il committente abbia richiesto la creazione di due applicazioni distinte, ognuna con una diversa finalità.\\
@@ -1333,7 +1336,7 @@ Ciononostante, \textit{Smart Public Restrooms} rimane un sistema flessibile con 
 \section*{Appendice} 
  \subsection{Configurazione software locale}
  \paragraph{Configurazione e installazione software arduino}
-Si riporta il file "GuidaArduino.txt" dove viene riportata l'intera procedura per la configurazione e l'installazione del software sui dispositivi Arduino.
+%Si riporta il file "GuidaArduino.txt" dove viene riportata l'intera procedura per la configurazione e l'installazione del software sui dispositivi Arduino.
 
 \subparagraph{Requisiti}
 I requisiti per configurare e installare il software sugli Arduino sono i seguenti:
@@ -1350,19 +1353,20 @@ I requisiti per configurare e installare il software sugli Arduino sono i seguen
 Di seguito, un esempio di procedura per configurare il software e installarlo sull'Arduino.\\
 
 \begin{itemize}
+\item Aprire il progetto Hall o Cell con VSCode
 \item Modificare la chiave \textit{board} nel file \textit{platformio.ini} mettendo come valore il nome della scheda Arduino utilizzata. Esempio:
 \begin{lstlisting}
 	board = uno 		//per ArduinoUno
 	board = mega2560 	//per ArduinoMega2560
 \end{lstlisting}
-\item Modificare la proprietà \textit{deviceName} nel file \textit{main.cpp} specificando il ruolo che avrà l'Arduino nel sistema locale. Esempio:
+\item Modificare la proprietà \textit{deviceName} nel file \textit{src/main.cpp} specificando il ruolo che avrà l'Arduino nel sistema locale. Esempio:
 \begin{lstlisting}
 	const String deviceName="CELL.01"; //per un modulo cella
 	const String deviceName="SINK.01"; //per un modulo lavabo (sapone e pattumiera)
 \end{lstlisting}
 dove \textit{CELL} sta a indicare che l'Arduino monitorerà una cella di un locale e \textit{01} il progressivo di cella
 
-\item Modificare il file \textit{cellMapping.h} o \textit{sinkMapping.h} per configurare la lista di mapping dei sensori. Dovranno essere modificati tutti e tre i metodi. Esempio:
+\item Modificare il file \textit{src/headers/cellMapping.h} o \textit{src/headers/sinkMapping.h} per configurare la lista di mapping dei sensori. Dovranno essere modificati tutti e tre i metodi. Esempio:
 \begin{lstlisting}
 String cell_inputMapping(int value)
 {
@@ -1399,9 +1403,81 @@ String cell_outputMapping(int value)
 
 \end{itemize}
 
+\newpage
 
+\paragraph{Configurazione software raspberry}
+%Si riporta il file "GuidaConfigurazione.txt" che ci da una panoramica su una corretta configurazione dell'applicazione per il Raspberry
+\subparagraph{Requisiti}
+Per la configurazione del software bisogna rispettare i seguenti requisiti:
+\begin{itemize}
+\item Avere un qualsiasi editor di testo
+\end{itemize}
 
+\subparagraph{Procedura}
+Per configurare l'applicazione è necessario aprire il file \textit{config.properties} in modalità scrittura.
+Il file deve riportare almeno le seguenti proprietà:
+\begin{lstlisting}
+RESTROOMSENSORMANAGER.INFO.ID=36e451a2-3520-4704-aec7-a9cfb5fb03b1
+RESTROOMSENSORMANAGER.INFO.CITYADDRESS=Via Inesistente, 14
+RESTROOMSENSORMANAGER.INFO.LATITUDE=44.06747087
+RESTROOMSENSORMANAGER.INFO.LONGITUDE=12.53445526
+RESTROOMSENSORMANAGER.INFO.COMPANY=F.lli Tizi S.r.l
+RESTROOMSENSORMANAGER.INFO.DEVICE=MAC-
+RESTROOMSENSORMANAGER.MANAGER.TTD=4500
+RESTROOMSENSORMANAGER.MANAGER.RANDOMTIMESENDING=2000
+RESTROOMSENSORMANAGER.MANAGER.REST_URL=UrlDelServerRest
+RESTROOMSENSORMANAGER.PORTNAME.1=COM4
+RESTROOMSENSORMANAGER.PORTNAME.2=COM5
+RESTROOMSENSORMANAGER.CELL.1.LIGHT.TREESHOLD=600
+RESTROOMSENSORMANAGER.CELL.1.LIGHT.NEGATIVE=0
+RESTROOMSENSORMANAGER.CELL.1.PAPER.TREESHOLD=600
+RESTROOMSENSORMANAGER.CELL.1.PAPER.NEGATIVE=0
+RESTROOMSENSORMANAGER.CELL.1.DOOR.TREESHOLD=100
+RESTROOMSENSORMANAGER.CELL.1.DOOR.NEGATIVE=0
+RESTROOMSENSORMANAGER.SINK.1.TRASH.1.MIN=700
+RESTROOMSENSORMANAGER.SINK.1.TRASH.1.MAX=200
+RESTROOMSENSORMANAGER.SINK.1.SOAP.1.MIN=100
+RESTROOMSENSORMANAGER.SINK.1.SOAP.1.MAX=700
+\end{lstlisting}
+Tutte le proprietà sopraelencate sono obbligatorie.
+Le chiavi di proprietà per le categorie \textit{INFO},\textit{MANAGER} e \textit{PORTNAME} sono impostate nel seguente modo:
+\begin{lstlisting}
+RESTROOMSENSORMANAGER.CATEGORY.PROPERTY 
+\end{lstlisting}
 
+Per la categoria CELL invece le chiavi sono impostate nel seguente modo
+\begin{lstlisting}
+RESTROOMSENSORMANAGER.CELL.NUMBEROFCELL.[LIGHT|PAPER|DOOR].[TREESHOLD|NEGATIVE] 
+\end{lstlisting}
+Dove
+\begin{itemize}
+\item \textit{NUMBEROFCELL} è il numero progressivo della cella
+\item \textit{LIGHT|PAPER|DOOR} si riferiscono ai sensori relativi al controllo di funzionamento della luce di servizio, disponibilità della carta igienica e chiusura porta.
+\item \textit{TREESHOLD|NEGATIVE} sono proprietà relative alle logiche di manipolazione dei dati ricevuti al manager da parte dei sensori 
+\end{itemize}
+
+Infine per la categoria SINK, le chiavi sono impostate nel seguente modo
+\begin{lstlisting}
+RESTROOMSENSORMANAGER.SINK.1.[SOAP|TRASH].NUMBEROFSINKMODULE.[MIN|MAX]
+\end{lstlisting}
+dove:
+\begin{itemize}
+\item \textit{[SOAP|TRASH]} si riferiscono ai sensori relativi al rilevamento disponibilità del liquido sapone e capienza occupata nella pattumiera
+\item \textit{NUMBEROFSINKMODULE} è il numero progressivo del modulo lavabo
+\item \textit {[MIN|MAX]} sono le proprietà relative alle logiche di manipolazione dei dati ricevuti al manager da parte dei sensori
+\end{itemize}
+
+Di seguito, la descrizione delle proprietà meno triviali:
+\begin{itemize}
+\item \textit{DEVICE}: nome del dispositivo Raspberry
+\item \textit{TTD}: Time To Delivery, è il tempo di attesa che intercorre tra un aggiornamento del server Rest e l'altro.
+\item \textit{RANDOMTIMESENDING}: Tempo che intercorre tra un'interrogazione e un'altra tra VirtualSensor e Arduino.
+\item \textit{REST\_URL}: Url del server a cui Raspberry si deve connettere
+\item \textit{TREESHOLD}: Soglia nella quale una condizione deve considerarsi vera.
+\item \textit{NEGATIVE}: Se è impostato a zero, la condizione si considera vera al superare della soglia di \textit{TREESHOLD}, al di sotto in caso contrario.
+\item \textit{MIN}: Minimo valore atteso da un sensore.
+\item \textit{MAX}: Massimo valore atteso da un sensore.
+\end{itemize}
 %----------------------------------------------------------------------------------------
 %	RIFERIMENTI BIBLIOGRAFICI
 %----------------------------------------------------------------------------------------
