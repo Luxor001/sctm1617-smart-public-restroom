@@ -1,0 +1,19 @@
+diff a/report/report.tex b/report/report.tex	(rejected hunks)
+@@ -188,14 +188,14 @@
+ \textsc{\Large Relazione di progetto di "Smart City e Tecnologie Mobili"}\\[0.5cm]
+ 
+ \HRule \\[0.4cm]
+-{ \huge \bfseries Smart Public Restrooms }\\[0.4cm]
++{ \huge \bfseries Smart Public Restroom }\\[0.4cm]
+ \HRule \\[1.5cm]
+ 
+ \vfill
+ 
+ \begin{flushleft}
+-\emph{Numero del gruppo: 60}\\[1cm]
+-\emph{Componenti del gruppo: \textit{Stefano Belli}; \textit{Andrea Vecchiotti}}\\[3cm]
++\emph{Numero del gruppo:}\\[1cm]
++\emph{Componenti del gruppo:}\\[3cm]
+ \end{flushleft}
+ 
+ 
