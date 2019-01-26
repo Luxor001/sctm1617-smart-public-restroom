@@ -1262,16 +1262,18 @@ In questo scenario, tuttavia, ci raccomandiamo di affidarci ai cluster  forniti 
 Qualora queste strategie di \textit{Scalability} non siano sufficienti (o siano troppo esose), si ritiene possibile aumentare progressivamente la frequenza di aggiornamento delle \textit{Restrooms}: la maggioranza dei dati raccolti non hanno necessità di essere tempestivamente notificate all'utente, eccezion fatta per l'allarme "fumo".\\ 
 In tal caso si può studiare un meccanismo di invio di \textit{push notifications} o messaggi SMS (tramite modulo GMS installato negli impianti) direttamente agli utenti di \textit{Manager}.\\\\
 Infine, raccomandiamo l'utilizzo di servizi come \textit{CloudFlare} per la \textit{DDoS Mitigation} e più in generale per l'ottenimento di un sufficiente livello di \textit{Overload Protection}.
+\newpage
+
 \subsection{Parte Locale}
 \textit{Smart Public Restrooms}, essendo un sistema utilizzabile su larga scala, deve necessariamente tenere in considerazione due fattori:
 \begin{itemize}
 \item Le dimensioni del locale e dei suoi interni
 \item Il numero di celle e lavabi presenti al suo interno
 \end{itemize}
-A causa delle basse potenze fornite nativamente dai microcontrollori (si consideri che la massima differenza di potenziale fornita da Arduino è 5vcc) , le tracce utilizzate per la comunicazione dovranno essere adeguatamente dimensionate.
+A causa delle basse tensioni fornite nativamente dai microcontrollori (si consideri che la massima differenza di potenziale fornita da Arduino è 5vcc), le tracce utilizzate per la comunicazione dovranno essere adeguatamente dimensionate.\\
 Per applicazioni di una certa entità può essere considerato necessario l'utilizzo di un amplificatore di segnale oppure si potrebbe cambiare il paradigma di comunicazione tra i dispositivi installando su di loro un trasmettitore e ricevitore radio e modificando parzialmente il codice relativo all'interazione tra Raspberry e Arduino.\\
 
-Qualora il numero di celle e/o lavabi superino il numero di porte usb disponibili del raspberry si renderà necessario utilizzare degli hub usb per aumentare il numero di microcontrollori supportati.
+Qualora il numero di celle e/o lavabi superino il numero di porte usb disponibili, inoltre, si renderà necessario utilizzare degli hub usb per aumentare il numero di microcontrollori supportati.
 
 
 
