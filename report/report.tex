@@ -1140,9 +1140,15 @@ restroomsCollection.InsertOne(newRestroom);
 \section{Testing e performance}
 \subsection{Performance parte Locale}
 \subsubsection{Parte hardware}
-La longevità dell'impianto elettrico dipende dalla qualità dei sensori utilizzati. Tuttavia, data la progettazione semplificata e l'installazione non invasiva, è possibile sostituire qualsiasi tipo di guasto elettronico.
+La longevità del circuito elettrico e dei componenti utilizzati dipende dalla principalmente dalla loro qualità e da una corretta modalità di utilizzo.\\
+Pertanto, considerando la relativa semplicità del sistema e le basse tensioni di esercizio utilizzate si considera improbabile l'insorgenza di eventuali problemi di hardware.\\
+Grazie all'esclusivo utilizzo di connessioni cablate nell'impianto si considerano nulle le latenze di comunicazione tra Raspberry e Arduino; si possono considerare nulle anche le latenze derivanti dall'interrogazione dei sensori, in quanto molto semplice e in alcuni casi completamente analogici.\\
+Le latenze tra Raspberry e Server, invece, sono largamente dipendenti dal tipo di connessione utilizzata e dal livello di congestione del server: il messaggio può così accumulare una latenza che varia da qualche ms a qualche centinaio di ms.
+
 \subsubsection{Parte software}
-Molto più preoccupante è la robustezza del software; in una prima versione del progetto la gestione degli errori è stata ridotta all'osso. Questo significa che per qualsiasi malfunzionamento l'applicazione lato raspberry potrebbe rompersi; occorre quindi un riavvio dell'applicazione da remoto per ristabilire il corretto funzionamento del sistema.
+Il sistema è stato progettato per resistere ad eventi improvvisi come sbalzi di corrente, fallimenti hardware dei microcontrollori o dei singoli sensori e latenze di rete.\\
+Ad esempio, nel caso di completo spegnimento della macchina Raspberry si prevede che il servizio continui a funzionare non appena l'alimentazione ritorni al sistema, grazie all'utilizzo di un \textit{Cron Job} del sistema operativo.\\
+Eventuali fallimenti di macchine Arduino (a causa di rotture o disconnessioni delle interfacce di comunicazioni) vengono tollerate dal Raspberry, considerando l'\textit{ArduinoSensor} corrispondente in timeout.
 \newpage
 \subsection{Performance parte applicativa}
 Nell'ambito di applicazioni RESTful le performance finali si possono considerare dipendenti da due fattori:
@@ -1273,6 +1279,7 @@ Qualora il numero di celle e/o lavabi superino il numero di porte usb disponibil
 %----------------------------------------------------------------------------------------
 %	PIANO DI LAVORO
 %----------------------------------------------------------------------------------------
+\section{Piano di lavoro}
 Il progetto appena presentato è stato interamente realizzato da un team di due persone, \textit{Stefano Beli} e \textit{Andrea Vecchiotti}.\\
 La divisione dei compiti è stata netta e basata sull'affinità di ogni membro del gruppo di lavoro:
 \begin{itemize}
@@ -1322,10 +1329,75 @@ Ciononostante, \textit{Smart Public Restrooms} rimane un sistema flessibile con 
 \appendix 
 \addcontentsline{toc}{section}{Appendice} 
 \section*{Appendice} 
-Laddove necessario è possibile avvalersi di appendici alla relazione per includere materiale di approfondimento.\\ 
+ \subsection{Configurazione software locale}
+ \paragraph{Configurazione e installazione software arduino}
+Si riporta il file "GuidaArduino.txt" dove viene riportata l'intera procedura per la configurazione e l'installazione del software sui dispositivi Arduino.
 
- A titolo esemplificativo possono essere incluse le schede tecniche dei componenti adottati, la normativa di riferimento che regola un particolare dominio applicativo, ecc.
-\newpage
+\subparagraph{Requisiti}
+I requisiti per configurare e installare il software sugli Arduino sono i seguenti:
+\begin{itemize}
+\item Installare ArduinoSDK
+\item Installare Visual Studio Code
+\item Installare il plugin PlatformIO per VSCode
+\item Scaricare le dipendenze necessarie a buildare la soluzione
+\item Collegare l'Arduino al proprio computer
+\end{itemize}
+
+
+\subparagraph{Procedura} 
+Di seguito, un esempio di procedura per configurare il software e installarlo sull'Arduino.\\
+
+\begin{itemize}
+\item Modificare la chiave \textit{board} nel file \textit{platformio.ini} mettendo come valore il nome della scheda Arduino utilizzata. Esempio:
+\begin{lstlisting}
+	board = uno 		//per ArduinoUno
+	board = mega2560 	//per ArduinoMega2560
+\end{lstlisting}
+\item Modificare la proprietà \textit{deviceName} nel file \textit{main.cpp} specificando il ruolo che avrà l'Arduino nel sistema locale. Esempio:
+\begin{lstlisting}
+	const String deviceName="CELL.01"; //per un modulo cella
+	const String deviceName="SINK.01"; //per un modulo lavabo (sapone e pattumiera)
+\end{lstlisting}
+dove \textit{CELL} sta a indicare che l'Arduino monitorerà una cella di un locale e \textit{01} il progressivo di cella
+
+\item Modificare il file \textit{cellMapping.h} o \textit{sinkMapping.h} per configurare la lista di mapping dei sensori. Dovranno essere modificati tutti e tre i metodi. Esempio:
+\begin{lstlisting}
+String cell_inputMapping(int value)
+{
+    switch(value)
+    {
+        case 4: return TEMP_AND_HUMIDITY;   //HUMIDITY
+            return PHOTO_RESISTOR;
+        default:
+            return "";
+    }
+};
+
+String evaluateMappingType(int value)
+{
+	if (value==4)
+		return O_REAL;
+	else
+		return O_DGT;
+}
+String cell_outputMapping(int value)
+{
+    switch(value)
+    {
+        case 2:                             //DOOR
+        case 3: return LASER_EMIT;          //PAPER
+        case 13: return LED_BUILTIN_S;
+        default:
+            return "";
+    }
+};
+\end{lstlisting}
+
+\item Eseguire il comando \textit{PlatformIO: Build} e successivamente \textit{PlatformIO: Upload} per eseguire una build e caricare il compilato sull'Arduino.
+
+\end{itemize}
+
+
 
 
 %----------------------------------------------------------------------------------------
