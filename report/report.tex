@@ -842,8 +842,9 @@ Tra le librerie third-party si prevede almeno l'utilizzo delle seguenti:
 \paragraph{Codice}
 Il codice d'implementazione rispecchia concettualmente quello che è stato già definito in fase progettuale. Verrà descritto quindi il codice relativo alla componente sensori e il codice relativo al manager.
 \subparagraph{Sensori}
-L'interfaccia ISensor si occupa di esporre i metodi basilari che ogni sensore virtuale deve poi implementare; estende l'interfaccia Runnable in modo da integrare la logica dei 'Java.Thread' al suo interno. ISensor verrà implementato parzialmente da AbstractSensor, una classe astratta che incorpora il comportamento principale che ogni sensore deve avere.
-L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un ulteriore comportamento, la sua parte reattiva. Grazie all'implementazione dell'Observable in AbstractSensor è possibile modificare lo stato di tutti gli oggetti di tipo Observer che si sono iscritti.
+Per mantenere una corretta omogeneità di funzionamento, è stata creata un'interfaccia \textit{ISensor}, che si è dimostrata fondamentale per stabile un basilare contratto di funzionamento per ogni sensore utilizzato nel sistema.\\
+Per rendere ogni sensore compatibile con i \textit{Java.Thread}, inoltre, si è provveduto a implementare per ogni \textit{ISensor} l'interfaccia \textit{Runnable}. \\
+\textit{ISensor} verrà poi parzialmente implementato da \textit{AbstractSensor}, una classe astratta utile per stabilire altri dettagli del comportamento principale di ogni sensore del sistema: derivando dalla classe \textit{Observable}, ad esempio, si introdurranno meccanismi di programmazione reattiva in ogni sensore.\\
 \begin{lstlisting}
 	protected boolean updateObserver(EntrySet entry)
 	{
@@ -853,40 +854,45 @@ L'abstractSensor deriva anche dalla classe Observable; implementerà quindi un u
 		return true;
 	}
 \end{lstlisting}
-L'abstractSensor viene a sua volta implementato da ArduinoSensor, una seconda classe astratta che implementa a sua volta la classe Observer. In questo modo ArduinoSensor è in grado non solo di aggiornare possibili subscribers ma anche di iscriversi ad un'altro Observable e di reagire ai suoi aggiornamenti. Grazie a questa implementazione, l'ArduinoSensor reagisce alle risposte da parte dell'Arduino e può iscriversi ad un altro ArduinoSensor per reagire alle variazioni di stato del sensore virtuale a cui si è iscritto.
-Le classi finali sono ArduinoReadingSensor e ArduinoWritingSensor.
-Il comportamento di queste due classi sono simili; la differenza sostanziale sta nel fatto che l'ArduinoReadingSensor, una volta che riceve le informazioni dall'Arduino, aggiorna il Manager mentre l'ArduinoWritingSensor ha il solo scopo di cambiare lo stato dei pin relativi ai Sensori fisici di output (come il pin di un led); entrambi le classi sfruttano il Manager per comunicare con l'Arduino.
-La ragione principale per cui si è creato un livello di astrazione così profondo è quella di tenere alta la libertà di usare, in futuro, un dispositivo differente da Arduino per la gestione fisica dei sensori. 
+Per gestire i sensori collegati ad hardware \textit{Arduino} è stata creata la classe \textit{ArduinoSensor}: ciò ha permesso di rendere gli \textit{AbstractSensor} il più generici e flessibili possibile.\\
+Grazie all'implementazione dell'interfaccia \textit{Observer}, inoltre, l'\textit{ArduinoSensor} avrà un comportamento comparabile con quello di un \textit{Subject}: non solo sarà in grado aggiornare possibili \textit{subscribers} ma anche di iscriversi ad altri \textit{Observables} e di reagire ai loro aggiornamenti.\\
+Essendo \textit{ArduinoSensor} a sua volta una classe astratta, si è reso necessario incapsulare il suo comportamento in due classi concrete chiamate \textit{ArduinoReadingSensor} e \textit{ArduinoWritingSensor}; la differenza sostanziale tra le due classi sta nel loro comportamento finale: \textit{ArduinoReadingSensor}, infatti, una volta ricevute le informazioni dall'Arduino aggiornerà direttamente il Manager.\\ \textit{ArduinoWritingSensor}, invece, avrà il solo compito di cambiare lo stato dei pin relativi ai sensori fisici di output (come il pin di un led).\\
+Si tenga presente che la ragione principale per cui si è creato un livello di astrazione così profondo è stata quella di mantenere alta la flessibilità e riusabilità del progetto: si ritiene importante infatti la libertà di usare, in futuro, un dispositivo differente da Arduino per la gestione fisica dei sensori. 
 \subparagraph{Manager}
-Il manager è composto da 3 macro parti:
+Il manager è composto da tre macro componenti:
 \begin{itemize}
-\item RestroomSM: responsabile del coordinamento di tutte le componenti
-\item IOComm: responsabile della comunicazione tra manager-arduino e sensori virtuali-arduino
-\item RestClient: responsabile della comunicazione tra manager e server
+\item \textit{IOComm}: responsabile della comunicazione tra manager-arduino e sensori virtuali-arduino
+\item \textit{RestClient}: responsabile della comunicazione tra manager e server
+\item \textit{RestroomSM}: responsabile finale del coordinamento tra \textit{IOComm}, \textit{RestClient} e \textit{VirtualSensors}.
 \end{itemize}
-L'\textbf{IOComm} è la classe responsabile alla comunicazione tra Raspberry e Arduino e implementa l'interfaccia Observer per reagire alle risposte da parte di Arduino. Per inizializzare un oggetto di questa classe è richiesta la lista di porte seriali a cui i vari Arduino sono fisicamente connessi al Raspberry. 
-Durante l'inizializzazione, la classe interroga ogni Arduino connesso per ricevere la lista delle mappature dei sensori fisici utilizzati e crea le strutture necessarie a memorizzare queste mappature e legarle concettualmente all'Arduino interrogato. Per ogni stringa di mappatura ricevuta dagli Arduino, l'IOComm inizializza i sensori virtuali di tipo ArduinoSensor passando loro informazioni utili al loro funzionamento; le principali informazioni sono:
-\begin{itemize}
-\item relative all'Arduino fisico a cui concettualmente appartiene come la porta seriale e il numero di pin a cui il sensore fisico è cablato.
-\item relative alle proprietà funzionali del sensore virtuale come il delay che ci deve essere tra un'interrogazione all'Arduino e un'altra.
-\end{itemize}
+L'\textbf{IOComm} è il principale responsabile della comunicazione tra Raspberry e Arduino, utilizzando meccanismi della programmazione reattiva per reagire adeguatamente alle risposte fornite dai microcontrollori connessi.\\
+La sua inizializzazione necessiterà la fornitura di una lista di porte seriali a cui i vari Arduino sono fisicamente connessi al Raspberry; durante il processo di inizializzazione quindi \textit{IOComm} interrogherà ogni Arduino connesso per ricevere la lista delle mappature dei sensori fisici utilizzati e creerà le strutture necessarie a memorizzare.\\ 
+Ad ogni stringa di mappatura ricevuta dagli Arduino l'IOComm inizializzerà una serie di \textit{ArduinoSensor}, fornendo loro metadati indispensabili per un corretto funzionamento.\\
+Alcuni esempi di tali informazioni possono essere l'indirizzo della porta seriale a cui l'Arduino è assegnato, il numero di pin a cui il sensore è cablato o informazioni funzionali come il ritardo che deve intercorrere tra un ogni interrogazione.\\
 Una volta conclusa l'inizializzazione è possibile comunicare con l'Arduino con l'ausilio di due metodi di classe esposti:
 \begin{itemize}
-\item sendWriteRequestToArduino(), metodo che serve a cambiare lo stato di un pin di un Arduino
-\item sendReadRequestToArduino(), metodo che serve a leggere lo stato di un pin di un Arduino
+\item \textit{sendWriteRequestToArduino()}, utilizzato per cambiare lo stato di un pin.
+\item \textit{sendReadRequestToArduino()}, utilizzato per interrogare lo stato di un pin.
 \end{itemize}
-Il \textbf{RestClient} è una classe che permette al Raspberry di comunicare ad un server con tecnologia Rest. Durante la sua inizializzazione, viene richiesto l'indirizzo URL a cui il Raspberry si connetterà e vengono impostate le metodologie di comunicazione, come l'utilizzo dell'http post con struttra dei messaggi in Json.
-La classe espone il metodo sendData() che prende come parametro l'informazione strutturata da spedire.
-Il metodo serializza l'informazione in formato Json, crea la struttura di request e response e spedisce il messaggio. E' possibile conoscere l'esito dell'operazione tramite il metodo .getStatusLine().getStatusCode() della struttura di response; il risultato del metodo sopra citato è un intero che rappresenta il codice di stato http. Se l'esito è andato a buon fine, lo status code sarà uguale a 200. All'interno della response inoltre c'è un oggetto Json deserializzabile in un oggetto di classe RestResponse che riporta il risultato dell'operazione di business e un possibile messaggio.
-\textbf{RestroomSM} (Restroom sensor manager) è la classe principale del software; essa implementa sia le funzioni di Observable che le funzioni di Observer. Questa classe serve a collegare i sensori virtuali con l'IOComm, si collega al RestClient e tiene in memoria una struttura dati ben definita da aggiornare e/o inviare al Server durante il suo ciclo di vita.
-Durante la sua inizializzazione, il RestroomSM recupera, dal file di configurazione dell'applicazione, tutte le informazioni necessarie a inizializzare correttamente l'IOComm, il RestClient e la struttura dati. Inoltre il manager mappa il nome delle porte ai dispositivi arduino e i dispositivi arduino alle strutture dati. Infine,se necessario , crea le dipendenze tra i vari ArduinoSensors.
-Il RSM espone due funzioni:
+Il \textbf{RestClient} permette la comunicazione con il server tramite interfaccia \textit{RESTFul}, in accordo alla tipologia di backend del sistema.\\
+Durante la sua inizializzazione, viene richiesto l'indirizzo URL a cui il Raspberry si connetterà e vengono impostate le metodologie di comunicazione, come l'utilizzo del metodo POST con struttra dei messaggi in \textit{JSON}.\\
+La classe espone il metodo \textit{sendData(param)} che accetta come parametro il dato da inviare.\\
+Il metodo serializzerà così l'informazione in formato \textit{JSON}, creerà la struttura di request e response e spedirà il messaggio.\\
+Sarà possibile conoscere l'esito dell'operazione tramite il metodo \textit{.getStatusLine()}\textit{.getStatusCode()} del response ricevuto; il risultato sarà un intero che rappresenta il codice di stato http.\\
+All'interno della response sarà disponibile un JSON deserializzabile in un oggetto di classe \textit{RestResponse} che riporta il risultato dell'operazione di business e un possibile messaggio.\\\\
+\textbf{RestroomSM} (Restroom sensor manager) è la classe principale del sistema, implementando sia le funzioni di \textit{Observable} che le funzioni di \textit{Observer}.\\
+Questa classe verrà utilizzata per collegare i sensori virtuali con  l'oggetto \textit{IOComm}, collegandosi al \textit{RestClient} esistente e tenendo in memoria una struttura dati ben definita da aggiornare e/o inviare al Server durante il suo ciclo di vita.\\
+Durante la sua inizializzazione, il \textit{RestroomSM} recupererà, dal file di configurazione dell'applicazione, tutte le informazioni necessarie a inizializzare correttamente i suoi componenti.\\
+Inoltre il manager effettuerà il mapping tra il nome delle porte ai dispositivi Arduino e alle strutture dati. 
+Infine, se necessario, creerà le dipendenze tra i vari \textit{ArduinoSensors}.\\
+Il RSM esporrà due funzioni principali:
 \begin{itemize}
-\item Start() Abilita tutti i sensori virtuali ad esso collegati
-\item Stop() Ferma tutti i sensori virtuali ad esso collegati
+\item Start() Abilita tutti i sensori virtuali collegati.
+\item Stop() Disabilita tutti i sensori virtuali collegati.
 \end{itemize}
-Una volta avviatosi, il cuore della classe è rappresentata dalla funzione onNext() metodo derivato da Observer.
-Questo metodo viene chiamato dai vari sensori virtuali come Observable e ha il compito di smistare le informazioni per aggiornare la struttura dati. Al termine dello smistamento dei dati, viene chiesto l'invio della struttura dati tramite l'ausilio della classe RestClient.
+Una volta avviatosi, il punto focale della classe può essere rappresentato dalla funzione \textit{onNext()}, cioè un metodo derivato dall'interfaccia \textit{Observer}.
+Questo metodo viene chiamato dai vari sensori virtuali come \textit{Observable} e ha il compito di smistare le informazioni per aggiornare la struttura dati.\\
+Una volta completato, verrà richiesto invio della struttura dati risultante tramite il componente \textit{RestClient}.
 \newpage
 \subsection{Implementazione parte Applicativa}
 \subsubsection{Manager}
